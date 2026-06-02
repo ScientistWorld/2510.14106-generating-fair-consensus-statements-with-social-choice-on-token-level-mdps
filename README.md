@@ -18,6 +18,22 @@ Do NOT describe the paper's method or solution here — only the problem itself.
 
 ---
 
+# Reproduction Log
+
+### Iteration 1: gpt-5.5
+- **Milestone**: `none` | **Status**: error
+- **Working time**: 15m | **GPU**: 0.0h
+
+<details>
+<summary>Progress Log</summary>
+
+<!-- Write your progress here -->
+
+</details>
+
+
+---
+
 # Reproduction Milestones
 
 **Current: none**

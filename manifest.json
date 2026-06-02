@@ -1,0 +1,103 @@
+{
+  "paper": {
+    "arxiv_id": "2510.14106",
+    "title": "Generating Fair Consensus Statements with Social Choice on Token-Level MDPs",
+    "date": "",
+    "topics": [
+      "paper-type-metric-method",
+      "domain-nlp",
+      "area-llm",
+      "category-generation",
+      "method-beam-search",
+      "secondary-domain-ai-ml",
+      "secondary-area-llm",
+      "secondary-category-alignment",
+      "secondary-method-social-choice",
+      "selection-category-visual-generation"
+    ]
+  },
+  "reproduction": {
+    "milestone": "none",
+    "status": "error",
+    "error": "rc=-1: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 8:40 PM.",
+    "scaffold": "codex",
+    "model": "gpt-5.5",
+    "profile": "gpt-5.5-medium",
+    "effort": "medium",
+    "gpu_hours_used": 0.0,
+    "current_iteration_gpu_budget": 30,
+    "current_iteration_gpu_hours_used": 0.0,
+    "total_gpu_hours_used": 0.0,
+    "current_iteration_cpu_hours_used": 0.0,
+    "total_cpu_hours_used": 0,
+    "gpu_budget": 30,
+    "duration_sec": 910.2,
+    "cost_usd": null,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 0,
+    "cache_creation_tokens": null,
+    "reasoning_tokens": 0,
+    "total_input_tokens": 0,
+    "num_turns": 0,
+    "duration_api_ms": null,
+    "num_runs": 1,
+    "iteration_count": 0,
+    "workflow": "standard",
+    "workflow_step": 0,
+    "total_gpu_jobs": 0,
+    "time_breakdown": {
+      "working": 903.7491400241852
+    }
+  },
+  "agents": [
+    {
+      "scaffold": "codex",
+      "model": "gpt-5.5",
+      "profile": "gpt-5.5-medium",
+      "effort": "medium",
+      "role": "reproducer",
+      "is_iteration": false,
+      "iteration": 1,
+      "workflow": "standard",
+      "workflow_step": 0,
+      "started_at": 1780428155.857336,
+      "finished_at": 1780429066.0318596,
+      "duration_sec": 910.2,
+      "blocked_sec": 0.0,
+      "status": "error",
+      "error": "rc=-1: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 8:40 PM.",
+      "milestone": "none",
+      "gpu_budget": 30,
+      "gpu_hours_used": 0.0,
+      "total_gpu_hours_used": 0.0,
+      "cpu_hours_used": 0.0,
+      "time_breakdown": {
+        "working": 903.7491400241852
+      },
+      "cost_usd": null,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_input_tokens": 0,
+      "cache_creation_tokens": null,
+      "reasoning_tokens": 0,
+      "total_input_tokens": 0,
+      "num_turns": 0,
+      "duration_api_ms": null,
+      "tool_uses": {},
+      "gpu_jobs": [],
+      "progress_log": "<!-- Write your progress here -->"
+    }
+  ],
+  "components": {
+    "has_container": true,
+    "has_method_code": true,
+    "has_evaluation": true,
+    "has_download_script": true,
+    "has_reproduce_script": true,
+    "has_method_script": true,
+    "has_baseline": true,
+    "has_reference": false,
+    "has_data": true
+  }
+}
