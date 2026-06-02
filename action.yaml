@@ -27,8 +27,8 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: pending
-gpus: 1
+action: done
+gpus: 0
 test: false
 milestone: none
-notes: ""
+notes: "Fixed validation by adding scoring/reference.json and removing a non-portable shared/ reference from scripts/download.sh."
