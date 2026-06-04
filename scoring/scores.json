@@ -11,6 +11,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
               }
             }
           },
@@ -19,6 +27,14 @@
             "seed": 202511,
             "policies": {
               "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "utilitarian_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
               }
@@ -31,6 +47,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
               }
             }
           },
@@ -41,6 +65,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
               }
             }
           },
@@ -49,6 +81,14 @@
             "seed": 202514,
             "policies": {
               "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "utilitarian_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
               }
@@ -61,6 +101,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.2787657370809846,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
               }
             }
           },
@@ -71,6 +119,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.3433945471981745,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.9076925353149525,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -81,6 +137,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.6491871257218544,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.828588296317228,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -89,6 +153,14 @@
             "seed": 202513,
             "policies": {
               "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.4957504304261846,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
               }
@@ -101,6 +173,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.3207288565943933,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 2.327089985873176,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -111,6 +191,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 2.0201473407836685,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.881736864086628,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -121,6 +209,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 2.000758890888704,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 12.210014870099812,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -131,6 +227,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 3.147663923812287,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 129.29185701347345,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -141,6 +245,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 2.61437720214612,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 7.54786107165647,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -151,6 +263,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 2.835160386094826,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 27.07673901175608,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -161,6 +281,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 6.092689739954988,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 17.70466812831288,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -171,6 +299,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 4.328675805952711,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 745.4223156402929,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -181,6 +317,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 7.5355438798051635,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 83581.92144996222,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -191,6 +335,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 5.120679357785322,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 163.86449292755054,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -201,6 +353,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 7.586489260946939,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 3665.7489775537697,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -211,6 +371,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 12.794596075914255,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1567.2763676684901,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -221,6 +389,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 7.623765211855145,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 2778272.143272679,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -231,6 +407,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 13.652826773369478,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 14782312.74856763,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -241,6 +425,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 9.042886736641135,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 134257.86021201633,
+                "core_constraint_satisfied": 0.0
               }
             }
           },
@@ -251,6 +443,14 @@
               "nash_welfare_policy": {
                 "max_coalition_improvement": 1.0,
                 "core_constraint_satisfied": 1.0
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 13.17820000833249,
+                "core_constraint_satisfied": 0.0
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 11062541.55723857,
+                "core_constraint_satisfied": 0.0
               }
             }
           }
@@ -259,7 +459,30 @@
       "results": {
         "nash_welfare_policy": {
           "max_coalition_improvement": 1.0,
-          "core_constraint_satisfied": 1.0
+          "core_constraint_satisfied": 1.0,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        },
+        "uniform_policy": {
+          "max_coalition_improvement": 13.652826773369478,
+          "core_constraint_satisfied": 0.0,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.6491871257218544,
+          "rho_2_max_coalition_improvement": 3.147663923812287,
+          "rho_4_max_coalition_improvement": 7.586489260946939,
+          "rho_8_max_coalition_improvement": 13.652826773369478
+        },
+        "utilitarian_policy": {
+          "max_coalition_improvement": 14782312.74856763,
+          "core_constraint_satisfied": 0.0,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 2.327089985873176,
+          "rho_2_max_coalition_improvement": 129.29185701347345,
+          "rho_4_max_coalition_improvement": 83581.92144996222,
+          "rho_8_max_coalition_improvement": 14782312.74856763
         }
       }
     }
