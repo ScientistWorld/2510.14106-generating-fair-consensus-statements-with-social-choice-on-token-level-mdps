@@ -8,7 +8,9 @@ Evaluation code reads those artifacts and solves the paper's coalition-blocking 
 
 ## Results
 
-No scheduler result yet. A CPU job is being submitted to install dependencies in the container and run `scripts/reproduce.sh`.
+Job `449b4d8c-419` generated all synthetic core-test method artifacts under `checkpoints/core_test`, but failed during evaluation. The evaluator tried to compute coalition-improvement diagnostics for blockable baseline policies; one coalition LP was correctly unbounded, which crashed the job before scores were written.
+
+The evaluator now scores only `nash_welfare_policy`, matching `scoring/reference.json`. Baseline diagnostics are not required for the current target and should not block the core-claim score.
 
 ## Remaining
 
@@ -18,7 +20,8 @@ No scheduler result yet. A CPU job is being submitted to install dependencies in
 
 ## Issues
 
-The original Habermas and Llama/Gemma experiments require large model weights and datasets not currently present in the workspace. The first executable reproduction targets the paper's synthetic core experiment because it is self-contained and directly tests the formal fairness claim.
+- The original Habermas and Llama/Gemma experiments require large model weights and datasets not currently present in the workspace. The first executable reproduction targets the paper's synthetic core experiment because it is self-contained and directly tests the formal fairness claim.
+- The first submitted job exposed an evaluator bug for unbounded baseline coalition-improvement LPs. This was fixed by aligning evaluated methods with `reference.json`.
 
 ## Deviations from Paper
 

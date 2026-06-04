@@ -33,6 +33,8 @@ def evaluate(input_dir: Path) -> dict:
         instance_scores = {"rho": record["rho"], "seed": record["seed"], "policies": {}}
         for policy in record["policies"]:
             name = policy["name"]
+            if name != "nash_welfare_policy":
+                continue
             distribution = np.asarray(policy["distribution"], dtype=np.float64)
             alpha = max_coalition_improvement(utilities, distribution)
             by_policy.setdefault(name, []).append(alpha)
