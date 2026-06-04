@@ -112,7 +112,7 @@ The included executable reproduction evaluates the synthetic core-stability sett
 
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: core_claim**
 
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- Completed at milestone `core_claim`.
