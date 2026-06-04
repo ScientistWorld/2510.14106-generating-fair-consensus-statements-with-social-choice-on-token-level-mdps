@@ -107,12 +107,32 @@ The included executable reproduction evaluates the synthetic core-stability sett
 
 </details>
 
+### Iteration 2: gpt-5.5
+- **Milestone**: `core_claim_plus` | **Status**: done
+- **Working time**: 6m | **GPU**: 0.0h
+- **Jobs**: 3 total (2 completed, 1 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-04 00:00] - core_claim
+- Audited the existing Section 4.2 empirical core-test reproduction.
+- Confirmed the implementation contains the paper's actual synthetic token-tree policies, Nash-welfare lottery optimization, induced stochastic prefix policy, and independent coalition-blocking LP evaluation.
+- Kept the milestone at `core_claim` while a CPU test job refreshes `scores.json` with the expanded baseline and per-polarization metrics needed to restore `core_claim_plus`.
+
+### [2026-06-04 10:27] - core_claim_plus
+- Job `bf64dcb8-621` completed successfully in the container with exit code 0.
+- Regenerated `scoring/scores.json` for 25 synthetic token-tree instances: five seeds across `rho = 0, 1, 2, 4, 8`.
+- Restored `core_claim_plus`: `nash_welfare_policy` has maximum coalition improvement 1.0 at every polarization level, while `uniform_policy` and `utilitarian_policy` become blockable as polarization increases.
+
+</details>
+
 
 ---
 
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: core_claim_plus**
 
 ## Stop Justification
-- Completed at milestone `core_claim`.
+- Completed at milestone `core_claim_plus`.

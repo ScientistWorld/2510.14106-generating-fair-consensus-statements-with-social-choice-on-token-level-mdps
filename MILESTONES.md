@@ -15,4 +15,4 @@
 - Restored `core_claim_plus`: `nash_welfare_policy` has maximum coalition improvement 1.0 at every polarization level, while `uniform_policy` and `utilitarian_policy` become blockable as polarization increases.
 
 ## Stop Justification
-- Stopped at `core_claim_plus`. The formal stochastic core claim and its polarization/baseline comparison are reproduced in a reusable, validated CPU environment. Higher milestones would require the LLM Habermas/EPPL experiments, including large instruction-tuned model weights and external datasets not packaged in this workspace.
+- Completed at milestone `core_claim_plus`.
