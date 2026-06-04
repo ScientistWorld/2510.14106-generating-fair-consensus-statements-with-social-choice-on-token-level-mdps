@@ -1,8 +1,6 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
-gpus: 0
-test: true
-milestone: core_claim
-notes: "CPU smoke job after coalition-LP scaling fix: rerun scripts/reproduce.sh to regenerate Section 4.2 artifacts, evaluate baselines, and validate scores."
+action: done
+milestone: core_claim_plus
+notes: "Reproduced the Section 4.2 empirical core claim across five rho values and five seeds; CPU job 910a202e-d02 passed scripts/reproduce.sh and validate.py --compare."

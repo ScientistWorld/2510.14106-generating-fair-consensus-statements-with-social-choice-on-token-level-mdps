@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: core_claim_plus**
 
 ## Progress Log
 
@@ -19,6 +19,11 @@
 - The latest CPU smoke job (`449b4d8c-419`) exposed a numerical conditioning failure in the independent coalition LP evaluator for a regenerated baseline artifact.
 - Rescaled the LP constraints by each agent's current utility so alpha has a stable unit coefficient; a follow-up CPU smoke job is required before restoring `core_claim_plus`.
 
+### [2026-06-04 10:37] - core_claim_plus
+- Follow-up CPU smoke job (`910a202e-d02`) reran `scripts/reproduce.sh` successfully in the compute container.
+- The reproduced Nash-welfare policy satisfies the empirical core constraint for all 25 generated instances across five polarization values and five seeds.
+- Uniform and utilitarian reference policies remain blockable in polarized settings, so the additional rho/seed coverage supports the paper's comparative core-test claim.
+
 ## Stop Justification
-- The packaged environment reaches `core_claim` for the self-contained stochastic-policy fairness claim.
+- The packaged environment reaches `core_claim_plus` for the self-contained stochastic-policy fairness claim.
 - Higher milestones would require reproducing the LLM consensus-generation beam/lookahead experiments; the paper's public code path uses Together/OpenAI API clients, which are out of scope for this no-paid-API benchmark.

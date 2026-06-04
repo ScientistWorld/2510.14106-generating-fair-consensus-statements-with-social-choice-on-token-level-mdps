@@ -6,7 +6,7 @@ Implemented the paper's empirical core-test pipeline for the synthetic token-tre
 
 Evaluation code reads those artifacts and solves the paper's coalition-blocking LP to compute maximum coalition improvement.
 
-Earlier end-to-end reproduction jobs ran successfully in the compute container. The latest continuation audit found and fixed a numerical conditioning bug in the evaluator; the follow-up smoke job is pending.
+The end-to-end reproduction script runs successfully in the compute container after the continuation audit fix.
 
 The evaluator now scores every policy distribution saved in the artifacts, including the paper's uniform and utilitarian reference policies, while keeping `eval/` independent from `method/`.
 
@@ -30,6 +30,8 @@ Final reproduced core-test summary:
 
 Continuation audit job `449b4d8c-419` failed while rerunning `scripts/reproduce.sh` because HiGHS reported an unbounded coalition LP for a regenerated baseline artifact. The LP was algebraically bounded, but the original formulation used very small expected-utility coefficients on alpha; the evaluator now uses the equivalent scaled form `alpha <= U_i(q) / U_i(p)`.
 
+Follow-up job `910a202e-d02` completed successfully after the LP scaling fix. It regenerated the Section 4.2 artifacts, rewrote `scoring/scores.json`, and passed `python validate.py --compare`.
+
 ## Remaining
 
 - The deterministic finite-lookahead and beam-search LLM consensus-generation experiments remain for a higher milestone.
@@ -42,6 +44,7 @@ Continuation audit job `449b4d8c-419` failed while rerunning `scripts/reproduce.
 - The first submitted job exposed an evaluator bug for unbounded baseline coalition-improvement LPs. This was fixed by aligning evaluated methods with `reference.json`.
 - The provided external job-log path was not mounted at that absolute location, but the same logs were available under `jobs/bf64dcb8-621/` and were reviewed.
 - Continuation job `449b4d8c-419` exposed a second numerical conditioning issue in the coalition LP. The evaluator was patched to validate input distributions, renormalize harmless roundoff, and solve the scaled blocking LP.
+- Job `910a202e-d02` verified the patched evaluator in the compute container.
 
 ## Deviations from Paper
 
