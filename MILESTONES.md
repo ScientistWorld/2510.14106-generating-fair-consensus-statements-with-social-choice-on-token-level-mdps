@@ -25,5 +25,4 @@
 - Uniform and utilitarian reference policies remain blockable in polarized settings, so the additional rho/seed coverage supports the paper's comparative core-test claim.
 
 ## Stop Justification
-- The packaged environment reaches `core_claim_plus` for the self-contained stochastic-policy fairness claim.
-- Higher milestones would require reproducing the LLM consensus-generation beam/lookahead experiments; the paper's public code path uses Together/OpenAI API clients, which are out of scope for this no-paid-API benchmark.
+- Completed at milestone `core_claim_plus`.
