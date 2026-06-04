@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: true
-milestone: none
-notes: "Retry CPU reproduction after fixing evaluator to score the Nash-welfare policy only; expected to write scoring/scores.json and validate comparison."
+action: done
+milestone: core_claim_plus
+notes: "Reproduced the paper's stochastic ex-ante-core claim on the synthetic token-tree experiment across 25 instances. Final validation passed with max_coalition_improvement=1.0 and core_constraint_satisfied=1.0."

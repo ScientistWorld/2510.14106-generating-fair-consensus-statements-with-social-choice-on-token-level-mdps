@@ -19,4 +19,4 @@
 - The Nash-welfare policy achieved maximum coalition improvement `1.0` and satisfied the core constraint on every instance.
 
 ## Stop Justification
-- Reached `core_claim_plus` for the paper's stochastic ex-ante-core claim with a reusable method/evaluation environment.
+- Completed at milestone `core_claim_plus`.
