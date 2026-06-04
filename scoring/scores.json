@@ -1,0 +1,267 @@
+{
+  "experiments": {
+    "empirical_core_test": {
+      "_details": {
+        "num_instances": 25,
+        "per_instance": [
+          {
+            "rho": 0.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 0.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 0.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 0.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 0.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 1.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 1.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 1.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 1.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 1.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 2.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 2.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 2.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 2.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 2.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 4.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 4.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 4.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 4.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 4.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 8.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 8.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 8.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 8.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          },
+          {
+            "rho": 8.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "core_constraint_satisfied": 1.0
+              }
+            }
+          }
+        ]
+      },
+      "results": {
+        "nash_welfare_policy": {
+          "max_coalition_improvement": 1.0,
+          "core_constraint_satisfied": 1.0
+        }
+      }
+    }
+  }
+}

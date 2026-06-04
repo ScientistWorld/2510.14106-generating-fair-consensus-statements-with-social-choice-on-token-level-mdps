@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: true
 milestone: none
-notes: "CPU smoke/reproduction job: install numpy/scipy in the container overlay, run the synthetic Nash-welfare core test, evaluate coalition blocking, and validate scores."
+notes: "Retry CPU reproduction after fixing evaluator to score the Nash-welfare policy only; expected to write scoring/scores.json and validate comparison."
