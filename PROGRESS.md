@@ -36,6 +36,7 @@ Final reproduced core-test summary:
 ## Issues
 
 - The original Habermas and Llama/Gemma experiments require large model weights and datasets not currently present in the workspace. The first executable reproduction targets the paper's synthetic core experiment because it is self-contained and directly tests the formal fairness claim.
+- The paper's public GitHub repository was checked at commit `27abe654c72e465ea58213c80cfb8416573ac2cc`. Its full text-generation experiment stack requires Together and OpenAI API credentials, so it is not suitable for this no-paid-API reusable benchmark without substantial local-model replacement work.
 - The first submitted job exposed an evaluator bug for unbounded baseline coalition-improvement LPs. This was fixed by aligning evaluated methods with `reference.json`.
 - The provided external job-log path was not mounted at that absolute location, but the same logs were available under `jobs/bf64dcb8-621/` and were reviewed.
 
