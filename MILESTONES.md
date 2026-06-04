@@ -14,6 +14,11 @@
 - The Nash-welfare policy satisfies `max_coalition_improvement = 1.0` across the polarization grid, while uniform and utilitarian reference policies become blockable in polarized settings.
 - Packaged scripts, scoring metadata, and environment setup for rerunning the core-test reproduction.
 
+### [2026-06-04 10:35] - core_claim
+- Audited the continuing workspace and confirmed the method code implements the paper's Section 4.2 Nash-welfare lottery, not a surrogate.
+- The latest CPU smoke job (`449b4d8c-419`) exposed a numerical conditioning failure in the independent coalition LP evaluator for a regenerated baseline artifact.
+- Rescaled the LP constraints by each agent's current utility so alpha has a stable unit coefficient; a follow-up CPU smoke job is required before restoring `core_claim_plus`.
+
 ## Stop Justification
 - The packaged environment reaches `core_claim` for the self-contained stochastic-policy fairness claim.
 - Higher milestones would require reproducing the LLM consensus-generation beam/lookahead experiments; the paper's public code path uses Together/OpenAI API clients, which are out of scope for this no-paid-API benchmark.

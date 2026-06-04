@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: true
 milestone: core_claim
-notes: "CPU smoke job: rerun scripts/reproduce.sh to regenerate the Section 4.2 core-test artifacts, evaluate coalition blocking, and validate scores."
+notes: "CPU smoke job after coalition-LP scaling fix: rerun scripts/reproduce.sh to regenerate Section 4.2 artifacts, evaluate baselines, and validate scores."
