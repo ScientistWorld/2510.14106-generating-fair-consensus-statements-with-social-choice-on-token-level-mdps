@@ -10,6 +10,8 @@ The end-to-end reproduction script now runs successfully in the compute containe
 
 The evaluator now scores every policy distribution saved in the artifacts, including the paper's uniform and utilitarian reference policies, while keeping `eval/` independent from `method/`.
 
+The coalition LP now guards against zero-denominator numerical underflow by using the evaluator tolerance in the ratio denominator. The default Section 4.2 softmax utilities are positive, but this keeps the reusable evaluator well-defined for future finite-outcome submissions.
+
 ## Results
 
 Job `63da2914-c4d` completed successfully. The reproduced empirical core-test score matches the paper's reported core constraint: `max_coalition_improvement = 1.0` and `core_constraint_satisfied = 1.0` for `nash_welfare_policy`.
@@ -17,6 +19,8 @@ Job `63da2914-c4d` completed successfully. The reproduced empirical core-test sc
 The run covered 25 instances: five polarization levels (`rho = 0, 1, 2, 4, 8`) and five seeds.
 
 Pending refresh: a CPU test job is being submitted to regenerate `scoring/scores.json` with uniform and utilitarian baseline coalition-improvement scores included alongside the Nash-welfare policy.
+
+The scoring schema now includes fixed per-polarization metrics for `rho = 0, 1, 2, 4, 8`. Exact paper reference values are listed only for the Nash-welfare policy because the paper reports the baseline core-test curves qualitatively rather than as a numeric table.
 
 ## Remaining
 

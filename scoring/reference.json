@@ -72,13 +72,44 @@
         "core_constraint_satisfied": {
           "higher_is_better": true,
           "coefficient": 0.5
+        },
+        "rho_0_max_coalition_improvement": {
+          "higher_is_better": false,
+          "coefficient": -0.1
+        },
+        "rho_1_max_coalition_improvement": {
+          "higher_is_better": false,
+          "coefficient": -0.1
+        },
+        "rho_2_max_coalition_improvement": {
+          "higher_is_better": false,
+          "coefficient": -0.1
+        },
+        "rho_4_max_coalition_improvement": {
+          "higher_is_better": false,
+          "coefficient": -0.1
+        },
+        "rho_8_max_coalition_improvement": {
+          "higher_is_better": false,
+          "coefficient": -0.1
         }
       },
       "results": {
         "nash_welfare_policy": {
           "type": "proposed",
           "max_coalition_improvement": 1.0,
-          "core_constraint_satisfied": 1.0
+          "core_constraint_satisfied": 1.0,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        },
+        "uniform_policy": {
+          "type": "baseline"
+        },
+        "utilitarian_policy": {
+          "type": "baseline"
         }
       }
     }

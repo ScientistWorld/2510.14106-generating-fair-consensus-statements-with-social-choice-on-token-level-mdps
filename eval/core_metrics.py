@@ -25,6 +25,7 @@ def max_coalition_improvement(
     distribution = np.asarray(distribution, dtype=np.float64)
     num_agents, num_leaves = utilities.shape
     current = utilities @ distribution
+    current_safe = np.maximum(current, tolerance)
     best_alpha = 0.0
 
     for r in range(1, num_agents + 1):
@@ -43,7 +44,7 @@ def max_coalition_improvement(
             for agent in coalition:
                 row = np.zeros(num_leaves + 1, dtype=np.float64)
                 row[:num_leaves] = -utilities[agent]
-                row[-1] = current[agent]
+                row[-1] = current_safe[agent]
                 a_ub.append(row)
                 b_ub.append(0.0)
 

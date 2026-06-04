@@ -27,6 +27,7 @@ def evaluate(input_dir: Path) -> dict:
         raise FileNotFoundError(f"No core-test artifacts found in {input_dir}")
 
     by_policy: dict[str, list[float]] = {}
+    by_policy_rho: dict[str, dict[float, list[float]]] = {}
     per_instance = []
     for record in records:
         utilities = np.asarray(record["utilities"], dtype=np.float64)
@@ -36,6 +37,7 @@ def evaluate(input_dir: Path) -> dict:
             distribution = np.asarray(policy["distribution"], dtype=np.float64)
             alpha = max_coalition_improvement(utilities, distribution)
             by_policy.setdefault(name, []).append(alpha)
+            by_policy_rho.setdefault(name, {}).setdefault(float(record["rho"]), []).append(alpha)
             instance_scores["policies"][name] = {
                 "max_coalition_improvement": alpha,
                 "core_constraint_satisfied": 1.0 if alpha <= 1.0 + 1e-6 else 0.0,
@@ -49,6 +51,10 @@ def evaluate(input_dir: Path) -> dict:
             "max_coalition_improvement": float(values.max()),
             "core_constraint_satisfied": 1.0 if float(values.max()) <= 1.0 + 1e-6 else 0.0,
         }
+        for rho, rho_alphas in sorted(by_policy_rho[policy_name].items()):
+            rho_values = np.asarray(rho_alphas, dtype=np.float64)
+            rho_key = f"rho_{rho:g}_max_coalition_improvement"
+            results[policy_name][rho_key] = float(rho_values.max())
 
     return {
         "experiments": {
