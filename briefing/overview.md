@@ -1,14 +1,15 @@
 # Overview
 
-- **Paper ID:** <!-- e.g. 1706.03762 -->
-- **Title:** <!-- e.g. Attention Is All You Need -->
-- **Domain:** <!-- e.g. Computer Vision / Object Detection -->
-- **TL;DR:** <!-- One sentence: what this paper does and why it matters -->
+- **Paper ID:** 2510.14106
+- **Title:** Generating Fair Consensus Statements with Social Choice on Token-Level MDPs
+- **Domain:** Generative social choice / fair text generation
+- **TL;DR:** The paper turns consensus statement generation into a token-level social-choice problem and derives fair stochastic and deterministic decoding procedures.
 
 ## Short Summary
 
-<!-- 3-5 sentences covering the problem, approach, and main findings -->
+The paper represents each participant's opinion as a next-token policy and uses that policy to define token-level rewards. It proves that maximizing Nash welfare over complete generated statements yields a stochastic policy in the ex-ante core. It also evaluates finite-lookahead and beam-search procedures that optimize worst-participant alignment for single consensus statements.
 
 ## Key Results
 
-<!-- 2-3 bullet points: main findings or numbers in bullet points -->
+- In the synthetic core test, the Nash-welfare policy remains unblocked with maximum coalition improvement equal to 1.
+- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead.

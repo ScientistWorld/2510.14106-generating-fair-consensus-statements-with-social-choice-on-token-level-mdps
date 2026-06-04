@@ -1,15 +1,17 @@
 # Evaluation
 
-How success is measured. Describe only the metrics, targets, and evaluation procedure — do NOT describe the paper's method or how they achieved these results. Think of this as a general evaluation protocal for other scientists trying to solve the same problem, where they should not see this paper's solution.
-
 ## Metrics
 
-<!-- What metrics are used? How are they computed? What does higher/lower mean? -->
+The core-stability metric is maximum coalition improvement `alpha*`. Values greater than 1 mean some coalition can block the outcome; values at or below 1 satisfy the ex-ante-core constraint.
+
+For single consensus statements, the paper reports Egalitarian Perplexity, the maximum participant-specific perplexity of the generated statement. Lower values mean better worst-participant alignment.
 
 ## Baselines and Targets
 
-<!-- What performance levels exist as reference points? Include the paper's reported numbers as targets, and any standard baselines. A scientist agent should know what "good" looks like. -->
+The paper's synthetic core test expects the fair stochastic outcome to have maximum coalition improvement equal to 1 across polarization levels. The same test reports that uniform and utilitarian alternatives become blockable as polarization increases.
+
+The paper's main text-generation benchmark reports lower EPPL for token-search methods than Best-of-N and Habermas-style baselines on three Habermas Machine scenarios.
 
 ## Evaluation Protocol
 
-<!-- How should evaluation be run? What data split, what conditions? Any important details about how to compare fairly (e.g., fixed seeds, specific test sets, averaging over runs). -->
+The included executable reproduction evaluates the synthetic core-stability setting from the paper: multiple random token trees, multiple polarization values, fixed branching factor 3, and depth 4. Evaluation reads saved utility matrices and output distributions, then independently solves the coalition-blocking LP for each instance.

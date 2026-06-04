@@ -2,36 +2,24 @@
 
 ## What Works
 
-<!-- What has been successfully reproduced so far. -->
+Implemented the paper's empirical core-test pipeline for the synthetic token-tree setting in Section 4.2. The method builds normalized vector agent policies, enumerates complete leaves, solves the Nash-welfare lottery, derives the prefix stochastic policy, and writes artifacts for independent evaluation.
+
+Evaluation code reads those artifacts and solves the paper's coalition-blocking LP to compute maximum coalition improvement.
 
 ## Results
 
-<!-- Reproduced numbers compared to the paper's reported numbers. -->
+No scheduler result yet. A CPU job is being submitted to install dependencies in the container and run `scripts/reproduce.sh`.
 
 ## Remaining
 
-<!-- What still needs to be done to reach higher milestones. -->
+- Run the submitted CPU job and inspect `scoring/scores.json`
+- If the core constraint holds, update milestone to `core_claim`
+- If budget allows, add deterministic finite-lookahead or beam-search text-generation experiments
 
 ## Issues
 
-<!-- Blockers, bugs, or difficulties encountered. -->
+The original Habermas and Llama/Gemma experiments require large model weights and datasets not currently present in the workspace. The first executable reproduction targets the paper's synthetic core experiment because it is self-contained and directly tests the formal fairness claim.
 
 ## Deviations from Paper
 
-<!-- Do not edit this section unless you deviated from the paper's original setup.
-     For each deviation, document: what the paper used, what you substituted, and why.
-
-     ACCEPTABLE deviations (data/resource/scale substitutions — milestones still valid):
-       - Replaced a proprietary dataset with a public one
-       - Used a smaller model of the same architecture
-       - Scaled down training (fewer epochs, smaller batch)
-       - Used a different library for the same algorithm
-
-     UNACCEPTABLE deviations (algorithm substitutions — milestones above 'none' are void):
-       - Replaced the paper's algorithm with a fundamentally different one
-       - Wrote a generic model trained to approximate the method's outputs
-         instead of implementing the method's computational steps
-
-     The test: could someone reading your code identify which algorithm from
-     the paper you implemented? If not, you replaced the method. -->
-
+- The submitted run reproduces the synthetic empirical core test rather than the LLM consensus-generation benchmark. This is a scale/resource choice for the first milestone, not an algorithm substitution: the implemented computation is the paper's Nash-welfare lottery and induced stochastic policy.

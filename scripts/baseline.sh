@@ -17,4 +17,5 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+python -m method.run_core_test --output-dir checkpoints/core_test "$@"
+python -m eval.evaluate_core_test --input-dir checkpoints/core_test --scores scoring/scores.json
