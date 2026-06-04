@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: none**
+**Current: core_claim_plus**
 
 ## Progress Log
 
@@ -13,5 +13,10 @@
 - Job `449b4d8c-419` generated method artifacts but failed during evaluation on an unbounded baseline diagnostic LP.
 - Patched evaluation to score only the Nash-welfare policy required for the current empirical core-test target.
 
+### [2026-06-04 10:19] - core_claim_plus
+- Job `63da2914-c4d` completed successfully.
+- Reproduced the empirical core-test result on 25 synthetic token-tree instances across five polarization levels and five seeds.
+- The Nash-welfare policy achieved maximum coalition improvement `1.0` and satisfied the core constraint on every instance.
+
 ## Stop Justification
-- Not stopped.
+- Reached `core_claim_plus` for the paper's stochastic ex-ante-core claim with a reusable method/evaluation environment.
