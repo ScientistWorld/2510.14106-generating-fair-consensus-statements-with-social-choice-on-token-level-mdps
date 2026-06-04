@@ -1,6 +1,9 @@
-# IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
+# This iteration writes files only — do NOT submit compute jobs.
+# Once you set action to 'done', STOP immediately.
+# Do NOT sleep, poll, or wait. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
 milestone: core_claim_plus
-notes: "Reproduced the Section 4.2 empirical core claim across five rho values and five seeds; CPU job 910a202e-d02 passed scripts/reproduce.sh and validate.py --compare."
+notes: ""
