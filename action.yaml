@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
-gpus: 0
-test: true
-milestone: core_claim_plus
-notes: "Reproduced the empirical core-test claim and polarization/baseline comparison. Nash-welfare policy remains in the core across rho values; uniform and utilitarian reference policies become blockable. Environment validates with python validate.py --compare."
+action: pending
+gpus: 1
+test: false
+milestone: core_claim
+notes: ""
