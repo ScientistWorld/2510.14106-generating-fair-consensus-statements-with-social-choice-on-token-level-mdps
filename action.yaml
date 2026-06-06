@@ -3,4 +3,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Fixed even/odd empirical-core split; 33 train and 33 test metric values; proposed core alpha 1.0 on both slices with min utility 0.0116 train/0.0105 test; diagnostics simplex/rho0 unweighted."
+notes: "Packager audit passed: synthetic benchmark needs no external artifacts; download.sh, ignored paths, and shared-path checks are fresh-clone safe."
