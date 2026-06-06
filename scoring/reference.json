@@ -38,7 +38,7 @@
         "rho_0_max_coalition_improvement": {
           "higher_is_better": false,
           "coefficient": 0.0,
-          "description": "Diagnostic worst coalition improvement on unpolarized synthetic instances; the runtime pass showed this slice is intentionally trivial for all valid policies."
+          "description": "Diagnostic worst coalition improvement on unpolarized synthetic instances; the verification pass showed this slice is intentionally trivial for all valid policies."
         },
         "rho_1_max_coalition_improvement": {
           "higher_is_better": false,

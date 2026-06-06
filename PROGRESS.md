@@ -36,11 +36,8 @@ Verification job `e76aa4d8-762` completed successfully on the CPU test resource.
 
 Final verification kept the active benchmark scoped to the verified empirical core-test experiment. An unverified secondary single-statement search experiment was removed from active code, `reference.json`, and public scoring documentation because the completed compute job did not produce corresponding `scores.json` entries.
 
-Prepared a supplemental deterministic-search implementation for the paper's single-statement Algorithms 2 and 3. It runs finite lookahead, beam search, greedy depth-1 lookahead, Best-of-4, and an exact finite-tree oracle on the Section 4.2 synthetic policy family. The evaluator reads saved paths and utility matrices only, recomputes egalitarian log utility and EPPL-like scores independently, and writes `scoring/deterministic_search_scores.json` instead of modifying the official paper-reference `scores.json`.
-
 ## Remaining
 
-- Submit a compute-container job to verify the supplemental deterministic-search runner, because the login-node Python environment lacks NumPy while the container setup installs it.
 - The deterministic finite-lookahead and beam-search LLM consensus-generation experiments remain for a higher milestone.
 - The opinion-length and credit-assignment experiments remain for a higher milestone.
 
@@ -57,4 +54,3 @@ Prepared a supplemental deterministic-search implementation for the paper's sing
 ## Deviations from Paper
 
 - The submitted run reproduces the synthetic empirical core test rather than the LLM consensus-generation benchmark. This is a scale/resource choice for the first milestone, not an algorithm substitution: the implemented computation is the paper's Nash-welfare lottery and induced stochastic policy.
-- The supplemental deterministic-search runner uses the paper's finite-lookahead and beam-search computation, but substitutes the synthetic token-tree policy family for Llama/Habermas text generation. Its scores are therefore kept separate from the official benchmark `scores.json`.

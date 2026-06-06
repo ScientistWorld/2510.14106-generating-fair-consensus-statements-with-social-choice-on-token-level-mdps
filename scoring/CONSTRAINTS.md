@@ -2,7 +2,7 @@
 
 ## Problem Setting
 
-The scientist must evaluate on the provided synthetic token-tree setup unless they add a separately named experiment. The default benchmark uses branching factor 3, depth 4, five agents, and the same normalized vector policy family described in the paper.
+The scientist must evaluate on the provided synthetic token-tree setup unless they add a separately named experiment. The default benchmark uses branching factor 3, depth 4, five agents, and the tracked benchmark generator in `data/core_synthetic/generate.py`.
 
 ## Evaluation
 

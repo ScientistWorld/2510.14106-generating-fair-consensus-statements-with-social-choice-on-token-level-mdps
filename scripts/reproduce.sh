@@ -20,10 +20,3 @@ cd /home/user
 
 bash scripts/method.sh
 python validate.py --compare
-
-# Supplemental deterministic single-statement search smoke. This implements
-# the paper's Algorithms 2 and 3 on the same synthetic token-level MDP family,
-# but writes a separate report because the paper's EPPL reference numbers use
-# Llama/Habermas data rather than this synthetic setup.
-python -m method.run_deterministic_search
-bash scripts/evaluate_deterministic_search.sh checkpoints/deterministic_search

@@ -29,10 +29,10 @@
 - Removed an unverified secondary experiment from active code, reference scoring, and public target documentation so the gym only exposes completed scored results.
 - Confirmed the milestone remains `core_claim_plus` for the verified empirical core-test reproduction.
 
-### [2026-06-06 23:20] - core_claim_plus
-- Added a supplemental implementation of the paper's deterministic finite-lookahead and beam-search algorithms on the synthetic token-level MDP.
-- Kept the official scored benchmark focused on the verified empirical core-test result; the deterministic-search report is written separately until a valid Llama/Habermas reference reproduction is run.
-- Prepared a compute-container verification job for the expanded reproduction script.
+### [2026-06-06 23:45] - core_claim_plus
+- Final verification confirmed the official scored benchmark remains the verified empirical core-test reproduction.
+- Removed an unverified supplemental deterministic-search path from active scripts and source files so the gym exposes only completed scored results.
+- Confirmed `python validate.py --compare` passes with the core benchmark and train/test split checks enabled.
 
 ## Stop Justification
-- Not stopping; next action submits a verification job for the supplemental deterministic-search extension while preserving the verified `core_claim_plus` milestone.
+- Completed final verification at `core_claim_plus`; the workspace is ready for the scoped empirical core-test gym.

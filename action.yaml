@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
-test: true
+test: false
 milestone: core_claim_plus
-notes: "CPU test job runs scripts/reproduce.sh to revalidate the core benchmark and verify the supplemental deterministic-search implementation."
+notes: "Final verification passed; the scoped empirical core-stability gym is clean and ready."
