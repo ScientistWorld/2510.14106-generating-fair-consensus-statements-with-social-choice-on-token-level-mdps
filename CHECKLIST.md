@@ -20,6 +20,7 @@ Check off items as you complete them. Order doesn't matter — work however make
 ## Code
 - [x] Evaluation code in `eval/`
 - [x] Method implementation in `method/`
+- [x] Supplemental deterministic finite-lookahead/beam-search implementation
 - [ ] Baseline implementation in `baseline/` (if applicable)
 
 ## Scripts
