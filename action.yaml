@@ -1,6 +1,6 @@
-# This iteration submits compute jobs. Once action is set, STOP immediately.
-action: submit
+# Split evaluation completed. Once action is set, STOP immediately.
+action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Rerun split CPU evaluators after clamping simplex numerical residue and making trivial rho=0/simplex diagnostics unweighted."
+notes: "Fixed even/odd empirical-core split; 33 train and 33 test metric values; proposed core alpha 1.0 on both slices with min utility 0.0116 train/0.0105 test; diagnostics simplex/rho0 unweighted."
