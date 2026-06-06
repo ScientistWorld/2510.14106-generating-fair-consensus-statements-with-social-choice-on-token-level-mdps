@@ -35,4 +35,4 @@
 - Confirmed `python validate.py --compare` passes with the core benchmark and train/test split checks enabled.
 
 ## Stop Justification
-- Completed final verification at `core_claim_plus`; the workspace is ready for the scoped empirical core-test gym.
+- Completed at milestone `core_claim_plus`.
