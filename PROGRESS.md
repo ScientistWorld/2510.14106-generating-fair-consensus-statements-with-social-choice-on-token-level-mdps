@@ -34,6 +34,7 @@ Follow-up job `910a202e-d02` completed successfully after the LP scaling fix. It
 
 ## Remaining
 
+- The deterministic finite-lookahead and beam-search single-statement search experiment has been implemented on the synthetic token-tree environment and is awaiting a compute-container smoke test.
 - The deterministic finite-lookahead and beam-search LLM consensus-generation experiments remain for a higher milestone.
 - The opinion-length and credit-assignment experiments remain for a higher milestone.
 
@@ -49,3 +50,4 @@ Follow-up job `910a202e-d02` completed successfully after the LP scaling fix. It
 ## Deviations from Paper
 
 - The submitted run reproduces the synthetic empirical core test rather than the LLM consensus-generation benchmark. This is a scale/resource choice for the first milestone, not an algorithm substitution: the implemented computation is the paper's Nash-welfare lottery and induced stochastic policy.
+- The new single-statement search experiment uses the same token-level MDP objective and the paper's finite-lookahead and beam-search procedures, but evaluates them on the synthetic token-tree policies instead of Llama/Gemma prompted policies. This avoids paid APIs and large model downloads while preserving the deterministic search computation.

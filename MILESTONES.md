@@ -24,5 +24,10 @@
 - The reproduced Nash-welfare policy satisfies the empirical core constraint for all 25 generated instances across five polarization values and five seeds.
 - Uniform and utilitarian reference policies remain blockable in polarized settings, so the additional rho/seed coverage supports the paper's comparative core-test claim.
 
+### [2026-06-06 22:48] - core_claim_plus
+- Added deterministic single-path search code for the paper's finite-lookahead and beam-search algorithms on the synthetic token-level MDP.
+- Expanded the evaluator and scoring schema with a single-statement egalitarian perplexity experiment.
+- A compute-container smoke test is being submitted before claiming a higher milestone.
+
 ## Stop Justification
 - Completed at milestone `core_claim_plus`.

@@ -1,6 +1,6 @@
-# Split evaluation completed. Once action is set, STOP immediately.
-action: done
+# CPU smoke test for the expanded reproduction. Once action is set, STOP immediately.
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: core_claim_plus
-notes: "Packager audit passed: synthetic benchmark needs no external artifacts; download.sh, ignored paths, and shared-path checks are fresh-clone safe."
+notes: "Run scripts/reproduce.sh in the compute container to verify the expanded core-policy plus deterministic single-statement search scoring pipeline."

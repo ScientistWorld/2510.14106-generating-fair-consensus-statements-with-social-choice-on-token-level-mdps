@@ -11,6 +11,10 @@ import numpy as np
 
 from data.core_synthetic.generate import build_instance
 from method.core_policy import induce_prefix_policy, solve_nash_welfare_distribution
+from method.single_path_search import (
+    leaf_log_utilities_from_prob_utilities,
+    run_all_selectors,
+)
 
 
 def _distribution_payload(name: str, distribution: np.ndarray) -> dict:
@@ -52,6 +56,15 @@ def run(args: argparse.Namespace) -> None:
             for policy in policies:
                 p = np.asarray(policy["distribution"], dtype=np.float64)
                 policy["expected_utilities"] = (instance.utilities @ p).tolist()
+            leaf_log_utilities = leaf_log_utilities_from_prob_utilities(instance.utilities)
+            path_results = run_all_selectors(
+                instance.leaves,
+                leaf_log_utilities,
+                instance.branching,
+                lookahead=args.lookahead_depth,
+                beam_width=args.beam_width,
+                aggregation=args.path_aggregation,
+            )
 
             record = {
                 "experiment": "empirical_core_test",
@@ -68,6 +81,19 @@ def run(args: argparse.Namespace) -> None:
                     instance.leaves, nash.distribution, instance.branching
                 ),
                 "nash_welfare": nash.nash_welfare,
+                "paths": [
+                    {
+                        "name": result.name,
+                        "path": list(result.path),
+                        "egalitarian_log_welfare": result.egalitarian_welfare,
+                        "egalitarian_perplexity": float(
+                            np.exp(-result.egalitarian_welfare / instance.depth)
+                        ),
+                        "utilitarian_log_welfare": result.utilitarian_welfare,
+                        "metadata": result.metadata,
+                    }
+                    for result in path_results
+                ],
             }
             path = output_dir / f"core_rho{rho:g}_seed{args.seed_offset + seed}.json"
             path.write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -87,6 +113,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--depth", type=int, default=4)
     parser.add_argument("--agents", type=int, default=5)
     parser.add_argument("--embedding-dim", type=int, default=8)
+    parser.add_argument("--lookahead-depth", type=int, default=4)
+    parser.add_argument("--beam-width", type=int, default=4)
+    parser.add_argument(
+        "--path-aggregation",
+        choices=["mean", "best", "worst"],
+        default="mean",
+    )
     return parser.parse_args()
 
 
