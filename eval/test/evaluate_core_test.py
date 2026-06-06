@@ -10,11 +10,19 @@ from typing import Iterable
 
 import numpy as np
 
+from data.core_synthetic.generate import build_instance
 from eval.core_metrics import max_coalition_improvement
 
 
 SLICE = "test"
-SPLIT_RULE = "sort by (rho, seed, filename), then keep odd-indexed artifacts"
+SPLIT_RULE = "fixed rho/seed grid in ascending order, then keep odd-indexed keys"
+EXPECTED_BRANCHING = 3
+EXPECTED_DEPTH = 4
+EXPECTED_AGENTS = 5
+EXPECTED_EMBEDDING_DIM = 8
+EXPECTED_RHOS = (0.0, 1.0, 2.0, 4.0, 8.0)
+EXPECTED_SEEDS = (202510, 202511, 202512, 202513, 202514)
+TOLERANCE = 1e-6
 
 
 def _resolve_artifact_path(input_dir: Path, artifact: str) -> Path:
@@ -45,9 +53,43 @@ def _record_sort_key(record: dict) -> tuple[float, int, str]:
     )
 
 
+def _record_key(record: dict) -> tuple[float, int]:
+    return (float(record["rho"]), int(record["seed"]))
+
+
+def _expected_keys() -> list[tuple[float, int]]:
+    return [(rho, seed) for rho in EXPECTED_RHOS for seed in EXPECTED_SEEDS]
+
+
+def _expected_test_keys() -> set[tuple[float, int]]:
+    return {key for index, key in enumerate(_expected_keys()) if index % 2 == 1}
+
+
+def _check_expected_records(records: list[dict]) -> None:
+    seen: set[tuple[float, int]] = set()
+    duplicates: set[tuple[float, int]] = set()
+    expected = set(_expected_keys())
+    for record in records:
+        key = _record_key(record)
+        if key in seen:
+            duplicates.add(key)
+        seen.add(key)
+    unknown = seen.difference(expected)
+    if duplicates:
+        raise ValueError(f"Duplicate core-test artifacts: {sorted(duplicates)}")
+    if unknown:
+        raise ValueError(f"Unexpected core-test artifacts: {sorted(unknown)}")
+
+
 def _select_test(records: Iterable[dict]) -> list[dict]:
-    ordered = sorted(records, key=_record_sort_key)
-    return [record for index, record in enumerate(ordered) if index % 2 == 1]
+    record_list = list(records)
+    _check_expected_records(record_list)
+    test_keys = _expected_test_keys()
+    selected = [record for record in record_list if _record_key(record) in test_keys]
+    missing = test_keys.difference(_record_key(record) for record in selected)
+    if missing:
+        raise FileNotFoundError(f"Missing test-slice core-test artifacts: {sorted(missing)}")
+    return sorted(selected, key=_record_sort_key)
 
 
 def _expected_methods(train_scores: Path) -> set[str]:
@@ -59,6 +101,57 @@ def _expected_methods(train_scores: Path) -> set[str]:
     )
 
 
+def _expected_instance(record: dict):
+    """Load the fixed benchmark instance instead of trusting artifact utilities."""
+
+    for key, expected in (
+        ("branching", EXPECTED_BRANCHING),
+        ("depth", EXPECTED_DEPTH),
+        ("num_agents", EXPECTED_AGENTS),
+        ("embedding_dim", EXPECTED_EMBEDDING_DIM),
+    ):
+        if key not in record or int(record[key]) != expected:
+            raise ValueError(
+                f"Artifact for rho={record.get('rho')} seed={record.get('seed')} "
+                f"has {key}={record.get(key)}, expected {expected}"
+            )
+
+    instance = build_instance(
+        rho=float(record["rho"]),
+        seed=int(record["seed"]),
+        branching=EXPECTED_BRANCHING,
+        depth=EXPECTED_DEPTH,
+        num_agents=EXPECTED_AGENTS,
+        embedding_dim=EXPECTED_EMBEDDING_DIM,
+    )
+    if "leaves" in record:
+        artifact_leaves = np.asarray(record["leaves"], dtype=np.int64)
+        if artifact_leaves.shape != instance.leaves.shape or not np.array_equal(
+            artifact_leaves, instance.leaves
+        ):
+            raise ValueError(
+                f"Artifact leaves do not match fixed benchmark instance for "
+                f"rho={record['rho']} seed={record['seed']}"
+            )
+    return instance
+
+
+def _distribution_stats(distribution: np.ndarray, num_leaves: int) -> tuple[np.ndarray, float]:
+    if distribution.shape != (num_leaves,):
+        raise ValueError(
+            f"Policy distribution has shape {distribution.shape}, expected {(num_leaves,)}"
+        )
+    if not np.all(np.isfinite(distribution)):
+        raise ValueError("Policy distribution must contain only finite values")
+    negative_mass = float(np.abs(np.minimum(distribution, 0.0)).sum())
+    simplex_l1_error = abs(float(distribution.sum()) - 1.0) + negative_mass
+    clipped = np.maximum(distribution, 0.0)
+    total = float(clipped.sum())
+    if total <= TOLERANCE:
+        raise ValueError("Policy distribution has no positive probability mass")
+    return clipped / total, simplex_l1_error
+
+
 def evaluate(input_dir: Path, train_scores: Path) -> dict:
     records = _select_test(_load_records(input_dir))
     if not records:
@@ -66,9 +159,12 @@ def evaluate(input_dir: Path, train_scores: Path) -> dict:
 
     by_policy: dict[str, list[float]] = {}
     by_policy_rho: dict[str, dict[float, list[float]]] = {}
+    by_policy_simplex_error: dict[str, list[float]] = {}
+    by_policy_min_utility: dict[str, list[float]] = {}
     per_instance = []
     for record in records:
-        utilities = np.asarray(record["utilities"], dtype=np.float64)
+        instance = _expected_instance(record)
+        utilities = np.asarray(instance.utilities, dtype=np.float64)
         instance_scores = {
             "slice": SLICE,
             "rho": record["rho"],
@@ -77,13 +173,23 @@ def evaluate(input_dir: Path, train_scores: Path) -> dict:
         }
         for policy in record["policies"]:
             name = policy["name"]
-            distribution = np.asarray(policy["distribution"], dtype=np.float64)
+            raw_distribution = np.asarray(policy["distribution"], dtype=np.float64)
+            distribution, simplex_l1_error = _distribution_stats(
+                raw_distribution, utilities.shape[1]
+            )
+            expected_utilities = utilities @ distribution
             alpha = max_coalition_improvement(utilities, distribution)
             by_policy.setdefault(name, []).append(alpha)
             by_policy_rho.setdefault(name, {}).setdefault(float(record["rho"]), []).append(alpha)
+            by_policy_simplex_error.setdefault(name, []).append(simplex_l1_error)
+            by_policy_min_utility.setdefault(name, []).append(float(expected_utilities.min()))
             instance_scores["policies"][name] = {
                 "max_coalition_improvement": alpha,
-                "core_constraint_satisfied": 1.0 if alpha <= 1.0 + 1e-6 else 0.0,
+                "mean_coalition_improvement": alpha,
+                "coalition_violation_rate": 1.0 if alpha > 1.0 + TOLERANCE else 0.0,
+                "core_constraint_satisfied": 1.0 if alpha <= 1.0 + TOLERANCE else 0.0,
+                "distribution_simplex_l1_error": simplex_l1_error,
+                "min_agent_expected_utility": float(expected_utilities.min()),
             }
         per_instance.append(instance_scores)
 
@@ -100,9 +206,15 @@ def evaluate(input_dir: Path, train_scores: Path) -> dict:
     for policy_name in result_names:
         alphas = by_policy[policy_name]
         values = np.asarray(alphas, dtype=np.float64)
+        simplex_errors = np.asarray(by_policy_simplex_error[policy_name], dtype=np.float64)
+        min_utilities = np.asarray(by_policy_min_utility[policy_name], dtype=np.float64)
         results[policy_name] = {
             "max_coalition_improvement": float(values.max()),
-            "core_constraint_satisfied": 1.0 if float(values.max()) <= 1.0 + 1e-6 else 0.0,
+            "mean_coalition_improvement": float(values.mean()),
+            "coalition_violation_rate": float(np.mean(values > 1.0 + TOLERANCE)),
+            "core_constraint_satisfied": 1.0 if float(values.max()) <= 1.0 + TOLERANCE else 0.0,
+            "distribution_simplex_l1_error": float(simplex_errors.max()),
+            "min_agent_expected_utility": float(min_utilities.min()),
         }
         for rho, rho_alphas in sorted(by_policy_rho[policy_name].items()):
             rho_values = np.asarray(rho_alphas, dtype=np.float64)

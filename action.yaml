@@ -2,8 +2,8 @@
 # Once you set action to 'done', STOP immediately.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: pending
+action: done
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: ""
+notes: "Improvements: anchored train/test scoring to fixed benchmark instances; required expected split membership; added distribution-validity and aggregate violation metrics; aligned reference.json with computed split metrics. Notes: see DESIGN_NOTES.md."

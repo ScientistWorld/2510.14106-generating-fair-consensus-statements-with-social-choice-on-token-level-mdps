@@ -1,104 +1,74 @@
 {
   "experiments": {
-    "consensus_generation_habermas_scenarios": {
-      "description": "Main consensus-generation benchmark on three Habermas Machine scenarios using Egalitarian Perplexity (Table 10 / Figure 4). Lower EPPL indicates better worst-agent alignment.",
-      "weight": 0.75,
-      "primary_metric": "overall_eppl",
-      "metrics": {
-        "scenario1_eppl": {
-          "higher_is_better": false,
-          "coefficient": -0.3
-        },
-        "scenario2_eppl": {
-          "higher_is_better": false,
-          "coefficient": -0.3
-        },
-        "scenario3_eppl": {
-          "higher_is_better": false,
-          "coefficient": -0.3
-        },
-        "overall_eppl": {
-          "higher_is_better": false,
-          "coefficient": -1.0
-        }
-      },
-      "results": {
-        "beam_search": {
-          "type": "proposed",
-          "scenario1_eppl": 3.22,
-          "scenario2_eppl": 2.66,
-          "scenario3_eppl": 2.74,
-          "overall_eppl": 2.87
-        },
-        "finite_lookahead": {
-          "type": "proposed",
-          "scenario1_eppl": 4.29,
-          "scenario2_eppl": 3.83,
-          "scenario3_eppl": 4.43,
-          "overall_eppl": 4.18
-        },
-        "best_of_n": {
-          "type": "baseline",
-          "scenario1_eppl": 8.57,
-          "scenario2_eppl": 6.70,
-          "scenario3_eppl": 3.77,
-          "overall_eppl": 6.35
-        },
-        "prompted_habermas_machine": {
-          "type": "baseline",
-          "scenario1_eppl": 10.58,
-          "scenario2_eppl": 10.39,
-          "scenario3_eppl": 8.03,
-          "overall_eppl": 9.67
-        },
-        "habermas_machine_chinchilla": {
-          "type": "baseline",
-          "scenario1_eppl": 17.18,
-          "scenario2_eppl": 15.71,
-          "scenario3_eppl": 14.18,
-          "overall_eppl": 15.69
-        }
-      }
-    },
     "empirical_core_test": {
-      "description": "Empirical ex-ante-core validation on the small synthetic token tree in Figure 2. A maximum coalition improvement of 1 means no coalition can block the policy.",
-      "weight": 0.25,
+      "description": "Empirical ex-ante-core validation on the fixed synthetic token tree setting. A maximum coalition improvement of 1 means no coalition can block the submitted stochastic policy.",
+      "weight": 1.0,
       "primary_metric": "max_coalition_improvement",
       "metrics": {
         "max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -1.0
+          "coefficient": -1.0,
+          "description": "Worst proportional improvement available to any coalition across the slice."
+        },
+        "mean_coalition_improvement": {
+          "higher_is_better": false,
+          "coefficient": -0.5,
+          "description": "Average blocking pressure across instances, which catches methods that pass only by hiding a few extreme failures."
+        },
+        "coalition_violation_rate": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Fraction of instances where at least one coalition can improve beyond the core threshold."
         },
         "core_constraint_satisfied": {
           "higher_is_better": true,
-          "coefficient": 0.5
+          "coefficient": 0.5,
+          "description": "Indicator that the worst coalition improvement stays at or below the core threshold."
+        },
+        "distribution_simplex_l1_error": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Maximum simplex violation of the submitted lottery before evaluator normalization."
+        },
+        "min_agent_expected_utility": {
+          "higher_is_better": true,
+          "coefficient": 0.15,
+          "description": "Worst expected utility received by any participant under the submitted lottery."
         },
         "rho_0_max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -0.1
+          "coefficient": -0.08,
+          "description": "Worst coalition improvement on unpolarized synthetic instances."
         },
         "rho_1_max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -0.1
+          "coefficient": -0.08,
+          "description": "Worst coalition improvement at polarization rho=1."
         },
         "rho_2_max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -0.1
+          "coefficient": -0.08,
+          "description": "Worst coalition improvement at polarization rho=2."
         },
         "rho_4_max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -0.1
+          "coefficient": -0.08,
+          "description": "Worst coalition improvement at polarization rho=4."
         },
         "rho_8_max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -0.1
+          "coefficient": -0.08,
+          "description": "Worst coalition improvement at polarization rho=8."
         }
       },
       "results": {
         "nash_welfare_policy": {
           "type": "proposed",
           "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
           "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 0.0,
           "rho_0_max_coalition_improvement": 1.0,
           "rho_1_max_coalition_improvement": 1.0,
           "rho_2_max_coalition_improvement": 1.0,
