@@ -32,9 +32,12 @@ Continuation audit job `449b4d8c-419` failed while rerunning `scripts/reproduce.
 
 Follow-up job `910a202e-d02` completed successfully after the LP scaling fix. It regenerated the Section 4.2 artifacts, rewrote `scoring/scores.json`, and passed `python validate.py --compare`.
 
+Verification job `e76aa4d8-762` completed successfully on the CPU test resource. It verified the split evaluation scripts in the compute container and kept the Nash-welfare policy at `max_coalition_improvement = 1.0` on both slices.
+
+Final verification kept the active benchmark scoped to the verified empirical core-test experiment. An unverified secondary single-statement search experiment was removed from active code, `reference.json`, and public scoring documentation because the completed compute job did not produce corresponding `scores.json` entries.
+
 ## Remaining
 
-- The deterministic finite-lookahead and beam-search single-statement search experiment has been implemented on the synthetic token-tree environment and is awaiting a compute-container smoke test.
 - The deterministic finite-lookahead and beam-search LLM consensus-generation experiments remain for a higher milestone.
 - The opinion-length and credit-assignment experiments remain for a higher milestone.
 
@@ -46,8 +49,8 @@ Follow-up job `910a202e-d02` completed successfully after the LP scaling fix. It
 - The provided external job-log path was not mounted at that absolute location, but the same logs were available under `jobs/bf64dcb8-621/` and were reviewed.
 - Continuation job `449b4d8c-419` exposed a second numerical conditioning issue in the coalition LP. The evaluator was patched to validate input distributions, renormalize harmless roundoff, and solve the scaled blocking LP.
 - Job `910a202e-d02` verified the patched evaluator in the compute container.
+- Final verification removed an unscored secondary experiment that had been prepared for a later run but not actually reproduced. The remaining gym artifacts all target the verified empirical core-test result.
 
 ## Deviations from Paper
 
 - The submitted run reproduces the synthetic empirical core test rather than the LLM consensus-generation benchmark. This is a scale/resource choice for the first milestone, not an algorithm substitution: the implemented computation is the paper's Nash-welfare lottery and induced stochastic policy.
-- The new single-statement search experiment uses the same token-level MDP objective and the paper's finite-lookahead and beam-search procedures, but evaluates them on the synthetic token-tree policies instead of Llama/Gemma prompted policies. This avoids paid APIs and large model downloads while preserving the deterministic search computation.

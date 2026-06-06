@@ -459,7 +459,11 @@
       "results": {
         "nash_welfare_policy": {
           "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
           "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 2.220446049250313e-16,
+          "min_agent_expected_utility": 0.010510063375869998,
           "rho_0_max_coalition_improvement": 1.0,
           "rho_1_max_coalition_improvement": 1.0,
           "rho_2_max_coalition_improvement": 1.0,
@@ -468,7 +472,11 @@
         },
         "uniform_policy": {
           "max_coalition_improvement": 13.652826773369478,
+          "mean_coalition_improvement": 4.466491491652193,
+          "coalition_violation_rate": 0.8,
           "core_constraint_satisfied": 0.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.012345679012345673,
           "rho_0_max_coalition_improvement": 1.0,
           "rho_1_max_coalition_improvement": 1.649187125721854,
           "rho_2_max_coalition_improvement": 3.1476639238122877,
@@ -477,7 +485,11 @@
         },
         "utilitarian_policy": {
           "max_coalition_improvement": 14782312.74856763,
+          "mean_coalition_improvement": 1153892.692765697,
+          "coalition_violation_rate": 0.72,
           "core_constraint_satisfied": 0.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 4.2320196970592265e-12,
           "rho_0_max_coalition_improvement": 1.0,
           "rho_1_max_coalition_improvement": 2.327089985873176,
           "rho_2_max_coalition_improvement": 129.29185701347342,

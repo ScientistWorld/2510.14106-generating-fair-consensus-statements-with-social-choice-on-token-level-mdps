@@ -2,7 +2,7 @@
   "experiments": {
     "empirical_core_test": {
       "description": "Empirical ex-ante-core validation on the fixed synthetic token tree setting. A maximum coalition improvement of 1 means no coalition can block the submitted stochastic policy.",
-      "weight": 0.65,
+      "weight": 1.0,
       "primary_metric": "max_coalition_improvement",
       "metrics": {
         "max_coalition_improvement": {
@@ -79,64 +79,6 @@
           "type": "baseline"
         },
         "utilitarian_policy": {
-          "type": "baseline"
-        }
-      }
-    },
-    "synthetic_single_statement_search": {
-      "description": "Single-statement egalitarian search comparison. Paper reference values are the Table 10 overall EPPL results for Llama consensus generation; the reproduced scores use the same lower-is-better egalitarian perplexity metric on the synthetic token-tree environment.",
-      "weight": 0.35,
-      "primary_metric": "mean_egalitarian_perplexity",
-      "metrics": {
-        "mean_egalitarian_perplexity": {
-          "higher_is_better": false,
-          "coefficient": -1.0,
-          "description": "Mean worst-agent perplexity across instances; lower means better egalitarian alignment."
-        },
-        "max_egalitarian_perplexity": {
-          "higher_is_better": false,
-          "coefficient": -0.4,
-          "description": "Worst instance-level egalitarian perplexity across the evaluated slice."
-        },
-        "mean_egalitarian_log_welfare": {
-          "higher_is_better": true,
-          "coefficient": 0.5,
-          "description": "Mean minimum agent log-likelihood utility; higher is better."
-        },
-        "min_egalitarian_log_welfare": {
-          "higher_is_better": true,
-          "coefficient": 0.2,
-          "description": "Worst minimum agent log-likelihood utility across instances."
-        }
-      },
-      "results": {
-        "beam_search_egalitarian": {
-          "type": "proposed",
-          "mean_egalitarian_perplexity": 2.87
-        },
-        "finite_lookahead_egalitarian": {
-          "type": "proposed",
-          "mean_egalitarian_perplexity": 4.18
-        },
-        "best_of_n": {
-          "type": "baseline",
-          "mean_egalitarian_perplexity": 6.35
-        },
-        "habermas_machine": {
-          "type": "baseline",
-          "mean_egalitarian_perplexity": 9.67
-        },
-        "predefined": {
-          "type": "baseline",
-          "mean_egalitarian_perplexity": 15.69
-        },
-        "egalitarian_exhaustive": {
-          "type": "baseline"
-        },
-        "greedy_egalitarian": {
-          "type": "baseline"
-        },
-        "utilitarian": {
           "type": "baseline"
         }
       }

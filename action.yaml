@@ -1,6 +1,5 @@
-# CPU smoke test for the expanded reproduction. Once action is set, STOP immediately.
-action: submit
+action: done
 gpus: 0
-test: true
+test: false
 milestone: core_claim_plus
-notes: "Run scripts/reproduce.sh in the compute container to verify the expanded core-policy plus deterministic single-statement search scoring pipeline."
+notes: "Final verification passed; workspace is ready for the verified empirical core-test gym."

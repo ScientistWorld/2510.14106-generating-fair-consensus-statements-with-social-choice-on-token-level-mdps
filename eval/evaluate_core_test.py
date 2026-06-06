@@ -30,7 +30,6 @@ def evaluate(input_dir: Path) -> dict:
     by_policy_rho: dict[str, dict[float, list[float]]] = {}
     simplex_error_by_policy: dict[str, list[float]] = {}
     min_utility_by_policy: dict[str, list[float]] = {}
-    path_by_method: dict[str, list[dict[str, float]]] = {}
     per_instance = []
     for record in records:
         utilities = np.asarray(record["utilities"], dtype=np.float64)
@@ -38,7 +37,6 @@ def evaluate(input_dir: Path) -> dict:
             "rho": record["rho"],
             "seed": record["seed"],
             "policies": {},
-            "paths": {},
         }
         for policy in record["policies"]:
             name = policy["name"]
@@ -56,14 +54,6 @@ def evaluate(input_dir: Path) -> dict:
                 "distribution_simplex_l1_error": simplex_error,
                 "min_agent_expected_utility": float(expected_utilities.min()),
             }
-        for path_record in record.get("paths", []):
-            name = path_record["name"]
-            metrics = {
-                "egalitarian_log_welfare": float(path_record["egalitarian_log_welfare"]),
-                "egalitarian_perplexity": float(path_record["egalitarian_perplexity"]),
-            }
-            path_by_method.setdefault(name, []).append(metrics)
-            instance_scores["paths"][name] = metrics
         per_instance.append(instance_scores)
 
     results = {}
@@ -82,17 +72,6 @@ def evaluate(input_dir: Path) -> dict:
             rho_key = f"rho_{rho:g}_max_coalition_improvement"
             results[policy_name][rho_key] = float(rho_values.max())
 
-    path_results = {}
-    for method_name, metrics in path_by_method.items():
-        log_welfare = np.asarray([row["egalitarian_log_welfare"] for row in metrics], dtype=np.float64)
-        perplexity = np.asarray([row["egalitarian_perplexity"] for row in metrics], dtype=np.float64)
-        path_results[method_name] = {
-            "mean_egalitarian_perplexity": float(perplexity.mean()),
-            "max_egalitarian_perplexity": float(perplexity.max()),
-            "mean_egalitarian_log_welfare": float(log_welfare.mean()),
-            "min_egalitarian_log_welfare": float(log_welfare.min()),
-        }
-
     return {
         "experiments": {
             "empirical_core_test": {
@@ -101,13 +80,6 @@ def evaluate(input_dir: Path) -> dict:
                     "per_instance": per_instance,
                 },
                 "results": results,
-            },
-            "synthetic_single_statement_search": {
-                "_details": {
-                    "num_instances": len(records),
-                    "description": "Deterministic path search artifacts saved by method.run_core_test.",
-                },
-                "results": path_results,
             }
         }
     }

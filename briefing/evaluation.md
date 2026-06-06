@@ -8,7 +8,7 @@ For single consensus statements, the paper reports Egalitarian Perplexity, the m
 
 ## Baselines and Targets
 
-The paper's synthetic core test expects the fair stochastic outcome to have maximum coalition improvement equal to 1 across polarization levels. The same test reports that uniform and utilitarian alternatives become blockable as polarization increases.
+The synthetic core test expects a stable stochastic outcome to have maximum coalition improvement equal to 1 across polarization levels. The same test reports that uniform and utilitarian alternatives become blockable as polarization increases.
 
 The paper's main text-generation benchmark reports lower EPPL for token-search methods than Best-of-N and Habermas-style baselines on three Habermas Machine scenarios.
 
