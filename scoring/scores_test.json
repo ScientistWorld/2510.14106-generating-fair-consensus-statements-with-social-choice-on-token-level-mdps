@@ -114,7 +114,7 @@
                 "mean_coalition_improvement": 1.0,
                 "coalition_violation_rate": 0.0,
                 "core_constraint_satisfied": 1.0,
-                "distribution_simplex_l1_error": 1.1102230246251565e-16,
+                "distribution_simplex_l1_error": 0.0,
                 "min_agent_expected_utility": 0.018656354954402165
               },
               "uniform_policy": {
@@ -391,7 +391,7 @@
           "mean_coalition_improvement": 1.0,
           "coalition_violation_rate": 0.0,
           "core_constraint_satisfied": 1.0,
-          "distribution_simplex_l1_error": 1.1102230246251565e-16,
+          "distribution_simplex_l1_error": 0.0,
           "min_agent_expected_utility": 0.010510063375869998,
           "rho_0_max_coalition_improvement": 1.0,
           "rho_1_max_coalition_improvement": 1.0,
