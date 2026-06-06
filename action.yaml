@@ -1,9 +1,6 @@
-# This iteration writes files only — do NOT submit compute jobs.
-# Once you set action to 'done', STOP immediately.
-# Do NOT sleep, poll, or wait. The system reads this file
-# only after your turn ends.
-action: done
+# This iteration submits compute jobs. Once action is set, STOP immediately.
+action: submit
 gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Improvements: anchored train/test scoring to fixed benchmark instances; required expected split membership; added distribution-validity and aggregate violation metrics; aligned reference.json with computed split metrics. Notes: see DESIGN_NOTES.md."
+notes: "Run split CPU evaluators against checkpoints/core_test to populate scoring/scores_train.json and scoring/scores_test.json."
