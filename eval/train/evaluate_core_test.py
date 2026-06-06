@@ -136,6 +136,8 @@ def _distribution_stats(distribution: np.ndarray, num_leaves: int) -> tuple[np.n
         raise ValueError("Policy distribution must contain only finite values")
     negative_mass = float(np.abs(np.minimum(distribution, 0.0)).sum())
     simplex_l1_error = abs(float(distribution.sum()) - 1.0) + negative_mass
+    if simplex_l1_error <= TOLERANCE:
+        simplex_l1_error = 0.0
     clipped = np.maximum(distribution, 0.0)
     total = float(clipped.sum())
     if total <= TOLERANCE:

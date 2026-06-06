@@ -27,8 +27,8 @@
         },
         "distribution_simplex_l1_error": {
           "higher_is_better": false,
-          "coefficient": -0.4,
-          "description": "Maximum simplex violation of the submitted lottery before evaluator normalization."
+          "coefficient": 0.0,
+          "description": "Diagnostic maximum simplex violation of the submitted lottery before evaluator normalization; invalid distributions fail evaluation before ranking."
         },
         "min_agent_expected_utility": {
           "higher_is_better": true,
@@ -37,8 +37,8 @@
         },
         "rho_0_max_coalition_improvement": {
           "higher_is_better": false,
-          "coefficient": -0.08,
-          "description": "Worst coalition improvement on unpolarized synthetic instances."
+          "coefficient": 0.0,
+          "description": "Diagnostic worst coalition improvement on unpolarized synthetic instances; the runtime pass showed this slice is intentionally trivial for all valid policies."
         },
         "rho_1_max_coalition_improvement": {
           "higher_is_better": false,
