@@ -1,0 +1,6 @@
+.state/
+**/artifacts/
+**/generated/
+**/*.log
+**/train_filter.json
+**/optimizer_diagnostics.json
