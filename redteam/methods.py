@@ -80,7 +80,7 @@ def egalitarian(utilities):
     return result.x[:m], float(result.x[-1] * scale)
 
 
-def perfect_prefill():
+def shortcut_perfect_prefill():
     values = {'max_coalition_improvement': 1., 'mean_coalition_improvement': 1.,
               'coalition_violation_rate': 0., 'core_constraint_satisfied': 1.,
               'distribution_simplex_l1_error': 0.,
@@ -250,7 +250,7 @@ def build_instance(rho, seed, branching=3, depth=4, num_agents=5, embedding_dim=
                     if p['name'] != 'nash_welfare_policy':
                         p['distribution'] = [1.] + [0.] * 80
         if name == 'shortcut_score_prefill':
-            (ROOT / 'scoring/scores_test.json').write_text(json.dumps(perfect_prefill(), indent=2))
+            (ROOT / 'scoring/scores_test.json').write_text(json.dumps(shortcut_perfect_prefill(), indent=2))
     elif name in ('shortcut_invalid_nan', 'shortcut_invalid_null',
                   'shortcut_invalid_zero', 'shortcut_invalid_empty'):
         for record in records:
@@ -265,7 +265,7 @@ def build_instance(rho, seed, branching=3, depth=4, num_agents=5, embedding_dim=
                 p['distribution'] = []
         # Demonstrate that failures leave an earlier score file untouched. A
         # nonzero evaluator exit is still recorded as failure, never as success.
-        (ROOT / 'scoring/scores_test.json').write_text(json.dumps(perfect_prefill(), indent=2))
+        (ROOT / 'scoring/scores_test.json').write_text(json.dumps(shortcut_perfect_prefill(), indent=2))
     elif name in ('shortcut_constraint_tradeoff_a', 'shortcut_constraint_tradeoff_b'):
         fraction = .001 if name.endswith('_a') else .002
         for record in records:

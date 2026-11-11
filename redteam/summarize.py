@@ -39,14 +39,14 @@ def denominators(names, results, metrics):
     return denominators
 
 
-def rank(values, reference, metrics, denominators):
+def rank(values, reference, metrics, denominators, weight=1.0):
     total = 0.
     contributions = {}
     for name, definition in metrics.items():
         if name not in values or name not in reference:
             continue
         direction = 1 if definition['higher_is_better'] else -1
-        contribution = abs(definition['coefficient']) * direction * (values[name]-reference[name]) / denominators[name]
+        contribution = weight * abs(definition['coefficient']) * direction * (values[name]-reference[name]) / denominators[name]
         contributions[name] = contribution
         total += contribution
     return total, contributions
@@ -61,6 +61,7 @@ def main():
         results[name] = load(name)
     reference_definition = json.loads((ROOT / 'scoring/reference.json').read_text())['experiments'][EXPERIMENT]
     metrics = reference_definition['metrics']
+    weight = reference_definition['weight']
     reference = results['reference'][METHOD]
     quality_cohort = [n for n in names if not n.startswith('shortcut_') and results.get(n) is not None]
     scales = denominators(quality_cohort, results, metrics)
@@ -70,7 +71,7 @@ def main():
             ranked[name] = {'valid_test_scores': False}
             continue
         values = methods.get(METHOD, {})
-        score, contributions = rank(values, reference, metrics, scales)
+        score, contributions = rank(values, reference, metrics, scales, weight)
         ranked[name] = {'valid_test_scores': True, 'metrics': values,
                         'rank_vs_reference_quality_cohort': score,
                         'rank_contributions': contributions,
@@ -85,12 +86,14 @@ def main():
     if seed_ranks:
         seed_spread['standardized_rank'] = {'min': min(seed_ranks), 'max': max(seed_ranks),
                                             'spread': max(seed_ranks)-min(seed_ranks)}
-    tradeoff_cohort = ['shortcut_constraint_tradeoff_a', 'shortcut_constraint_tradeoff_b', 'shortcut_easy_instances']
+    # An admissible future-attempt cohort: two failing methods and one honest
+    # improvement. The fixed reference is the comparison point, not an attempt.
+    tradeoff_cohort = ['shortcut_constraint_tradeoff_a', 'shortcut_constraint_tradeoff_b', 'better_core_fairness']
     tradeoff = {}
     if all(results.get(n) is not None for n in tradeoff_cohort):
         tradeoff_scales = denominators(tradeoff_cohort, results, metrics)
         for name in tradeoff_cohort:
-            score, contributions = rank(results[name].get(METHOD, {}), reference, metrics, tradeoff_scales)
+            score, contributions = rank(results[name].get(METHOD, {}), reference, metrics, tradeoff_scales, weight)
             tradeoff[name] = {'rank_vs_reference': score, 'contributions': contributions}
     else:
         tradeoff_scales = {}

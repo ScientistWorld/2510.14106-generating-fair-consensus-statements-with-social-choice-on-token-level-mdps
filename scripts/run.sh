@@ -13,4 +13,4 @@ set -e
 
 cd /home/user
 
-bash redteam/run_all.sh
+bash scripts/reproduce.sh

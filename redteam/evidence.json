@@ -1,0 +1,847 @@
+{
+  "job_id": "e5bf48e8-d10",
+  "job_exit": 0,
+  "runs": 26,
+  "successful_hidden_runs": 22,
+  "expected_invalid_hidden_runs": 4,
+  "sum_candidate_elapsed_seconds": 1586.3445119857788,
+  "all_protected_files_unchanged": true,
+  "fresh_reference_results_equal_original": true,
+  "reference_methods": {
+    "nash_welfare_policy": {
+      "max_coalition_improvement": 1.0,
+      "mean_coalition_improvement": 1.0,
+      "coalition_violation_rate": 0.0,
+      "core_constraint_satisfied": 1.0,
+      "distribution_simplex_l1_error": 0.0,
+      "min_agent_expected_utility": 0.010510063375869998,
+      "rho_0_max_coalition_improvement": 1.0,
+      "rho_1_max_coalition_improvement": 1.0,
+      "rho_2_max_coalition_improvement": 1.0,
+      "rho_4_max_coalition_improvement": 1.0,
+      "rho_8_max_coalition_improvement": 1.0
+    },
+    "uniform_policy": {
+      "max_coalition_improvement": 9.042886736641135,
+      "mean_coalition_improvement": 4.062099386802952,
+      "coalition_violation_rate": 0.8333333333333334,
+      "core_constraint_satisfied": 0.0,
+      "distribution_simplex_l1_error": 0.0,
+      "min_agent_expected_utility": 0.012345679012345671,
+      "rho_0_max_coalition_improvement": 1.0,
+      "rho_1_max_coalition_improvement": 1.649187125721854,
+      "rho_2_max_coalition_improvement": 2.614377202146118,
+      "rho_4_max_coalition_improvement": 7.586489260946938,
+      "rho_8_max_coalition_improvement": 9.042886736641135
+    },
+    "utilitarian_policy": {
+      "max_coalition_improvement": 2778272.1432726793,
+      "mean_coalition_improvement": 249985.19101121367,
+      "coalition_violation_rate": 0.75,
+      "core_constraint_satisfied": 0.0,
+      "distribution_simplex_l1_error": 0.0,
+      "min_agent_expected_utility": 2.1503418971487437e-08,
+      "rho_0_max_coalition_improvement": 1.0,
+      "rho_1_max_coalition_improvement": 2.327089985873176,
+      "rho_2_max_coalition_improvement": 12.210014870099814,
+      "rho_4_max_coalition_improvement": 83581.92144996222,
+      "rho_8_max_coalition_improvement": 2778272.1432726793
+    }
+  },
+  "coverage": {
+    "reference": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "reference_seed_11": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "reference_seed_22": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "reference_seed_33": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "better_core_fairness": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "weaker_uniform": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "weaker_one_iteration": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "maxmin_unconstrained": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "exhaustive_single_leaf": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "honest_exhaustive_optimizer": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_grid_replay": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_partial_coverage": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 2,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_empty_results": {
+      "required_test_records": 12,
+      "method_test_records": {},
+      "reported_methods": []
+    },
+    "shortcut_filter_methods": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12,
+        "shortcut_hidden_bad_method": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_generator_replacement": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_scaled_mass": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_fake_artifact_fields": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_score_prefill": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_move_baselines": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_constraint_tradeoff_a": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_constraint_tradeoff_b": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 12,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    },
+    "shortcut_easy_instances": {
+      "required_test_records": 12,
+      "method_test_records": {
+        "nash_welfare_policy": 10,
+        "uniform_policy": 12,
+        "utilitarian_policy": 12
+      },
+      "reported_methods": [
+        "nash_welfare_policy",
+        "uniform_policy",
+        "utilitarian_policy"
+      ]
+    }
+  },
+  "invalid_errors": {
+    "shortcut_invalid_nan": {
+      "test_exit": 1,
+      "scores_written_by_test": false,
+      "last_error": "ValueError: Policy distribution must contain only finite values",
+      "stale_file_unchanged": true
+    },
+    "shortcut_invalid_null": {
+      "test_exit": 1,
+      "scores_written_by_test": false,
+      "last_error": "ValueError: Policy distribution has shape (), expected (81,)",
+      "stale_file_unchanged": true
+    },
+    "shortcut_invalid_zero": {
+      "test_exit": 1,
+      "scores_written_by_test": false,
+      "last_error": "ValueError: Policy distribution has no positive probability mass",
+      "stale_file_unchanged": true
+    },
+    "shortcut_invalid_empty": {
+      "test_exit": 1,
+      "scores_written_by_test": false,
+      "last_error": "ValueError: Policy distribution has shape (0,), expected (81,)",
+      "stale_file_unchanged": true
+    }
+  },
+  "quality_test_instances": [
+    {
+      "rho": 0.0,
+      "seed": 202511,
+      "reference_min_utility": 0.012345679012345671,
+      "better_min_utility": 0.012345679012345671,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 0.0,
+      "seed": 202513,
+      "reference_min_utility": 0.012345679012345671,
+      "better_min_utility": 0.012345679012345671,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 1.0,
+      "seed": 202510,
+      "reference_min_utility": 0.011233123903864375,
+      "better_min_utility": 0.01578723132198641,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 1.0,
+      "seed": 202512,
+      "reference_min_utility": 0.018656354954402165,
+      "better_min_utility": 0.020360334885428256,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 1.0,
+      "seed": 202514,
+      "reference_min_utility": 0.010510063375869998,
+      "better_min_utility": 0.014761063035738051,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 2.0,
+      "seed": 202511,
+      "reference_min_utility": 0.017415730310092643,
+      "better_min_utility": 0.021530774421357746,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 2.0,
+      "seed": 202513,
+      "reference_min_utility": 0.018204119298606082,
+      "better_min_utility": 0.020376034848172304,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 4.0,
+      "seed": 202510,
+      "reference_min_utility": 0.024726724296879145,
+      "better_min_utility": 0.02639817276833782,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 4.0,
+      "seed": 202512,
+      "reference_min_utility": 0.03505846622360357,
+      "better_min_utility": 0.03505846622360357,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 4.0,
+      "seed": 202514,
+      "reference_min_utility": 0.03979234229291083,
+      "better_min_utility": 0.03979234229291083,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 8.0,
+      "seed": 202511,
+      "reference_min_utility": 0.05977522077847753,
+      "better_min_utility": 0.05977522077847753,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    },
+    {
+      "rho": 8.0,
+      "seed": 202513,
+      "reference_min_utility": 0.06764586822401893,
+      "better_min_utility": 0.06764586822401893,
+      "reference_alpha": 1.0,
+      "better_alpha": 1.0
+    }
+  ],
+  "honest_optimizer_diagnostics": [
+    {
+      "rho": 0.0,
+      "seed": 202510,
+      "before_min_utility": 0.012345679012345671,
+      "after_min_utility": 0.012345679012345671,
+      "egalitarian_upper_bound": 0.012345679012345678,
+      "accepted": []
+    },
+    {
+      "rho": 0.0,
+      "seed": 202511,
+      "before_min_utility": 0.012345679012345671,
+      "after_min_utility": 0.012345679012345671,
+      "egalitarian_upper_bound": 0.012345679012345678,
+      "accepted": []
+    },
+    {
+      "rho": 0.0,
+      "seed": 202512,
+      "before_min_utility": 0.012345679012345671,
+      "after_min_utility": 0.012345679012345671,
+      "egalitarian_upper_bound": 0.012345679012345678,
+      "accepted": []
+    },
+    {
+      "rho": 0.0,
+      "seed": 202513,
+      "before_min_utility": 0.012345679012345671,
+      "after_min_utility": 0.012345679012345671,
+      "egalitarian_upper_bound": 0.012345679012345678,
+      "accepted": []
+    },
+    {
+      "rho": 0.0,
+      "seed": 202514,
+      "before_min_utility": 0.012345679012345671,
+      "after_min_utility": 0.012345679012345671,
+      "egalitarian_upper_bound": 0.012345679012345678,
+      "accepted": []
+    },
+    {
+      "rho": 1.0,
+      "seed": 202510,
+      "before_min_utility": 0.011233123903864375,
+      "after_min_utility": 0.015787231321986405,
+      "egalitarian_upper_bound": 0.015787231321987477,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.01168853464567634
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.012371650758395253
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.01351017761292502
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.014648704467456426
+        },
+        {
+          "fraction": 0.9,
+          "min_utility": 0.015331820580173228
+        },
+        {
+          "fraction": 1.0,
+          "min_utility": 0.015787231321986405
+        }
+      ]
+    },
+    {
+      "rho": 1.0,
+      "seed": 202511,
+      "before_min_utility": 0.013040506428914269,
+      "after_min_utility": 0.016585117866641255,
+      "egalitarian_upper_bound": 0.01658511786664414,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.01339496757268738
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.013926659288346611
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.014812812147778388
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.015698965007210932
+        },
+        {
+          "fraction": 0.9,
+          "min_utility": 0.016230656722870676
+        },
+        {
+          "fraction": 1.0,
+          "min_utility": 0.016585117866641255
+        }
+      ]
+    },
+    {
+      "rho": 1.0,
+      "seed": 202512,
+      "before_min_utility": 0.018656354954402165,
+      "after_min_utility": 0.02036033488542826,
+      "egalitarian_upper_bound": 0.020360334885455,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.018826752947506
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.01908234993716384
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.019508344919926708
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.019934339902687812
+        },
+        {
+          "fraction": 0.9,
+          "min_utility": 0.020189936892330743
+        },
+        {
+          "fraction": 1.0,
+          "min_utility": 0.02036033488542826
+        }
+      ]
+    },
+    {
+      "rho": 1.0,
+      "seed": 202513,
+      "before_min_utility": 0.011591509763475413,
+      "after_min_utility": 0.018466054696613655,
+      "egalitarian_upper_bound": 0.018466054696619542,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.012278964256791805
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.01331014599676341
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.015028782230046726
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.016747418463331814
+        },
+        {
+          "fraction": 0.9,
+          "min_utility": 0.01777860020328962
+        },
+        {
+          "fraction": 1.0,
+          "min_utility": 0.018466054696613655
+        }
+      ]
+    },
+    {
+      "rho": 1.0,
+      "seed": 202514,
+      "before_min_utility": 0.010510063375869998,
+      "after_min_utility": 0.014761063035738051,
+      "egalitarian_upper_bound": 0.016178062922361732,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.011076863330519217
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.011927063262492859
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.013344063149115773
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.014761063035738051
+        }
+      ]
+    },
+    {
+      "rho": 2.0,
+      "seed": 202510,
+      "before_min_utility": 0.013062576467995921,
+      "after_min_utility": 0.022034770572342315,
+      "egalitarian_upper_bound": 0.02203477057234777,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.01395979587843115
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.015305624994084137
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.017548673520170956
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.01979172204625627
+        },
+        {
+          "fraction": 1.0,
+          "min_utility": 0.022034770572342315
+        }
+      ]
+    },
+    {
+      "rho": 2.0,
+      "seed": 202511,
+      "before_min_utility": 0.017415730310092643,
+      "after_min_utility": 0.021530774421357746,
+      "egalitarian_upper_bound": 0.022902455791780726,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.017964402858260953
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.018787411680512286
+        },
+        {
+          "fraction": 0.5,
+          "min_utility": 0.02015909305093215
+        },
+        {
+          "fraction": 0.75,
+          "min_utility": 0.021530774421357746
+        }
+      ]
+    },
+    {
+      "rho": 2.0,
+      "seed": 202512,
+      "before_min_utility": 0.025071811989119057,
+      "after_min_utility": 0.025696116803113997,
+      "egalitarian_upper_bound": 0.031314860129117494,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.025696116803113997
+        }
+      ]
+    },
+    {
+      "rho": 2.0,
+      "seed": 202513,
+      "before_min_utility": 0.018204119298606082,
+      "after_min_utility": 0.02037603484817231,
+      "egalitarian_upper_bound": 0.026891781496922097,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.01907288551842403
+        },
+        {
+          "fraction": 0.25,
+          "min_utility": 0.02037603484817231
+        }
+      ]
+    },
+    {
+      "rho": 2.0,
+      "seed": 202514,
+      "before_min_utility": 0.02037274813723823,
+      "after_min_utility": 0.021079479598382522,
+      "egalitarian_upper_bound": 0.027440062748674537,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.021079479598382522
+        }
+      ]
+    },
+    {
+      "rho": 4.0,
+      "seed": 202510,
+      "before_min_utility": 0.024726724296879145,
+      "after_min_utility": 0.02639817276833782,
+      "egalitarian_upper_bound": 0.041441209011486645,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.02639817276833782
+        }
+      ]
+    },
+    {
+      "rho": 4.0,
+      "seed": 202511,
+      "before_min_utility": 0.03385705333523022,
+      "after_min_utility": 0.034649536637507604,
+      "egalitarian_upper_bound": 0.041781886358047846,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.034649536637507604
+        }
+      ]
+    },
+    {
+      "rho": 4.0,
+      "seed": 202512,
+      "before_min_utility": 0.03505846622360357,
+      "after_min_utility": 0.03505846622360357,
+      "egalitarian_upper_bound": 0.052645048034876615,
+      "accepted": []
+    },
+    {
+      "rho": 4.0,
+      "seed": 202513,
+      "before_min_utility": 0.031156705764378574,
+      "after_min_utility": 0.032970537651763804,
+      "egalitarian_upper_bound": 0.04929502463823897,
+      "accepted": [
+        {
+          "fraction": 0.1,
+          "min_utility": 0.032970537651763804
+        }
+      ]
+    },
+    {
+      "rho": 4.0,
+      "seed": 202514,
+      "before_min_utility": 0.03979234229291083,
+      "after_min_utility": 0.03979234229291083,
+      "egalitarian_upper_bound": 0.05878459942505386,
+      "accepted": []
+    },
+    {
+      "rho": 8.0,
+      "seed": 202510,
+      "before_min_utility": 0.051169797566094875,
+      "after_min_utility": 0.051169797566094875,
+      "egalitarian_upper_bound": 0.09662959242585147,
+      "accepted": []
+    },
+    {
+      "rho": 8.0,
+      "seed": 202511,
+      "before_min_utility": 0.05977522077847753,
+      "after_min_utility": 0.05977522077847753,
+      "egalitarian_upper_bound": 0.07730846549781009,
+      "accepted": []
+    },
+    {
+      "rho": 8.0,
+      "seed": 202512,
+      "before_min_utility": 0.0345529883927552,
+      "after_min_utility": 0.0345529883927552,
+      "egalitarian_upper_bound": 0.08533658756197439,
+      "accepted": []
+    },
+    {
+      "rho": 8.0,
+      "seed": 202513,
+      "before_min_utility": 0.06764586822401893,
+      "after_min_utility": 0.06764586822401893,
+      "egalitarian_upper_bound": 0.08700249342522992,
+      "accepted": []
+    },
+    {
+      "rho": 8.0,
+      "seed": 202514,
+      "before_min_utility": 0.06727068593239106,
+      "after_min_utility": 0.06727068593239106,
+      "egalitarian_upper_bound": 0.10760650802146873,
+      "accepted": []
+    }
+  ]
+}
