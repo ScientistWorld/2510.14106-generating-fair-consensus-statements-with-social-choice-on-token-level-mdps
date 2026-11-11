@@ -196,20 +196,20 @@ def _line_search(a: np.ndarray, d: np.ndarray, gmax: float) -> float:
 
     if deriv(gmax * (1.0 - 1e-15)) >= 0.0:
         return gmax
-    lo, hi = 0.0, gmax
-    g = 0.5 * gmax
-    for _ in range(100):
-        den = a + g * d
-        f1 = float(np.sum(d / den))
+    lo, hi, g = 0.0, gmax, 0.0
+    for _ in range(80):
+        r = d / (a + g * d)
+        f1 = float(r.sum())
         if f1 > 0:
             lo = g
         else:
             hi = g
-        f2 = -float(np.sum((d / den) ** 2))
+        f2 = -float((r * r).sum())
         newton = g - f1 / f2 if f2 < 0 else 0.5 * (lo + hi)
-        g = newton if lo < newton < hi else 0.5 * (lo + hi)
-        if hi - lo <= 1e-15 * max(1.0, gmax):
-            break
+        g_new = newton if lo < newton < hi else 0.5 * (lo + hi)
+        if abs(g_new - g) <= 1e-13 * max(g_new, 1e-300) or hi - lo <= 1e-15 * max(1.0, gmax):
+            return g_new
+        g = g_new
     return g
 
 
