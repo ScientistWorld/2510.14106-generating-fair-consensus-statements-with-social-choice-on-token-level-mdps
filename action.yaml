@@ -1,8 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: pending
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: core_claim_plus
-notes: ""
+notes: "Smoke test + calibration of the redesigned evaluator (exactness vs brute force, per-rho calibration of reference/variants/baselines on deep prefix-dependent trees, end-to-end protocol run on the train slice)"
