@@ -34,10 +34,15 @@ def solve_instance(instance: dict, args) -> dict:
     leaves, mode = candidate_leaves(logp, args)
     logu = leaf_logutils(logp, leaves)
     utilities = np.exp(logu - logu.max(axis=1, keepdims=True))
+    full = mode == "full_tree"
     init = None
     if args.init_seed is not None:
-        init = np.random.default_rng(args.init_seed).dirichlet(np.ones(leaves.shape[0]))
-    full = mode == "full_tree"
+        rng = np.random.default_rng(args.init_seed)
+        if full:
+            init = rng.dirichlet(np.ones(leaves.shape[0]))
+        else:
+            init = np.zeros(leaves.shape[0])
+            init[int(rng.integers(leaves.shape[0]))] = 1.0
     result = solve_nash_welfare(
         utilities,
         tol=args.tol_full if full else args.tol_chunked,

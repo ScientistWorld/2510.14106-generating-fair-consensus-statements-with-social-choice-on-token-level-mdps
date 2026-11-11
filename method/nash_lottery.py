@@ -52,7 +52,8 @@ def _line_search(a: np.ndarray, d: np.ndarray, gmax: float) -> float:
         f2 = -float((r * r).sum())
         newton = g - f1 / f2 if f2 < 0 else 0.5 * (lo + hi)
         g_new = newton if lo < newton < hi else 0.5 * (lo + hi)
-        if abs(g_new - g) <= 1e-13 * max(g_new, 1e-300) or hi - lo <= 1e-15 * max(1.0, gmax):
+        if abs(f1) <= 1e-12 * float(np.abs(r).sum()) or abs(g_new - g) <= 1e-15 + 1e-12 * abs(g_new) \
+                or hi - lo <= 1e-15 * max(1.0, gmax):
             return g_new
         g = g_new
     return g
@@ -77,7 +78,12 @@ def solve_nash_welfare(
     v = v / v.max(axis=1, keepdims=True)
     n, m = v.shape
     vt = np.ascontiguousarray(v.T)
-    if init is None:
+    if init is None and m > 2000:
+        # Large candidate sets: start at the best single statement (a simplex vertex), the
+        # usual Frank-Wolfe start, so the iterate stays sparse.
+        p = np.zeros(m)
+        p[int(np.argmax(np.log(v).sum(axis=0)))] = 1.0
+    elif init is None:
         p = np.full(m, 1.0 / m)
     else:
         p = np.maximum(np.asarray(init, dtype=np.float64), 0.0)

@@ -207,7 +207,8 @@ def _line_search(a: np.ndarray, d: np.ndarray, gmax: float) -> float:
         f2 = -float((r * r).sum())
         newton = g - f1 / f2 if f2 < 0 else 0.5 * (lo + hi)
         g_new = newton if lo < newton < hi else 0.5 * (lo + hi)
-        if abs(g_new - g) <= 1e-13 * max(g_new, 1e-300) or hi - lo <= 1e-15 * max(1.0, gmax):
+        if abs(f1) <= 1e-12 * float(np.abs(r).sum()) or abs(g_new - g) <= 1e-15 + 1e-12 * abs(g_new) \
+                or hi - lo <= 1e-15 * max(1.0, gmax):
             return g_new
         g = g_new
     return g
@@ -613,6 +614,7 @@ def run_evaluation(instances: list[dict], *, split: str, scores_path: Path, work
             out_dir, status, elapsed, log_tail = run_solver(solver, instance_dir, workspace, timeout, scratch)
             runtimes[name] = round(elapsed, 1)
             print(f"[{split}] solver {name}: {status} after {elapsed:.1f}s", flush=True)
+            print("    log tail: " + log_tail[-600:].replace("\n", "\n    "), flush=True)
             if status != "ok":
                 reasons.append(status)
                 if log_tail:
