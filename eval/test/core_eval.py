@@ -205,16 +205,19 @@ def _game_lp(e: np.ndarray):
     """max_{q in simplex} min_i (e q)_i for a small nonnegative matrix; returns (value, duals)."""
 
     k, c = e.shape
-    res = linprog(
-        np.r_[np.zeros(c), -1.0],
-        A_ub=np.hstack([-e, np.ones((k, 1))]),
-        b_ub=np.zeros(k),
-        A_eq=np.r_[np.ones(c), 0.0][None, :],
-        b_eq=np.array([1.0]),
-        bounds=[(0.0, None)] * (c + 1),
-        method="highs",
-    )
-    if not res.success:
+    for method in ("highs", "highs-ipm", "highs-ds"):
+        res = linprog(
+            np.r_[np.zeros(c), -1.0],
+            A_ub=np.hstack([-e, np.ones((k, 1))]),
+            b_ub=np.zeros(k),
+            A_eq=np.r_[np.ones(c), 0.0][None, :],
+            b_eq=np.array([1.0]),
+            bounds=[(0.0, None)] * (c + 1),
+            method=method,
+        )
+        if res.success:
+            break
+    else:
         raise RuntimeError(f"coalition LP failed: {res.message}")
     lam = None
     marg = getattr(getattr(res, "ineqlin", None), "marginals", None)
@@ -227,28 +230,30 @@ def _game_lp(e: np.ndarray):
 def log_game_value(log_ratios: np.ndarray) -> float:
     """log of max_{q in simplex} min_i sum_x q_x exp(R[i, x]) over all columns x (exact).
 
-    Columns dominated by the best single column are dropped; the remaining LP is solved
-    directly when small and by column generation (pricing every column) otherwise.
+    With ub = min_i max_x R[i, x], the value lies in [lower, ub] where lower = max(best single
+    column, ub - log k) (mixing every member's best column). Columns whose every entry is below
+    the lower bound are never in an optimal mixture and are dropped; entries are scaled by
+    exp(-ub), so the LP value lies in [exp(lower - ub), 1] >= 1/k. The LP is solved directly when
+    small and by column generation (pricing every remaining column) otherwise.
     """
 
     r = np.asarray(log_ratios, dtype=np.float64)
     k = r.shape[0]
     if k == 1:
         return float(r.max())
-    mins = r.min(axis=0)
-    v0 = float(mins.max())
-    if float(r.max(axis=1).min()) <= v0 + 1e-12:
-        return v0
-    keep = np.flatnonzero(r.max(axis=0) >= v0 - 1e-12)
-    s = r[:, keep] - v0
-    cap = float(s.max(axis=1).min()) + math.log(1e6)
-    e = np.exp(np.minimum(s, cap))
-    e[e < 1e-12] = 0.0
+    ub = float(r.max(axis=1).min())
+    lower = max(float(r.min(axis=0).max()), ub - math.log(k))
+    if ub - lower <= 1e-12:
+        return lower
+    keep = np.flatnonzero(r.max(axis=0) >= lower - 1e-12)
+    e = np.exp(np.minimum(r[:, keep] - ub, math.log(1e8)))
+    e[e < 1e-14] = 0.0
+    t_min = math.exp(lower - ub)
     if e.shape[1] <= 3000:
         t, _ = _game_lp(e)
-        return v0 + math.log(max(t, 1.0))
-    cols = np.unique(np.r_[np.argmax(e, axis=1), int(np.argmax(s.min(axis=0)))])
-    t = 1.0
+        return ub + math.log(min(max(t, t_min), 1.0))
+    cols = np.unique(np.r_[np.argmax(e, axis=1), int(np.argmax(e.min(axis=0)))])
+    t = t_min
     for _ in range(1000):
         t, lam = _game_lp(e[:, cols])
         if lam is None:
@@ -263,7 +268,7 @@ def log_game_value(log_ratios: np.ndarray) -> float:
         if not new:
             break
         cols = np.r_[cols, np.asarray(new, dtype=np.int64)]
-    return v0 + math.log(max(t, 1.0))
+    return ub + math.log(min(max(t, t_min), 1.0))
 
 
 def all_coalitions(n: int) -> list[list[int]]:
@@ -274,12 +279,18 @@ def all_coalitions(n: int) -> list[list[int]]:
 
 def log_max_coalition_improvement(leaf_logu: np.ndarray, log_u: np.ndarray, coalitions) -> float:
     """log alpha*: the largest factor by which a coalition S, with probability mass |S|/n on any
-    statements, can raise every member's expected utility (paper Section 4.2), exact."""
+    statements, can raise every member's expected utility (paper Section 4.2), exact.
+
+    Statements that cannot be in any coalition's optimal mixture (every agent's ratio below the
+    lowest per-coalition lower bound, see ``log_game_value``) are dropped once, up front.
+    """
 
     n = log_u.shape[0]
     r_all = leaf_logu - log_u[:, None]
     rmax = r_all.max(axis=1)
     best = float((rmax + math.log(1.0 / n)).max())
+    threshold = max(float(r_all.min(axis=0).max()), float(rmax.min()) - math.log(n))
+    r_all = r_all[:, r_all.max(axis=0) >= threshold - 1e-12]
     for members in coalitions:
         size = len(members)
         if math.log(size / n) + float(rmax[members].min()) <= best + 1e-12:
@@ -315,6 +326,16 @@ class Tree:
         return lp[:, idx, :]
 
 
+def _policy_rows(policy: dict, keys: list) -> list:
+    rows = []
+    for key in keys:
+        row = policy.get(key)
+        if row is None:
+            raise SolverFailure(f"no next-token probabilities at reachable prefix '{key}'")
+        rows.append(row)
+    return rows
+
+
 def execute_policy(policy, branching: int, depth: int):
     """Exactly execute a stochastic token policy; returns reachable statement indices and probabilities.
 
@@ -323,41 +344,44 @@ def execute_policy(policy, branching: int, depth: int):
 
     if not isinstance(policy, dict) or not policy:
         raise SolverFailure("policy must be a non-empty object mapping prefixes to next-token probabilities")
-    keys, ids, masses = [""], [0], [1.0]
-    for _ in range(depth):
-        new_keys, new_ids, new_masses = [], [], []
-        for key, idx, mass in zip(keys, ids, masses):
-            row = policy.get(key)
-            if row is None:
-                raise SolverFailure(f"no next-token probabilities at reachable prefix '{key}'")
+    keys = [""]
+    ids = np.zeros(1, dtype=np.int64)
+    masses = np.ones(1)
+    for t in range(depth):
+        rows = _policy_rows(policy, keys)
+        for key, row in zip(keys, rows):
             if not isinstance(row, list) or len(row) != branching:
                 raise SolverFailure(f"prefix '{key}' must map to a list of {branching} probabilities")
-            vals = []
             for x in row:
-                if not _is_number(x) or not math.isfinite(float(x)):
-                    raise SolverFailure(f"non-numeric or non-finite probability at prefix '{key}'")
-                if x < -1e-12:
-                    raise SolverFailure(f"negative probability at prefix '{key}'")
-                vals.append(max(float(x), 0.0))
-            total = sum(vals)
-            if abs(total - 1.0) > SIMPLEX_TOLERANCE:
-                raise SolverFailure(f"next-token probabilities at prefix '{key}' sum to {total!r}, not 1")
-            sep = "," if key else ""
-            for action, x in enumerate(vals):
-                if x > 0.0:
-                    child = mass * x / total
-                    if child > 0.0:
-                        new_keys.append(f"{key}{sep}{action}")
-                        new_ids.append(idx * branching + action)
-                        new_masses.append(child)
-        keys, ids, masses = new_keys, new_ids, new_masses
-    if not ids:
+                if not _is_number(x):
+                    raise SolverFailure(f"non-numeric probability at prefix '{key}'")
+        arr = np.asarray(rows, dtype=np.float64)
+        bad = ~np.isfinite(arr).all(axis=1)
+        if bad.any():
+            raise SolverFailure(f"non-finite probability at prefix '{keys[int(np.argmax(bad))]}'")
+        neg = (arr < -1e-12).any(axis=1)
+        if neg.any():
+            raise SolverFailure(f"negative probability at prefix '{keys[int(np.argmax(neg))]}'")
+        arr = np.maximum(arr, 0.0)
+        totals = arr.sum(axis=1)
+        off = np.abs(totals - 1.0) > SIMPLEX_TOLERANCE
+        if off.any():
+            j = int(np.argmax(off))
+            raise SolverFailure(f"next-token probabilities at prefix '{keys[j]}' sum to {float(totals[j])!r}, not 1")
+        child = masses[:, None] * (arr / totals[:, None])
+        parent, action = np.nonzero(child > 0.0)
+        masses = child[parent, action]
+        ids = ids[parent] * branching + action
+        if t < depth - 1:
+            keys = [f"{keys[pi]},{a}" if keys[pi] else f"{a}" for pi, a in zip(parent.tolist(), action.tolist())]
+        if ids.size == 0:
+            break
+    if ids.size == 0:
         raise SolverFailure("policy reaches no complete statement")
-    probs = np.asarray(masses, dtype=np.float64)
-    total = float(probs.sum())
+    total = float(masses.sum())
     if not math.isfinite(total) or abs(total - 1.0) > 1e-6:
         raise SolverFailure(f"executed policy has total probability {total!r}")
-    return np.asarray(ids, dtype=np.int64), probs / total
+    return ids, masses / total
 
 
 def log_expected_utilities(leaf_logu: np.ndarray, ids: np.ndarray, probs: np.ndarray) -> np.ndarray:
@@ -374,15 +398,29 @@ def reference_data(tree: Tree) -> dict:
     return {"log_nw_upper": log_nw_upper, "nw_gap": gap, "log_umax": tree.leaf_logu.max(axis=1)}
 
 
+def greedy_statement(tree: Tree, agent: int) -> int:
+    """Index of the statement agent ``agent`` decodes greedily (argmax token at every prefix)."""
+
+    prefix: tuple = ()
+    for _ in range(tree.depth):
+        prefix = prefix + (int(np.argmax(tree.prefix_logprobs(prefix)[agent])),)
+    idx = 0
+    for a in prefix:
+        idx = idx * tree.branching + a
+    return idx
+
+
 def baseline_utilities(tree: Tree) -> dict:
-    """The paper's uniform and utilitarian policies, and random dictatorship (exact, full tree)."""
+    """Evaluator-owned baselines: the paper's uniform policy (uniform over all statements) and
+    utilitarian policy (the statement maximising the sum of utilities, exact), and random
+    dictatorship over the participants' greedy statements (each with probability 1/n)."""
 
     lu = tree.leaf_logu
     n, m = lu.shape
     out = {"uniform_policy": _logsumexp(lu, axis=1) - math.log(m)}
     j = int(np.argmax(_logsumexp(lu, axis=0)))
     out["utilitarian_policy"] = lu[:, j].copy()
-    fav, counts = np.unique(np.argmax(lu, axis=1), return_counts=True)
+    fav, counts = np.unique([greedy_statement(tree, i) for i in range(n)], return_counts=True)
     out["random_dictatorship_policy"] = _logsumexp(lu[:, fav] + np.log(counts / n)[None, :], axis=1)
     return out
 
@@ -589,86 +627,109 @@ def _by_rho(specs: list[dict], rows: list[dict], key: str, reducer) -> dict:
     return {rho: float(reducer(vals)) for rho, vals in groups.items()}
 
 
+def _solver_name(script: Path, used: set) -> str:
+    name = script.stem
+    if not NAME_RE.match(name) or name in used:
+        # Every solver on disk is scored; names that are invalid or collide with an evaluator
+        # baseline are reported under a distinct key.
+        base = "solver_" + re.sub(r"[^A-Za-z0-9_]", "_", name)[:50]
+        name, k = base, 1
+        while name in used:
+            name, k = f"{base}_{k}", k + 1
+    used.add(name)
+    return name
+
+
 def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: Path, workspace: Path,
                    timeout: float, log_dir: Path) -> dict:
+    """Instance by instance: build the tree once, score the evaluator baselines, then serve the
+    instance to every solver still running (all solvers run side by side, each waiting for its
+    next instance) and score its policy."""
+
     t0 = time.time()
     by_exp = {exp: [s for s in specs if s["experiment"] == exp] for exp in EXPERIMENTS}
     coalitions = {n: all_coalitions(n) for n in {int(s["num_agents"]) for s in specs}}
-
-    refs: dict[str, dict] = {}
-    raw: dict[str, dict[str, list[dict]]] = {exp: {} for exp in EXPERIMENTS}
-    for spec in specs:
-        tree = Tree(build_levels(spec))
-        ref = reference_data(tree)
-        refs[spec["instance_id"]] = ref
-        for name, log_u in baseline_utilities(tree).items():
-            raw[spec["experiment"]].setdefault(name, []).append(
-                instance_metrics(spec["experiment"], tree, ref, log_u, coalitions[tree.num_agents])
-            )
-    print(f"[{split}] {len(specs)} instances: exact optima and evaluator baselines in {time.time() - t0:.1f}s",
-          flush=True)
-
-    failures: dict[str, list[str]] = {}
-    solver_time: dict[str, float] = {}
-    queries: dict[str, dict[str, float]] = {}
     log_dir.mkdir(parents=True, exist_ok=True)
+
     used_names: set[str] = set(BASELINES)
+    sessions: dict[str, SolverSession] = {}
+    failures: dict[str, list[str]] = {}
     for script in discover_solvers(workspace):
-        name = script.stem
-        if not NAME_RE.match(name) or name in used_names:
-            # Every solver on disk is scored; names that are invalid or collide with an evaluator
-            # baseline are reported under a distinct key.
-            base = "solver_" + re.sub(r"[^A-Za-z0-9_]", "_", name)[:50]
-            name, k = base, 1
-            while name in used_names:
-                name, k = f"{base}_{k}", k + 1
-        used_names.add(name)
-        start = time.time()
-        reasons: list[str] = []
-        rows: dict[str, list[dict]] = {exp: [] for exp in EXPERIMENTS}
-        used: dict[str, list[int]] = {exp: [] for exp in EXPERIMENTS}
-        session = SolverSession(script, workspace, log_dir / f"{split}_{name}.log", timeout)
+        name = _solver_name(script, used_names)
         try:
-            for spec in specs:
-                tree = Tree(build_levels(spec))
-                policy, n_queries = serve_instance(session, spec, tree)
+            sessions[name] = SolverSession(script, workspace, log_dir / f"{split}_{name}.log", timeout)
+        except Exception as exc:
+            failures[name] = [f"could not start solver: {exc!r}"]
+    alive = sorted(sessions)
+    print(f"[{split}] {len(specs)} instances, {len(sessions)} solvers: {', '.join(alive)}", flush=True)
+
+    raw: dict[str, dict[str, list[dict]]] = {exp: {} for exp in EXPERIMENTS}
+    used_queries: dict[str, dict[str, list[int]]] = {name: {exp: [] for exp in EXPERIMENTS} for name in sessions}
+    refs: dict[str, dict] = {}
+
+    def fail(name: str, reason: str) -> None:
+        failures.setdefault(name, []).append(reason)
+        if name in alive:
+            alive.remove(name)
+        sessions[name].close()
+
+    for count, spec in enumerate(specs, 1):
+        exp = spec["experiment"]
+        tree = Tree(build_levels(spec))
+        ref = refs[spec["instance_id"]] = reference_data(tree)
+        for name, log_u in baseline_utilities(tree).items():
+            raw[exp].setdefault(name, []).append(
+                instance_metrics(exp, tree, ref, log_u, coalitions[tree.num_agents]))
+        for name in list(alive):
+            try:
+                policy, n_queries = serve_instance(sessions[name], spec, tree)
                 ids, probs = execute_policy(policy, tree.branching, tree.depth)
                 log_u = log_expected_utilities(tree.leaf_logu, ids, probs)
-                rows[spec["experiment"]].append(instance_metrics(
-                    spec["experiment"], tree, refs[spec["instance_id"]], log_u, coalitions[tree.num_agents]))
-                used[spec["experiment"]].append(n_queries)
-            session.send({"type": "done"})
-        except SolverFailure as exc:
-            done = sum(len(v) for v in rows.values())
-            reasons.append(f"instance {done + 1} of {len(specs)}: {exc}")
-        except Exception as exc:  # evaluator-side error on a malformed output
-            reasons.append(f"could not score solver output: {exc!r}")
-            traceback.print_exc()
-        finally:
-            rc = session.close()
-        solver_time[name] = round(session.solver_time, 1)
-        queries[name] = {exp: float(np.mean(v)) for exp, v in used.items() if v}
-        if not reasons and rc not in (0, None, -signal.SIGKILL):
-            reasons.append(f"solver exited with code {rc}")
-        if not reasons:
-            bad = [r for r in rows[EMPIRICAL] if r["blocked"] > 0]
-            if bad:
-                reasons.append(
-                    f"ex-ante core violated on {len(bad)} of {len(rows[EMPIRICAL])} {EMPIRICAL} instances "
-                    f"(max alpha* {max(r['max_coalition_improvement'] for r in bad):.6g})"
-                )
-        for exp in EXPERIMENTS:
-            if rows[exp] and len(rows[exp]) == len(by_exp[exp]):
-                raw[exp][name] = rows[exp]
-        if reasons:
-            failures[name] = reasons
-        status = "FAILED: " + reasons[0][:300] if reasons else "ok"
-        print(f"[{split}] solver {name}: {status} (solver {session.solver_time:.1f}s, total "
-              f"{time.time() - start:.1f}s)", flush=True)
+                row = instance_metrics(exp, tree, ref, log_u, coalitions[tree.num_agents])
+                raw[exp].setdefault(name, []).append(row)
+                used_queries[name][exp].append(n_queries)
+                if exp == EMPIRICAL and row["blocked"] > 0:
+                    # The core constraint fails the whole run; stop serving this solver.
+                    fail(name, f"ex-ante core violated on {spec['instance_id']} "
+                               f"(alpha* {row['max_coalition_improvement']:.6g} > 1 + {CORE_TOLERANCE:g})")
+            except SolverFailure as exc:
+                fail(name, f"instance {count} of {len(specs)} ({spec['instance_id']}): {exc}")
+            except Exception as exc:  # evaluator-side error on a malformed output
+                traceback.print_exc()
+                fail(name, f"could not score output for {spec['instance_id']}: {exc!r}")
+        if count % 20 == 0 or count == len(specs):
+            print(f"[{split}] {count}/{len(specs)} instances scored ({time.time() - t0:.1f}s); "
+                  f"{len(alive)} solvers running", flush=True)
 
-    method_names = list(BASELINES) + sorted(
-        n for n in set(raw[EMPIRICAL]) | set(raw[DEEP]) | set(failures) if n not in BASELINES
-    )
+    for name in list(alive):
+        try:
+            sessions[name].send({"type": "done"})
+        except SolverFailure as exc:
+            failures.setdefault(name, []).append(f"after the last instance: {exc}")
+        rc = sessions[name].close()
+        if name not in failures and rc not in (0, -signal.SIGKILL):
+            failures[name] = [f"solver exited with code {rc}"]
+
+    solver_time = {name: round(sess.solver_time, 1) for name, sess in sessions.items()}
+    queries = {name: {exp: float(np.mean(v)) for exp, v in per.items() if v} for name, per in used_queries.items()}
+    for name in sessions:
+        if name in failures:
+            continue
+        bad = [r for r in raw[EMPIRICAL].get(name, []) if r["blocked"] > 0]
+        if bad:
+            failures[name] = [
+                f"ex-ante core violated on {len(bad)} of {len(raw[EMPIRICAL][name])} {EMPIRICAL} instances "
+                f"(max alpha* {max(r['max_coalition_improvement'] for r in bad):.6g})"
+            ]
+    for exp in EXPERIMENTS:
+        for name in list(raw[exp]):
+            if name not in BASELINES and len(raw[exp][name]) != len(by_exp[exp]):
+                del raw[exp][name]  # incomplete: the run failed before this experiment finished
+    for name in sessions:
+        status = "FAILED: " + failures[name][0][:300] if name in failures else "ok"
+        print(f"[{split}] solver {name}: {status} (solver time {solver_time[name]:.1f}s)", flush=True)
+
+    method_names = list(BASELINES) + sorted(n for n in set(sessions) | set(failures) if n not in BASELINES)
     scores = {"experiments": {}, "_meta": {
         "split": split,
         "solvers_failed": failures,

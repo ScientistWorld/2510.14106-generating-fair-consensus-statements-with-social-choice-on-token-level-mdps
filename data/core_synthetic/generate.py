@@ -13,7 +13,8 @@ same logit to every action at a prefix and cancels in the softmax.
 * ``deep_tree_core_test``: B=3, L=12 (531,441 complete statements), six agents, d=8, and a fresh
   token vector for every prefix (each prefix has its own B candidate continuations, as when a base
   model proposes the top-B tokens of each prefix), so next-token distributions depend on the
-  whole prefix. rho takes the paper's per-step range.
+  whole prefix. rho in {0.4, 0.8, 1.6, 3.2} spans moderate to strong polarization (rho * L from
+  4.8 to 38; the paper uses rho * L from 2.4 to 20 at L=4).
 
 Solvers never see these parameters. They see the agents' policies only through the evaluator's
 query oracle (see ``oracle_client.py``): one query returns log pi_i(. | s) for every agent at one
@@ -47,7 +48,7 @@ EXPERIMENT_SETTINGS = {
         "num_agents": 6,
         "embedding_dim": 8,
         "token_vectors": "per_prefix",
-        "rhos": [0.6, 1.2, 2.4, 4.8],
+        "rhos": [0.4, 0.8, 1.6, 3.2],
         "query_budget": 1500,
     },
 }

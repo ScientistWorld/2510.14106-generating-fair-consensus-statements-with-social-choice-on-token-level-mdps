@@ -1,7 +1,7 @@
 {
   "experiments": {
     "empirical_core_test": {
-      "description": "Paper Section 4.2 empirical core test on synthetic token trees (B=3, depth 4, 81 complete statements, six agents, d=8, polarization rho on linspace(0.6, 5.0, 20)). Every coalition's proportional blocking LP is solved over all statements. A stochastic outcome that any coalition can block (max coalition improvement > 1 + 1e-6 on any instance) fails the run.",
+      "description": "Paper Section 4.2 empirical core test on synthetic token trees (B=3, depth 4, 81 complete statements, six agents, d=8, polarization rho on linspace(0.6, 5.0, 20)); the oracle's query budget (40) covers every prefix. Every coalition's proportional blocking LP is solved over all statements. A stochastic outcome that any coalition can block (max coalition improvement > 1 + 1e-6 on any instance) fails the run.",
       "weight": 0.4,
       "primary_metric": "max_coalition_improvement",
       "_paper_reported": "Figure 2: the Nash-welfare policy stays at alpha* = 1 for every rho; uniform and utilitarian policies become blockable as rho grows (no numeric table). The paper's setting (six agents, d=8, rho on linspace(0.6, 5, 20), seeds 42-44 in the authors' code) is used unchanged; the held-out slice uses other seeds.",
@@ -40,25 +40,25 @@
       }
     },
     "deep_tree_core_test": {
-      "description": "Same environment at statement length 24 (3^24 ~ 2.8e11 complete statements, too many to enumerate), the regime in which the paper resorts to token chunking (Section 4.3, Theorem 2). Outcomes are judged against the full statement tree: Nash welfare relative to each agent's ideal statement, and exact proportional blocking by every coalition of up to three agents.",
+      "description": "Deep prefix-dependent token trees (B=3, depth 12, 531,441 complete statements, six agents, d=8, a fresh token vector at every prefix, rho in {0.4, 0.8, 1.6, 3.2}). Solvers see the agents' policies only through a query oracle with 1,500 prefix queries per instance (0.56% of the 265,720 prefixes), the regime in which the paper resorts to token chunking (Section 4.3, Theorem 2). Outcomes are judged against the full tree: Nash welfare against the exact optimum, and exact proportional blocking by every coalition using any statement.",
       "weight": 0.6,
-      "primary_metric": "nash_welfare_ideal_fraction",
-      "_note": "The paper reports no number for this setting (it states only that chunking guarantees the core relative to the chunked statement set, with no constant-factor guarantee against the full set). The proposed-method value below is the gym's reference run of the paper's chunked method on the held-out slice, not a paper number. Polarization is rescaled so that rho * L spans the paper's range (rho in {0.1, 0.2, 0.4, 0.8} at L=24 vs rho in [0.6, 5] at L=4).",
+      "primary_metric": "nash_welfare_efficiency",
+      "_note": "The paper reports no number for this setting (it states only that chunking guarantees the core relative to the chunked statement set, that Nash welfare over it cannot exceed the full optimum, and that no constant-factor guarantee exists). The proposed-method value below is the gym's reference run of the paper's chunked method on the held-out slice, not a paper number.",
       "metrics": {
-        "nash_welfare_ideal_fraction": {
+        "nash_welfare_efficiency": {
           "higher_is_better": true,
           "coefficient": 1.0,
-          "description": "Mean over instances of the geometric mean over agents of U_i(p) / max_X U_i(X): Nash welfare normalised by each agent's best possible statement. A failed run receives 0."
+          "description": "Mean over instances of (NW(p) / NW*)^(1/n), NW* being the highest Nash welfare of any lottery over all 531,441 statements (computed exactly by the evaluator). A failed run receives 0."
         },
         "mean_log10_coalition_improvement": {
           "higher_is_better": false,
           "coefficient": -1.0,
-          "description": "Mean over instances of log10(max(1, alpha)), where alpha is the largest proportional improvement any coalition of at most three agents can secure over the outcome using any statements of the full tree (exact). 0 means no such coalition can block. Capped at 12, which a failed run receives."
+          "description": "Mean over instances of log10(alpha*), alpha* being the largest factor by which any coalition, using its proportional share of probability on any statements of the full tree, can raise all its members' expected utility (exact, every coalition). 0 means the outcome lies in the ex-ante core of the full tree. Capped at 12, which a failed run receives."
         },
         "coalition_violation_rate": {
           "higher_is_better": false,
           "coefficient": -0.5,
-          "description": "Fraction of instances on which some coalition of at most three agents can improve all its members by more than 0.1%. A failed run receives 1."
+          "description": "Fraction of instances on which some coalition can improve all its members by more than 0.1% (alpha* > 1.001). A failed run receives 1."
         },
         "worst_agent_ideal_fraction": {
           "higher_is_better": true,
@@ -69,7 +69,7 @@
       "results": {
         "nash_welfare_policy": {
           "type": "proposed",
-          "nash_welfare_ideal_fraction": 0.3
+          "nash_welfare_efficiency": 0.85
         },
         "uniform_policy": {
           "type": "baseline"

@@ -30,7 +30,7 @@ SETTINGS = {
         "num_agents": 6,
         "embedding_dim": 8,
         "token_vectors": "per_prefix",
-        "rhos": [0.6, 1.2, 2.4, 4.8],
+        "rhos": [0.4, 0.8, 1.6, 3.2],
         "query_budget": 1500,
     },
 }
