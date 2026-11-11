@@ -3,6 +3,6 @@
 # only after your turn ends.
 action: submit
 gpus: 0
-test: true
+test: false
 milestone: core_claim_plus
-notes: "Smoke test + calibration of the redesigned evaluator (exactness vs brute force, per-rho calibration of reference/variants/baselines on deep prefix-dependent trees, end-to-end protocol run on the train slice)"
+notes: "Hardening audit: exactness self-tests; reference alone on train/test (official scores); all variants and shortcuts through the no-argument hidden test and train; workspace-mutation probe; summary and validate"
