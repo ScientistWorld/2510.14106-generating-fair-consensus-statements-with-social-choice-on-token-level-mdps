@@ -11,8 +11,9 @@ The paper represents each participant's opinion as a next-token policy and uses 
 
 ## Key Results
 
-- In the synthetic core test, the Nash-welfare policy remains unblocked with maximum coalition improvement equal to 1.
-- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead.
+- In the synthetic core test, the Nash-welfare policy remains unblocked with maximum coalition improvement equal to 1, while uniform and utilitarian policies become blockable as polarization grows.
+- Enumerating every complete statement becomes infeasible for long statements; the paper restricts attention to chunked statement sets, for which the core guarantee holds only relative to the restricted set and no constant-factor Nash-welfare guarantee exists (Theorem 2).
+- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead (not part of this gym's executable benchmark).
 
 ---
 
@@ -20,15 +21,41 @@ The paper represents each participant's opinion as a next-token policy and uses 
 
 ## Research Question
 
-The task is to produce collective text statements from multiple free-form participant opinions while preserving fairness to the least satisfied participants and avoiding outcomes that a subset of participants could reasonably reject.
+Several participants each hold an opinion, represented by a next-token policy that says how
+likely the participant is to write each continuation of a partial statement. The task is to
+produce a fair *collective* outcome over complete statements: a lottery over statements (a
+stochastic generation policy) that every participant, and every group of participants, can
+accept.
 
 ## Why It Matters
 
-Open-ended text aggregation can reduce agenda-setting by allowing participants to express views in their own words, but a useful consensus system must be auditable and fair rather than relying on opaque post-hoc selection alone.
+Language models can aggregate free-form opinions without a fixed agenda, but a useful consensus
+system needs auditable fairness guarantees rather than post-hoc selection. A lottery over
+statements is fair in a strong sense when no coalition of participants could take its
+proportional share of the probability and use it to make every member better off.
+
+## Setting
+
+Statements are built token by token on a tree with a fixed number of candidate tokens per step
+and a fixed length. Participant i's utility for a complete statement X is the probability its
+policy assigns to X (the product of its next-token probabilities along X); its utility for a
+lottery p is the expected value under p. In the synthetic environment used here (from the paper),
+participant policies are softmax functions of random participant and token embeddings, and a
+polarization parameter rho controls how strongly participants disagree.
+
+Two regimes are studied:
+
+- **Small trees** (4 tokens, 81 complete statements): every statement can be listed.
+- **Deep trees** (24 tokens, about 2.8 * 10^11 complete statements): listing every statement is
+  infeasible, yet fairness is still judged against all of them.
 
 ## Success Criteria
 
-A successful system should produce statements or statement lotteries that are aligned with all participant perspectives. For stochastic outcomes, no coalition should be able to improve on the outcome using only its proportional share. For single statements, the worst-aligned participant should remain as well represented as possible.
+- No coalition of participants can block the outcome: using its proportional share of
+  probability, no coalition can raise the expected utility of all its members (ex-ante core).
+- The outcome has high Nash welfare (product of participants' expected utilities).
+- On deep trees, as much welfare and as little coalitional blocking as possible relative to the
+  full statement tree, within a fixed compute budget per run.
 
 ---
 
@@ -40,7 +67,9 @@ The paper models free-form consensus generation as a multi-objective token-level
 
 ## Approach
 
-For stochastic consensus, the method enumerates a finite token tree, computes each participant's probability utility for every complete path, solves a Nash-welfare optimization over lotteries on complete paths, and converts the optimal leaf distribution into a stochastic token policy using conditional leaf masses.
+For stochastic consensus (Algorithm 1), the method enumerates the complete statements of a finite token tree, computes each participant's probability utility for every statement, solves the Nash-welfare program max_p sum_i log(u_i^T p) over lotteries on statements (Frank-Wolfe with a coordinate linear oracle), and converts the optimal lottery into a stochastic token policy using conditional statement masses, pi*(a|s) = P*(C(s,a)) / P*(C(s)) (Definition 2). Any Nash-welfare maximiser lies in the ex-ante core, and the induced policy generates exactly that lottery (Theorem 1, Corollary 1).
+
+When the tree is too large to enumerate (Section 4.3), positions are grouped into chunks and decoding selects whole chunks from a limited candidate set; Algorithm 1 is run on the resulting chunked statement set, which gives a lottery in the core relative to that set but with no constant-factor guarantee against the full set (Theorem 2). The paper does not specify how chunk candidates are proposed; the reference implementation here proposes, for each chunk, every participant's most likely chunk plus the most likely chunks under the equal-weight mixture of participants (chunk size 6, 12 candidates).
 
 For single-statement consensus, the method uses additive log utilities and searches the token tree for statements that maximize egalitarian welfare, using finite lookahead or beam search.
 
@@ -52,21 +81,69 @@ The primary theoretical claim is that the Nash-welfare lottery induces a stochas
 
 # Evaluation
 
-## Metrics
+## Interface
 
-The core-stability metric is maximum coalition improvement `alpha*`. Values greater than 1 mean some coalition can block the outcome; values at or below 1 satisfy the ex-ante-core constraint.
+A method is a solver script `scripts/solvers/<name>.sh`, called as
 
-For single consensus statements, the paper reports Egalitarian Perplexity, the maximum participant-specific perplexity of the generated statement. Lower values mean better worst-participant alignment.
+    bash scripts/solvers/<name>.sh <instances_dir> <outputs_dir>
 
-## Baselines and Targets
+`<instances_dir>/manifest.json` lists instance files. Each instance gives `branching` (B),
+`depth` (L), `num_agents` (n), `embedding_dim`, `rho`, `token_vectors` (L x B x d),
+`agent_vectors` (n x d) and `agent_token_logprobs` (n x L x B): log pi_i(a | s) for every prefix s
+of length t. (pi_i(a|s) = softmax_a(rho * w_i . (z(s) + v_{t,a})) with z(s) the sum of the
+prefix's token vectors; z(s) shifts all logits at a prefix equally, so the table is exact for
+every prefix.)
 
-The synthetic core test expects a stable stochastic outcome to have maximum coalition improvement equal to 1 across polarization levels. The same test reports that uniform and utilitarian alternatives become blockable as polarization increases.
+For every instance the solver must write `<outputs_dir>/<instance_id>.json` containing
 
-The paper's main text-generation benchmark reports lower EPPL for token-search methods than Best-of-N and Habermas-style baselines on three Habermas Machine scenarios.
+    {"policy": {"": [p_0, ..., p_{B-1}], "0": [...], "0,2": [...], ...}}
 
-## Evaluation Protocol
+a stochastic token policy: next-token probabilities for every prefix (comma-separated token
+indices, "" for the empty prefix) reachable with positive probability. The evaluator executes
+the policy exactly to obtain the lottery over complete statements. Each row must have B finite,
+non-negative entries summing to 1 within 1e-6; at most 100,000 statements may be reachable.
+Any other field in the output is ignored.
 
-The included executable reproduction evaluates the synthetic core-stability setting from the paper: multiple random token trees, multiple polarization values, fixed branching factor 3, and depth 4. Evaluation reads saved utility matrices and output distributions, then independently solves the coalition-blocking LP for each instance.
+`scripts/evaluate.sh` / `scripts/evaluate_train.sh` run every solver on disk on the public
+training instances (`data/core_synthetic/generate.py`); the hidden test runs every solver on
+held-out instances from the same generating process. A solver gets two hours of wall-clock per
+evaluation run and must not read evaluator files.
+
+## Experiments and metrics
+
+**empirical_core_test** (B=3, L=4, six participants, d=8, rho on linspace(0.6, 5, 20)).
+- `max_coalition_improvement` (primary, lower is better): alpha* = the largest factor by which
+  any coalition S, using probability mass |S|/n on any statements, can raise all its members'
+  expected utility, maximised over instances. Every coalition's LP is solved over all 81
+  statements. 1 means the outcome is in the ex-ante core.
+- `core_constraint_satisfied`: 1 if alpha* <= 1 + 1e-6 on every instance.
+- `nash_welfare_efficiency`: mean of (NW(p) / NW*)^(1/n), where NW* is the highest Nash welfare
+  of any lottery on the instance.
+
+**deep_tree_core_test** (B=3, L=24, six participants, d=8, rho in {0.1, 0.2, 0.4, 0.8}).
+- `nash_welfare_ideal_fraction` (primary, higher is better): mean over instances of the
+  geometric mean over participants of U_i(p) / max_X U_i(X).
+- `mean_log10_coalition_improvement` (lower is better): mean over instances of
+  log10(max(1, alpha)), alpha being the largest proportional improvement available to any
+  coalition of at most three participants using any statements of the full tree (computed
+  exactly).
+- `coalition_violation_rate` (lower is better): fraction of instances where that alpha exceeds
+  1.001.
+- `worst_agent_ideal_fraction`: diagnostic, not ranked.
+
+## Failure rule
+
+A run that crashes, exceeds the time limit, misses an instance, returns an invalid policy, or
+fails the core constraint of empirical_core_test on any instance receives the worst value of
+every scored metric in both experiments (alpha* = 1e6, indicators and fractions 0,
+log10 improvement 12, violation rate 1).
+
+## Baselines
+
+Computed by the evaluator on the same instances and reported next to every solver: the uniform
+lottery over all statements, the utilitarian statement (maximising the sum of utilities; found
+by beam search on deep trees), and random dictatorship (each participant's favourite statement
+with probability 1/n). They are reported with their measured values.
 
 ---
 
@@ -446,6 +523,46 @@ The included executable reproduction evaluates the synthetic core-stability sett
 - **Milestone**: `core_claim_plus` | **Status**: done
 - **Working time**: 8m | **GPU**: 0.0h
 - **Jobs**: 6 total (5 completed, 1 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-04 10:31] - method_runs
+- Implemented the Section 4.2 synthetic token-tree environment with branching factor 3, depth 4, normalized token vectors, normalized agent vectors, and polarization-controlled softmax agent policies.
+- Implemented the paper's Nash-welfare lottery over complete leaves and induced stochastic prefix policy from conditional leaf masses.
+- Added a reusable evaluator that reads saved artifacts and computes the coalition-blocking LP without importing from `method/`.
+
+### [2026-06-04 10:31] - core_claim
+- Reproduced the empirical ex-ante-core claim on 25 instances across five polarization values and five seeds.
+- The Nash-welfare policy satisfies `max_coalition_improvement = 1.0` across the polarization grid, while uniform and utilitarian reference policies become blockable in polarized settings.
+- Packaged scripts, scoring metadata, and environment setup for rerunning the core-test reproduction.
+
+### [2026-06-04 10:35] - core_claim
+- Audited the continuing workspace and confirmed the method code implements the paper's Section 4.2 Nash-welfare lottery, not a surrogate.
+- The latest CPU smoke job (`449b4d8c-419`) exposed a numerical conditioning failure in the independent coalition LP evaluator for a regenerated baseline artifact.
+- Rescaled the LP constraints by each agent's current utility so alpha has a stable unit coefficient; a follow-up CPU smoke job is required before restoring `core_claim_plus`.
+
+### [2026-06-04 10:37] - core_claim_plus
+- Follow-up CPU smoke job (`910a202e-d02`) reran `scripts/reproduce.sh` successfully in the compute container.
+- The reproduced Nash-welfare policy satisfies the empirical core constraint for all 25 generated instances across five polarization values and five seeds.
+- Uniform and utilitarian reference policies remain blockable in polarized settings, so the additional rho/seed coverage supports the paper's comparative core-test claim.
+
+### [2026-06-06 22:53] - core_claim_plus
+- Final verification confirmed the reusable scoring pipeline passes `python validate.py --compare` with train/test split checks enabled.
+- Removed an unverified secondary experiment from active code, reference scoring, and public target documentation so the gym only exposes completed scored results.
+- Confirmed the milestone remains `core_claim_plus` for the verified empirical core-test reproduction.
+
+### [2026-06-06 23:45] - core_claim_plus
+- Final verification confirmed the official scored benchmark remains the verified empirical core-test reproduction.
+- Removed an unverified supplemental deterministic-search path from active scripts and source files so the gym exposes only completed scored results.
+- Confirmed `python validate.py --compare` passes with the core benchmark and train/test split checks enabled.
+
+</details>
+
+### Iteration 11: claude-opus-5-5 (hardener)
+- **Milestone**: `core_claim_plus` | **Status**: error
+- **Working time**: 48m | **GPU**: 0.0h
+- **Jobs**: 10 total (5 completed, 2 failed)
 
 <details>
 <summary>Progress Log</summary>
