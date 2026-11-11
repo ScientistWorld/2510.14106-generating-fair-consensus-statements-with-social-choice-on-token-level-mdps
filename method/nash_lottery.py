@@ -22,13 +22,17 @@ class NashResult:
     iterations: int
 
 
-def leaf_logutils(logp: np.ndarray, leaves: np.ndarray) -> np.ndarray:
-    """log U_i^prob(X) = sum_t log pi_i(a_t | s_{t-1}) for every agent and leaf, shape (n, m)."""
+def leaf_logutils(inst, leaves) -> np.ndarray:
+    """log U_i^prob(X) = sum_t log pi_i(a_t | s_{t-1}) for every agent and leaf, shape (n, m).
 
-    leaves = np.asarray(leaves, dtype=np.int64)
-    out = np.zeros((logp.shape[0], leaves.shape[0]))
-    for t in range(logp.shape[1]):
-        out += logp[:, t, leaves[:, t]]
+    Every prefix of every leaf must already have been queried from the oracle.
+    """
+
+    leaves = [tuple(int(a) for a in leaf) for leaf in leaves]
+    out = np.zeros((inst.num_agents, len(leaves)))
+    for j, leaf in enumerate(leaves):
+        for t, a in enumerate(leaf):
+            out[:, j] += inst.cached(leaf[:t])[:, a]
     return out
 
 

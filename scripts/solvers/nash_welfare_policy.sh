@@ -1,7 +1,9 @@
 #!/bin/bash
-# Reference solver (the paper's method): Nash-welfare lottery over complete statements,
-# token chunking when the tree is too large to enumerate, induced stochastic token policy.
-# Interface (all solvers): bash scripts/solvers/<name>.sh <instances_dir> <outputs_dir>
+# Reference solver (the paper's method): Nash-welfare lottery over complete statements
+# (Algorithm 1), token chunking when the query budget cannot cover the tree (Section 4.3),
+# induced stochastic token policy (Definition 2).
+# Interface (all solvers): started with no arguments, speaks the oracle protocol on
+# stdin/stdout (see data/core_synthetic/oracle_client.py).
 set -e
 cd /home/user
-python -m method.solve --instances "$1" --outputs "$2"
+exec python -m method.solve

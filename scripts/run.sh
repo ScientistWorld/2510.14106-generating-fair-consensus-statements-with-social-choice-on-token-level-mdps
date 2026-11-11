@@ -1,7 +1,7 @@
 #!/bin/bash
 # Job script (runs inside the compute container, workspace at /home/user, no internet).
-# Current job: the hardening audit (self-tests, reference, variants and shortcuts through the
-# hidden test). Restored to `bash scripts/reproduce.sh` once the audit is complete.
+# Current job: smoke tests and calibration of the redesigned evaluator. Restored to
+# `bash scripts/reproduce.sh` once the audit is complete.
 set -e
 cd /home/user
-bash hardening/run_job.sh
+bash hardening/smoke_job.sh

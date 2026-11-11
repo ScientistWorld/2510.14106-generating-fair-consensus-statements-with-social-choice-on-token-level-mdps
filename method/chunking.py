@@ -1,54 +1,80 @@
-"""Token chunking (paper Section 4.3).
+"""Token chunking (paper Section 4.3) under the oracle's query budget.
 
 Positions are partitioned into contiguous blocks of ``chunk_size`` tokens and decoding selects
 whole blocks. The paper leaves open how the candidate macro-actions are proposed; here each
-block's candidates are every participant's most likely block (so each viewpoint is represented
-in the chunked statement set) completed with the most likely blocks under the base model, the
-equal-weight mixture of the participants' block distributions (the analogue of a base model
-prompted with every opinion), up to ``num_candidates``. Agent policies in this environment do not
-depend on the prefix, so neither do the proposals. The chunked statement set C_K is the product of
-the per-block candidates; Algorithm 1 run on C_K yields a lottery in the ex-ante core relative to
-C_K.
+block's candidates at a chunk-start prefix are every participant's most likely continuation of
+the block (greedy decoding under that participant's policy, so each viewpoint is represented in
+the chunked statement set) and the greedy continuation under the base model, the equal-weight
+mixture of the participants' policies (the analogue of a base model prompted with every
+opinion). The chunked statement set C_K is the tree of block choices; Algorithm 1 run on C_K
+yields a lottery in the ex-ante core relative to C_K.
+
+The finest chunk size whose worst-case query cost fits the instance's budget is used; a tree
+small enough to query completely is enumerated instead.
 """
 
 from __future__ import annotations
 
 import math
-from itertools import product
 
 import numpy as np
 
-from method.nash_lottery import leaf_logutils
+
+def _mixture_logprobs(lp: np.ndarray) -> np.ndarray:
+    m = lp.max(axis=0)
+    return np.log(np.exp(lp - m).sum(axis=0)) + m - math.log(lp.shape[0])
 
 
-def _logsumexp0(x: np.ndarray) -> np.ndarray:
-    m = x.max(axis=0)
-    return np.log(np.exp(x - m).sum(axis=0)) + m
+def block_candidates(inst, start: tuple, length: int) -> list[tuple]:
+    """Greedy blocks of ``length`` tokens from prefix ``start``: one per agent, one for the mixture."""
+
+    n = inst.num_agents
+    paths = [list(start) for _ in range(n + 1)]  # rows 0..n-1: agents, row n: mixture
+    for _ in range(length):
+        lps = inst.logprobs_many([tuple(p) for p in paths])
+        for k, (path, lp) in enumerate(zip(paths, lps)):
+            row = lp[k] if k < n else _mixture_logprobs(lp)
+            path.append(int(np.argmax(row)))
+    blocks = []
+    for path in [paths[n]] + paths[:n]:
+        block = tuple(path[len(start):])
+        if block not in blocks:
+            blocks.append(block)
+    return blocks
 
 
-def chunk_candidates(logp: np.ndarray, chunk_size: int, num_candidates: int) -> list[np.ndarray]:
-    n, depth, branching = logp.shape
-    blocks_per_chunk = []
-    for start in range(0, depth, chunk_size):
-        stop = min(start + chunk_size, depth)
-        blocks = np.asarray(list(product(range(branching), repeat=stop - start)), dtype=np.int64)
-        block_logu = leaf_logutils(logp[:, start:stop, :], blocks)
-        mixture = _logsumexp0(block_logu) - math.log(n)
-        favourites = sorted(set(int(j) for j in np.argmax(block_logu, axis=1)), key=lambda j: -mixture[j])
-        chosen = favourites[:num_candidates]
-        for j in np.argsort(-mixture, kind="stable"):
-            if len(chosen) >= num_candidates:
-                break
-            if int(j) not in chosen:
-                chosen.append(int(j))
-        blocks_per_chunk.append(blocks[np.asarray(chosen)])
-    return blocks_per_chunk
+def chunk_query_cost(num_agents: int, depth: int, chunk_size: int) -> int:
+    """Worst-case number of distinct prefixes queried to build the chunked statement set."""
+
+    k = num_agents + 1
+    total, starts = 0, 1
+    for begin in range(0, depth, chunk_size):
+        length = min(chunk_size, depth - begin)
+        total += starts * (1 + k * (length - 1))
+        starts *= k
+    return total
 
 
-def chunked_leaves(blocks_per_chunk: list[np.ndarray]) -> np.ndarray:
-    leaves = blocks_per_chunk[0]
-    for blocks in blocks_per_chunk[1:]:
-        leaves = np.concatenate(
-            [np.repeat(leaves, len(blocks), axis=0), np.tile(blocks, (len(leaves), 1))], axis=1
-        )
-    return leaves
+def choose_chunk_size(num_agents: int, depth: int, budget: int) -> int:
+    for c in range(1, depth + 1):
+        if chunk_query_cost(num_agents, depth, c) <= budget:
+            return c
+    return depth
+
+
+def chunked_leaves(inst, chunk_size: int) -> list[tuple]:
+    frontier = [()]
+    for begin in range(0, inst.depth, chunk_size):
+        length = min(chunk_size, inst.depth - begin)
+        frontier = [prefix + block for prefix in frontier for block in block_candidates(inst, prefix, length)]
+    return frontier
+
+
+def full_tree_leaves(inst) -> list[tuple]:
+    """Query every prefix (level by level) and return every complete statement."""
+
+    level = [()]
+    for _ in range(inst.depth):
+        inst.logprobs_many(level)
+        level = [prefix + (a,) for prefix in level for a in range(inst.branching)]
+    return level
