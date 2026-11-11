@@ -1,0 +1,87 @@
+{
+  "experiments": {
+    "empirical_core_test": {
+      "_details": {
+        "slice": "test",
+        "split_rule": "fixed rho/seed grid in ascending order, then keep odd-indexed keys",
+        "num_instances": 12,
+        "required_methods_from_train": [],
+        "per_instance": [
+          {
+            "slice": "test",
+            "rho": 0.0,
+            "seed": 202511,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 0.0,
+            "seed": 202513,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202510,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202512,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202514,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 2.0,
+            "seed": 202511,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 2.0,
+            "seed": 202513,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202510,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202512,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202514,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 8.0,
+            "seed": 202511,
+            "policies": {}
+          },
+          {
+            "slice": "test",
+            "rho": 8.0,
+            "seed": 202513,
+            "policies": {}
+          }
+        ]
+      },
+      "results": {}
+    }
+  }
+}

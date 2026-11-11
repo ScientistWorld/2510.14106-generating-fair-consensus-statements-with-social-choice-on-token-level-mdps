@@ -1,0 +1,92 @@
+{
+  "experiments": {
+    "empirical_core_test": {
+      "_details": {
+        "slice": "train",
+        "split_rule": "fixed rho/seed grid in ascending order, then keep even-indexed keys",
+        "num_instances": 13,
+        "per_instance": [
+          {
+            "slice": "train",
+            "rho": 0.0,
+            "seed": 202510,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 0.0,
+            "seed": 202512,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 0.0,
+            "seed": 202514,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 1.0,
+            "seed": 202511,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 1.0,
+            "seed": 202513,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 2.0,
+            "seed": 202510,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 2.0,
+            "seed": 202512,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 2.0,
+            "seed": 202514,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 4.0,
+            "seed": 202511,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 4.0,
+            "seed": 202513,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 8.0,
+            "seed": 202510,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 8.0,
+            "seed": 202512,
+            "policies": {}
+          },
+          {
+            "slice": "train",
+            "rho": 8.0,
+            "seed": 202514,
+            "policies": {}
+          }
+        ]
+      },
+      "results": {}
+    }
+  }
+}

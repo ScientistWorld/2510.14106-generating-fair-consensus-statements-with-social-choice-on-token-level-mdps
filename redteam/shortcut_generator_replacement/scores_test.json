@@ -1,0 +1,431 @@
+{
+  "experiments": {
+    "empirical_core_test": {
+      "_details": {
+        "slice": "test",
+        "split_rule": "fixed rho/seed grid in ascending order, then keep odd-indexed keys",
+        "num_instances": 12,
+        "required_methods_from_train": [
+          "nash_welfare_policy",
+          "uniform_policy",
+          "utilitarian_policy"
+        ],
+        "per_instance": [
+          {
+            "slice": "test",
+            "rho": 0.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 0.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 2.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 2.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 8.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 8.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          }
+        ]
+      },
+      "results": {
+        "nash_welfare_policy": {
+          "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
+          "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.012345679012345671,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        },
+        "uniform_policy": {
+          "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
+          "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.012345679012345671,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        },
+        "utilitarian_policy": {
+          "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
+          "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.012345679012345678,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        }
+      }
+    }
+  }
+}

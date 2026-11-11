@@ -1,8 +1,4 @@
-# Once you set action to 'submit' or 'done', STOP immediately.
-# Do NOT sleep, poll, or wait for jobs. The system reads this file
-# only after your turn ends.
-action: pending
+action: submit
 gpus: 0
 test: false
-milestone: core_claim_plus
-notes: ""
+notes: "Run bundled gym audit: quality improvement and ablations, 3 optimizer seeds, brute force, and 16 shortcut probes through unmodified no-argument hidden evaluation; restore candidate files after each run."

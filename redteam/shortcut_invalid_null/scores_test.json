@@ -1,0 +1,21 @@
+{
+  "experiments": {
+    "empirical_core_test": {
+      "results": {
+        "nash_welfare_policy": {
+          "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
+          "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.012345679012345678,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        }
+      }
+    }
+  }
+}

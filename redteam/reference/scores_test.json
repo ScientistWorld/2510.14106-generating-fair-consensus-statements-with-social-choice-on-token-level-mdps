@@ -1,0 +1,431 @@
+{
+  "experiments": {
+    "empirical_core_test": {
+      "_details": {
+        "slice": "test",
+        "split_rule": "fixed rho/seed grid in ascending order, then keep odd-indexed keys",
+        "num_instances": 12,
+        "required_methods_from_train": [
+          "nash_welfare_policy",
+          "uniform_policy",
+          "utilitarian_policy"
+        ],
+        "per_instance": [
+          {
+            "slice": "test",
+            "rho": 0.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 0.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345671
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.011233123903864375
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.2787657370809855,
+                "mean_coalition_improvement": 1.2787657370809855,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345677
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.011187426384666023
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.018656354954402165
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.649187125721854,
+                "mean_coalition_improvement": 1.649187125721854,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345675
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 1.828588296317228,
+                "mean_coalition_improvement": 1.828588296317228,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.006831506887568019
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 1.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.010510063375869998
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 1.320728856594393,
+                "mean_coalition_improvement": 1.320728856594393,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345675
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 2.327089985873176,
+                "mean_coalition_improvement": 2.327089985873176,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.00348963057059409
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 2.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.017415730310092643
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 2.0007588908887044,
+                "mean_coalition_improvement": 2.0007588908887044,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345677
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 12.210014870099814,
+                "mean_coalition_improvement": 12.210014870099814,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.0011952540841048602
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 2.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.018204119298606082
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 2.614377202146118,
+                "mean_coalition_improvement": 2.614377202146118,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 7.5478610716564685,
+                "mean_coalition_improvement": 7.5478610716564685,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.001435568792235453
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202510,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.024726724296879145
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 6.092689739954987,
+                "mean_coalition_improvement": 6.092689739954987,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 17.70466812831288,
+                "mean_coalition_improvement": 17.70466812831288,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.0025593059880260295
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202512,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.03505846622360357
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 7.5355438798051635,
+                "mean_coalition_improvement": 7.5355438798051635,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345673
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 83581.92144996222,
+                "mean_coalition_improvement": 83581.92144996222,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 1.111464653994109e-06
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 4.0,
+            "seed": 202514,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.03979234229291083
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 7.586489260946938,
+                "mean_coalition_improvement": 7.586489260946938,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345677
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 3665.7489775537697,
+                "mean_coalition_improvement": 3665.7489775537697,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 1.3873315523633167e-05
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 8.0,
+            "seed": 202511,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.05977522077847753
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 7.623765211855143,
+                "mean_coalition_improvement": 7.623765211855143,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 2778272.1432726793,
+                "mean_coalition_improvement": 2778272.1432726793,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 2.1503418971487437e-08
+              }
+            }
+          },
+          {
+            "slice": "test",
+            "rho": 8.0,
+            "seed": 202513,
+            "policies": {
+              "nash_welfare_policy": {
+                "max_coalition_improvement": 1.0,
+                "mean_coalition_improvement": 1.0,
+                "coalition_violation_rate": 0.0,
+                "core_constraint_satisfied": 1.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.06764586822401893
+              },
+              "uniform_policy": {
+                "max_coalition_improvement": 9.042886736641135,
+                "mean_coalition_improvement": 9.042886736641135,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 0.012345679012345678
+              },
+              "utilitarian_policy": {
+                "max_coalition_improvement": 134257.86021201633,
+                "mean_coalition_improvement": 134257.86021201633,
+                "coalition_violation_rate": 1.0,
+                "core_constraint_satisfied": 0.0,
+                "distribution_simplex_l1_error": 0.0,
+                "min_agent_expected_utility": 3.729290123439734e-07
+              }
+            }
+          }
+        ]
+      },
+      "results": {
+        "nash_welfare_policy": {
+          "max_coalition_improvement": 1.0,
+          "mean_coalition_improvement": 1.0,
+          "coalition_violation_rate": 0.0,
+          "core_constraint_satisfied": 1.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.010510063375869998,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.0,
+          "rho_2_max_coalition_improvement": 1.0,
+          "rho_4_max_coalition_improvement": 1.0,
+          "rho_8_max_coalition_improvement": 1.0
+        },
+        "uniform_policy": {
+          "max_coalition_improvement": 9.042886736641135,
+          "mean_coalition_improvement": 4.062099386802952,
+          "coalition_violation_rate": 0.8333333333333334,
+          "core_constraint_satisfied": 0.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 0.012345679012345671,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 1.649187125721854,
+          "rho_2_max_coalition_improvement": 2.614377202146118,
+          "rho_4_max_coalition_improvement": 7.586489260946938,
+          "rho_8_max_coalition_improvement": 9.042886736641135
+        },
+        "utilitarian_policy": {
+          "max_coalition_improvement": 2778272.1432726793,
+          "mean_coalition_improvement": 249985.19101121367,
+          "coalition_violation_rate": 0.75,
+          "core_constraint_satisfied": 0.0,
+          "distribution_simplex_l1_error": 0.0,
+          "min_agent_expected_utility": 2.1503418971487437e-08,
+          "rho_0_max_coalition_improvement": 1.0,
+          "rho_1_max_coalition_improvement": 2.327089985873176,
+          "rho_2_max_coalition_improvement": 12.210014870099814,
+          "rho_4_max_coalition_improvement": 83581.92144996222,
+          "rho_8_max_coalition_improvement": 2778272.1432726793
+        }
+      }
+    }
+  }
+}
