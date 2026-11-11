@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim_plus
-notes: "Hardening audit: exactness self-tests; reference alone on train/test (official scores); all variants and shortcuts through the no-argument hidden test and train; workspace-mutation probe; summary and validate"
+notes: "Hardened: deep test rebuilt as prefix-dependent 12-token trees behind a 1,500-query oracle with exact NW optimum and exact all-coalition blocking; small-tree core test is a hard gate. Reference deep efficiency 0.772; better variants +0.22 (40/40 paired wins); weaker -0.058; zero seed spread; all shortcuts fail or tie. See HARDENING.md."
