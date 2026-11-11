@@ -1,4 +1,2 @@
-action: submit
-gpus: 0
-test: false
-notes: "Run bundled gym audit: quality improvement and ablations, 3 optimizer seeds, brute force, and 16 shortcut probes through unmodified no-argument hidden evaluation; restore candidate files after each run."
+action: done
+notes: "Completed 26-run audit: honest quality ordering passes; major shortcuts, metric saturation and cohort-dependent constraint failure documented in REDTEAM.md."
