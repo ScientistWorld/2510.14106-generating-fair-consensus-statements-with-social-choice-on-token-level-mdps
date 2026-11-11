@@ -11,5 +11,6 @@ The paper represents each participant's opinion as a next-token policy and uses 
 
 ## Key Results
 
-- In the synthetic core test, the Nash-welfare policy remains unblocked with maximum coalition improvement equal to 1.
-- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead.
+- In the synthetic core test, the Nash-welfare policy remains unblocked with maximum coalition improvement equal to 1, while uniform and utilitarian policies become blockable as polarization grows.
+- Enumerating every complete statement becomes infeasible for long statements; the paper restricts attention to chunked statement sets, for which the core guarantee holds only relative to the restricted set and no constant-factor Nash-welfare guarantee exists (Theorem 2).
+- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead (not part of this gym's executable benchmark).

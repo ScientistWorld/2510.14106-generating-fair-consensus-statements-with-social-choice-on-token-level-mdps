@@ -2,16 +2,25 @@
 
 ## Research Problem
 
-This benchmark studies fair aggregation of multiple text-like preference policies into a collective stochastic outcome. The goal is to improve social-choice fairness in generated consensus outcomes, not to solve a separate language-modeling task.
+Fair aggregation of several participants' token-level preferences into a collective stochastic
+outcome over complete statements, with fairness judged by coalitional stability (ex-ante core)
+and Nash welfare.
 
 ## Core Contribution
 
-Work should remain within token-level MDP or finite-outcome social-choice aggregation. Improvements should change how participant utilities over generated continuations are combined into a fair outcome.
+Improvements should change how a fair lottery over statements is found, especially when the
+statement tree is far too large to list: which statements to consider, how to search the tree,
+how to optimise the lottery, and how to keep it stable against coalitions that can use any
+statement of the tree.
 
 ## Approach Scope
 
-Scientists may change optimization methods, approximations, search procedures, or lottery construction as long as the artifact remains a distribution over generated leaves and is evaluated by the same coalition-blocking test.
+Any optimisation, search, approximation or decoding procedure is in scope, as long as the output
+is a stochastic token policy over the given tree, computed from the participants' policies on
+each instance within the time limit.
 
 ## Out of Bounds
 
-Replacing the benchmark with a classifier, a learned surrogate predictor of the score, or a text generator that bypasses the utility-and-lottery structure is out of scope. Reporting a deterministic single leaf as if it were a fair lottery is also out of scope unless the resulting distribution is explicitly evaluated by the same blocking metric.
+Reading or reconstructing the held-out instances, hard-coding answers for known instances,
+editing the evaluator or generator, or bypassing the failure rule. Trading coalitional stability
+on small trees for welfare is not an improvement: such runs fail.

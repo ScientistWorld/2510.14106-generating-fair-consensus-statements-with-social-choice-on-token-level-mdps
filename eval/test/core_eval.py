@@ -593,7 +593,10 @@ def run_evaluation(instances: list[dict], *, split: str, scores_path: Path, work
                 raw[exp].setdefault(baseline, []).append(metric_fn(ctx, log_u))
     print(f"[{split}] scored evaluator baselines ({time.time() - t0:.1f}s)", flush=True)
 
-    scratch = Path(tempfile.mkdtemp(prefix=f"core_eval_{split}_"))
+    # Solver outputs can be large; keep scratch space in the workspace rather than a small /tmp.
+    scratch_root = workspace / "tmp"
+    scratch_root.mkdir(parents=True, exist_ok=True)
+    scratch = Path(tempfile.mkdtemp(prefix=f"core_eval_{split}_", dir=str(scratch_root)))
     instance_dir = scratch / "instances"
     try:
         solvers = discover_solvers(workspace)
