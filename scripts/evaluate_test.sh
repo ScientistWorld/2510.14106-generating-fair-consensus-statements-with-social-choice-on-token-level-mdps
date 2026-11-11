@@ -1,15 +1,8 @@
 #!/bin/bash
-# Held-out test-slice evaluation. Mirrors scripts/evaluate.sh's artifact contract
-# but writes scoring/scores_test.json and requires methods seen in train scores.
-
+# Held-out test evaluation. Takes no arguments: writes the hidden test instances, runs every
+# solver in scripts/solvers/*.sh on them, and writes every method's numbers (plus the
+# evaluator-owned baselines) to scoring/scores_test.json.
 set -e
-
 cd /home/user
-
 mkdir -p scoring
-
-INPUT_DIR="${1:-checkpoints/core_test}"
-python -m eval.test.evaluate_core_test \
-  --input-dir "$INPUT_DIR" \
-  --scores scoring/scores_test.json \
-  --train-scores scoring/scores_train.json
+python -m eval.test.evaluate --scores scoring/scores_test.json

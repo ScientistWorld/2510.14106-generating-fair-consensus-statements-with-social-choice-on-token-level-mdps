@@ -1,14 +1,6 @@
 #!/bin/bash
-# Run the paper's proposed method.
-#
-# This script trains/runs the paper's method using code in method/.
-#
-# Usage:
-#   bash scripts/method.sh
-
+# Run the paper's method (scripts/solvers/nash_welfare_policy.sh) on the public training
+# instances and score it, together with every other solver on disk and the baselines.
 set -e
-
 cd /home/user
-
-python -m method.run_core_test "$@"
-bash scripts/evaluate.sh checkpoints/core_test
+bash scripts/evaluate.sh

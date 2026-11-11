@@ -1,16 +1,7 @@
 #!/bin/bash
-# Example job script submitted via the end-of-turn YAML block.
-#
-# This runs inside the compute container with:
-#   - Your workspace mounted at /home/user
-#   - GPU(s) available
-#   - No internet access
-#
-# Make sure all data, code, and dependencies are already in the
-# workspace or baked into the container before submitting.
-
+# Job script (runs inside the compute container, workspace at /home/user, no internet).
+# Current job: the hardening audit (self-tests, reference, variants and shortcuts through the
+# hidden test). Restored to `bash scripts/reproduce.sh` once the audit is complete.
 set -e
-
 cd /home/user
-
-bash scripts/reproduce.sh
+bash hardening/run_job.sh
