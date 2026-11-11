@@ -51,7 +51,7 @@ LOG10_ALPHA_CAP = 12.0
 SIMPLEX_TOLERANCE = 1e-6
 MAX_MESSAGE_BYTES = 256 * 1024 * 1024
 MAX_PREFIXES_PER_QUERY = 100_000
-CLOSE_GRACE_SECONDS = 30.0
+CLOSE_GRACE_SECONDS = 10.0
 BASELINES = ("uniform_policy", "utilitarian_policy", "random_dictatorship_policy")
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 HEADER_KEYS = ("instance_id", "experiment", "branching", "depth", "num_agents", "rho", "query_budget")
@@ -183,7 +183,7 @@ def nash_optimum(leaf_logu: np.ndarray, tol: float = 1e-10) -> tuple[float, floa
     a = None
     for _ in range(2000):
         sub = v_all[:, cols]
-        p, _ = nash_fw(sub, tol=tol * 1e-2, max_iter=500_000, init=p)
+        p, _ = nash_fw(sub, tol=tol * 0.1, max_iter=200_000, init=p)
         a = sub @ p
         g = vt_all @ (1.0 / a)
         gp = float(g[cols] @ p)
