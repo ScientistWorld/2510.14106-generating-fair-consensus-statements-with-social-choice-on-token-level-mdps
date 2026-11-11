@@ -43,7 +43,7 @@
       "description": "Deep prefix-dependent token trees (B=3, depth 12, 531,441 complete statements, six agents, d=8, a fresh token vector at every prefix, rho in {0.4, 0.8, 1.6, 3.2}). Solvers see the agents' policies only through a query oracle with 1,500 prefix queries per instance (0.56% of the 265,720 prefixes), the regime in which the paper resorts to token chunking (Section 4.3, Theorem 2). Outcomes are judged against the full tree: Nash welfare against the exact optimum, and exact proportional blocking by every coalition using any statement.",
       "weight": 0.6,
       "primary_metric": "nash_welfare_efficiency",
-      "_note": "The paper reports no number for this setting (it states only that chunking guarantees the core relative to the chunked statement set, that Nash welfare over it cannot exceed the full optimum, and that no constant-factor guarantee exists). The proposed-method value below is the gym's reference run of the paper's chunked method on the held-out slice, not a paper number.",
+      "_note": "The paper reports no number for this setting (it states only that chunking guarantees the core relative to the chunked statement set, that Nash welfare over it cannot exceed the full optimum, and that no constant-factor guarantee exists). The proposed-method value below (0.7724) is the gym's reference run of the paper's chunked method (Algorithm 1 on the chunked statement set, chunk size 4, greedy block proposals) on the held-out slice, not a paper number.",
       "metrics": {
         "nash_welfare_efficiency": {
           "higher_is_better": true,
@@ -69,7 +69,7 @@
       "results": {
         "nash_welfare_policy": {
           "type": "proposed",
-          "nash_welfare_efficiency": 0.85
+          "nash_welfare_efficiency": 0.7724
         },
         "uniform_policy": {
           "type": "baseline"

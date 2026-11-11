@@ -34,5 +34,10 @@
 - Removed an unverified supplemental deterministic-search path from active scripts and source files so the gym exposes only completed scored results.
 - Confirmed `python validate.py --compare` passes with the core benchmark and train/test split checks enabled.
 
+### [2026-11-11 06:30] - core_claim_plus
+- Hardening (final iteration): the deep-tree experiment now uses prefix-dependent 12-token trees (531,441 statements) seen through a query-budgeted oracle (1,500 of 265,720 prefixes); the evaluator holds the full tree and scores Nash welfare against the exact optimum and exact blocking by every coalition.
+- The paper's Section 4.2 core test (B=3, L=4, six agents, rho on linspace(0.6, 5, 20)) is served through the same oracle and is a hard gate; the reference stays at alpha* = 1 on all 100 held-out instances while uniform (9.90), utilitarian (2.75e5) and random dictatorship (1.21) are blockable.
+- Reference (Algorithm 1 + Section 4.3 chunking) on held-out deep trees: efficiency 0.772, mean log10 alpha* 0.300; better variants +0.22 (40/40 paired wins), coarser chunking -0.058 (39/40 losses), seed spread ~1e-12; every shortcut fails or ties. Details in HARDENING.md.
+
 ## Stop Justification
 - Completed at milestone `core_claim_plus`.

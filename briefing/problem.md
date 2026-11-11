@@ -20,20 +20,27 @@ proportional share of the probability and use it to make every member better off
 Statements are built token by token on a tree with a fixed number of candidate tokens per step
 and a fixed length. Participant i's utility for a complete statement X is the probability its
 policy assigns to X (the product of its next-token probabilities along X); its utility for a
-lottery p is the expected value under p. In the synthetic environment used here (from the paper),
-participant policies are softmax functions of random participant and token embeddings, and a
-polarization parameter rho controls how strongly participants disagree.
+lottery p is the expected value under p. In the synthetic environments used here (from the
+paper), participant policies are softmax functions of random participant and token embeddings,
+and a polarization parameter rho controls how strongly participants disagree.
+
+Participants' policies are only available through queries, as with language models: one query
+returns every participant's next-token probabilities at one prefix, and each instance has a
+query budget.
 
 Two regimes are studied:
 
-- **Small trees** (4 tokens, 81 complete statements): every statement can be listed.
-- **Deep trees** (24 tokens, about 2.8 * 10^11 complete statements): listing every statement is
-  infeasible, yet fairness is still judged against all of them.
+- **Small trees** (4 tokens, 81 complete statements, the paper's Section 4.2 setting): the
+  budget covers every prefix, so every statement can be listed.
+- **Deep trees** (12 tokens, 531,441 complete statements, next-token distributions that depend
+  on the whole prefix): the budget covers 1,500 of the 265,720 prefixes, so only a small part of
+  the tree can ever be seen, yet fairness is judged against all of it.
 
 ## Success Criteria
 
 - No coalition of participants can block the outcome: using its proportional share of
   probability, no coalition can raise the expected utility of all its members (ex-ante core).
 - The outcome has high Nash welfare (product of participants' expected utilities).
-- On deep trees, as much welfare and as little coalitional blocking as possible relative to the
-  full statement tree, within a fixed compute budget per run.
+- On deep trees, as much Nash welfare (relative to the best lottery over the whole tree) and as
+  little coalitional blocking (by any coalition, using any statement of the tree) as possible
+  within the query budget.

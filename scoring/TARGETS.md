@@ -14,12 +14,16 @@ Violating this on any instance fails the run in every experiment.
 
 ## Primary: deep_tree_core_test
 
-Fair outcomes on statement trees too large to enumerate, judged against the full tree.
+Fair outcomes on prefix-dependent statement trees seen through a query budget, judged against
+the full tree.
 
-- **Primary metric:** `nash_welfare_ideal_fraction` (higher is better)
+- **Primary (benefit) metric:** `nash_welfare_efficiency` (higher is better; 1 = the best
+  lottery over the whole tree)
 - **Constraint metrics:** `mean_log10_coalition_improvement` and `coalition_violation_rate`
-  (lower is better; 0 means no coalition of up to three participants can block)
+  (lower is better; 0 means no coalition can block using any statement of the tree)
 - **Diagnostic:** `worst_agent_ideal_fraction` (not ranked)
+- **Reference:** the paper's chunked method reaches 0.772 efficiency, mean log10 alpha* 0.300 and
+  violation rate 0.95 on the held-out slice (no paper number exists for this setting).
 
 ## How to run
 
