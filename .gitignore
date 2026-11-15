@@ -7,6 +7,12 @@ checkpoints/
 *.bin
 *.npy
 *.npz
+# Language-model token trees of lm_consensus_search (~1 MB each, built by
+# data/lm_consensus/build_trees.py): committed, the evaluator reads them.
+!data/lm_consensus/trees/*.npz
+!eval/test/lm_trees/*.npz
+data/lm_consensus/trees/.*.tmp.npz
+eval/test/lm_trees/.*.tmp.npz
 *.h5
 *.hdf5
 *.pkl

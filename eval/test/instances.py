@@ -5,14 +5,28 @@ trees and the deep prefix-dependent trees), but the seeds below are 128-bit secr
 here, and this is a private copy of the generator, so editing public data code cannot change the
 test ground truth. Solvers never see these parameters: the evaluator serves the agents' policies
 through its query oracle.
+
+The language-model consensus trees (lm_consensus_search) come from held-out scenarios whose
+issues and opinions exist only in ``lm_scenarios.json`` here; their trees were built once with
+the public builder (data/lm_consensus/build_trees.py) and are stored in ``lm_trees/``, also
+private to this directory. The hidden test only reads them; it never runs the language model.
 """
 
 from __future__ import annotations
+
+import json
+from pathlib import Path
 
 import numpy as np
 
 EMPIRICAL = "empirical_core_test"
 DEEP = "deep_tree_core_test"
+LM = "lm_consensus_search"
+
+_HERE = Path(__file__).resolve().parent
+_LM_SCENARIOS = _HERE / "lm_scenarios.json"
+_LM_TREES = _HERE / "lm_trees"
+LM_SETTINGS = {"branching": 4, "depth": 8, "query_budget": 200}
 
 SETTINGS = {
     EMPIRICAL: {
@@ -99,13 +113,36 @@ def test_specs() -> list[dict]:
                                            "token_vectors", "query_budget")},
                 })
                 counter += 1
+    for sc in json.loads(_LM_SCENARIOS.read_text(encoding="utf-8")):
+        specs.append({
+            "instance_id": sc["id"],
+            "experiment": LM,
+            "seed": None,
+            "rho": None,
+            "num_agents": len(sc["opinions"]),
+            "tree_file": str(_LM_TREES / f"{sc['id']}.npz"),
+            **LM_SETTINGS,
+        })
     return specs
 
 
 _CACHE: dict = {}
 
 
-def build_levels(spec: dict) -> list:
+def _lm_levels(spec: dict) -> dict:
+    depth, b, n = int(spec["depth"]), int(spec["branching"]), int(spec["num_agents"])
+    with np.load(spec["tree_file"]) as z:
+        agents = [z[f"agents_{t}"].astype(np.float64) for t in range(depth)]
+        base = [z[f"base_{t}"].astype(np.float64) for t in range(depth)]
+    for t in range(depth):
+        if agents[t].shape != (n, b ** t, b) or base[t].shape != (b ** t, b):
+            raise ValueError(f"{spec['tree_file']}: unexpected shape at level {t}")
+    return {"agents": agents, "base": base}
+
+
+def build_levels(spec: dict):
+    if spec["experiment"] == LM:
+        return _lm_levels(spec)
     key = (spec["experiment"], spec["seed"])
     if key not in _CACHE:
         _CACHE.clear()

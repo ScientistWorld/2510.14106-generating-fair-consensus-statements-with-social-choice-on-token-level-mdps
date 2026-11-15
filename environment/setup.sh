@@ -17,3 +17,6 @@
 set -e
 
 uv pip install --system numpy scipy
+# Language-model tree building (data/lm_consensus/build_trees.py, run once on a GPU node).
+# Neither the evaluator nor the reference solver needs these.
+uv pip install --system torch==2.5.1 transformers==4.46.3

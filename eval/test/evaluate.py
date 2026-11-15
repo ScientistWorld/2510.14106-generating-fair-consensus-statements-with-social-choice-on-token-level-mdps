@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Hidden-test scoring: run every solver on disk on held-out instances served by the oracle."""
+"""Hidden-test scoring: run every solver on disk on held-out instances served by the oracle.
+
+Takes no arguments: every experiment (the synthetic core tests and the language-model consensus
+search) is scored for every solver in scripts/solvers/."""
 
 from __future__ import annotations
 

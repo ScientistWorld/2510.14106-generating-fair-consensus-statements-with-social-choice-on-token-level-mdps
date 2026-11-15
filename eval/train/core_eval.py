@@ -16,10 +16,16 @@ deep_tree_core_test   B=3, L=12 trees (531,441 complete statements) with prefix-
                       policies; a solver may query 1,500 of the 265,720 prefixes. Nash welfare is
                       compared with the exact optimum over the full tree, and blocking is
                       computed exactly for every coalition over every statement.
+lm_consensus_search   Paper Section 6.3: B=4, L=8 trees from a real language model (the base
+                      model's four most likely tokens at every prefix; participants' policies are
+                      the model prompted with each opinion). The solver returns ONE statement (a
+                      deterministic policy); its egalitarian perplexity is compared with the best
+                      statement of the full tree (65,536 statements, computed exactly).
 
 A run that crashes, exceeds the time limit, breaks the protocol, omits an instance, returns an
-invalid policy, or fails the core constraint of empirical_core_test receives the worst value of
-every scored metric in every experiment.
+invalid policy (or, on lm_consensus_search, more than one statement), or fails the core
+constraint of empirical_core_test receives the worst value of every scored metric in every
+experiment.
 """
 
 from __future__ import annotations
@@ -33,6 +39,7 @@ import signal
 import subprocess
 import time
 import traceback
+import zlib
 from itertools import combinations
 from pathlib import Path
 
@@ -41,7 +48,8 @@ from scipy.optimize import linprog
 
 EMPIRICAL = "empirical_core_test"
 DEEP = "deep_tree_core_test"
-EXPERIMENTS = (EMPIRICAL, DEEP)
+LM = "lm_consensus_search"
+EXPERIMENTS = (EMPIRICAL, DEEP, LM)
 
 CORE_TOLERANCE = 1e-6
 SNAP_TOLERANCE = 1e-6
@@ -52,7 +60,14 @@ SIMPLEX_TOLERANCE = 1e-6
 MAX_MESSAGE_BYTES = 256 * 1024 * 1024
 MAX_PREFIXES_PER_QUERY = 100_000
 CLOSE_GRACE_SECONDS = 10.0
-BASELINES = ("uniform_policy", "utilitarian_policy", "random_dictatorship_policy")
+CORE_BASELINES = ("uniform_policy", "utilitarian_policy", "random_dictatorship_policy")
+LM_BASELINES = ("base_greedy_statement", "best_of_n_statement", "habermas_vote_statement")
+BASELINES = CORE_BASELINES + LM_BASELINES
+BASELINES_BY_EXPERIMENT = {EMPIRICAL: CORE_BASELINES, DEEP: CORE_BASELINES, LM: LM_BASELINES}
+LM_BON_N = 4  # candidates of Best-of-N and of the Habermas-style vote (paper Section 6.3)
+LM_REPLICATES = 200  # sampled baselines are averaged over this many fixed-seed draws
+LM_BASELINE_SEED = 20251016
+LM_OPTIMAL_TOLERANCE = 1e-9
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
 HEADER_KEYS = ("instance_id", "experiment", "branching", "depth", "num_agents", "rho", "query_budget")
 
@@ -305,9 +320,13 @@ def log_max_coalition_improvement(leaf_logu: np.ndarray, log_u: np.ndarray, coal
 
 
 class Tree:
-    """All agents' next-token log-probabilities at every prefix, and every statement's utility."""
+    """All agents' next-token log-probabilities at every prefix, and every statement's utility.
 
-    def __init__(self, levels: list):
+    ``base_levels`` (language-model trees only) holds the base model's log-probabilities of the
+    candidate tokens, served to solvers next to the participants' and used by the baselines.
+    """
+
+    def __init__(self, levels: list, base_levels: list | None = None):
         self.levels = [np.asarray(lp, dtype=np.float64) for lp in levels]
         self.num_agents, _, self.branching = self.levels[0].shape
         self.depth = len(self.levels)
@@ -315,15 +334,35 @@ class Tree:
         for lp in self.levels:
             lu = (lu[:, :, None] + lp).reshape(self.num_agents, -1)
         self.leaf_logu = lu
+        self.base_levels = None
+        self.base_leaf_logu = None
+        if base_levels is not None:
+            self.base_levels = [np.asarray(b, dtype=np.float64) for b in base_levels]
+            bu = np.zeros(1)
+            for b in self.base_levels:
+                bu = (bu[:, None] + b).reshape(-1)
+            self.base_leaf_logu = bu
+
+    @staticmethod
+    def build(built) -> "Tree":
+        if isinstance(built, dict):
+            return Tree(built["agents"], built.get("base"))
+        return Tree(built)
+
+    def _row(self, prefix: tuple) -> int:
+        idx = 0
+        for a in prefix:
+            idx = idx * self.branching + a
+        return idx
 
     def prefix_logprobs(self, prefix: tuple) -> np.ndarray:
         lp = self.levels[len(prefix)]
         if lp.shape[1] == 1:
             return lp[:, 0, :]
-        idx = 0
-        for a in prefix:
-            idx = idx * self.branching + a
-        return lp[:, idx, :]
+        return lp[:, self._row(prefix), :]
+
+    def prefix_base_logprobs(self, prefix: tuple) -> np.ndarray:
+        return self.base_levels[len(prefix)][self._row(prefix)]
 
 
 def _policy_rows(policy: dict, keys: list) -> list:
@@ -446,7 +485,112 @@ def instance_metrics(experiment: str, tree: Tree, ref: dict, log_u: np.ndarray, 
     return row
 
 
+# ---------------------------------------------------------------------------
+# Language-model consensus search (single statements, egalitarian perplexity)
+# ---------------------------------------------------------------------------
+
+
+def lm_reference_data(tree: Tree) -> dict:
+    """Every statement's egalitarian welfare min_i U_i^log(X); its best and worst values (exact)."""
+
+    ew = tree.leaf_logu.min(axis=0)
+    return {"ew_leaf": ew, "ew_star": float(ew.max()), "ew_min": float(ew.min()),
+            "base_min": float(tree.base_leaf_logu.min())}
+
+
+def lm_statement_row(tree: Tree, ref: dict, x: int) -> dict:
+    """EPPL(X) = max_i exp(-U_i^log(X) / L) (paper Section 6.3) and its log-gap to the best statement."""
+
+    depth = tree.depth
+    ew = float(ref["ew_leaf"][x])
+    regret = max(0.0, (ref["ew_star"] - ew) / depth)
+    return {
+        "egalitarian_perplexity": math.exp(-ew / depth),
+        "log_eppl_regret": regret,
+        "optimal": 1.0 if regret <= LM_OPTIMAL_TOLERANCE else 0.0,
+        "base_perplexity": math.exp(-float(tree.base_leaf_logu[x]) / depth),
+    }
+
+
+def lm_worst_row(tree: Tree, ref: dict) -> dict:
+    """The worst statement of the tree on every metric (what a failed run receives)."""
+
+    depth = tree.depth
+    return {
+        "egalitarian_perplexity": math.exp(-ref["ew_min"] / depth),
+        "log_eppl_regret": (ref["ew_star"] - ref["ew_min"]) / depth,
+        "optimal": 0.0,
+        "base_perplexity": math.exp(-ref["base_min"] / depth),
+    }
+
+
+def _mean_rows(rows: list[dict]) -> dict:
+    return {k: float(np.mean([r[k] for r in rows])) for k in rows[0]}
+
+
+def sample_statements(tree: Tree, rng: np.random.Generator, count: int) -> np.ndarray:
+    """Statements sampled from the base model (temperature 1, renormalised over the candidates)."""
+
+    idx = np.zeros(count, dtype=np.int64)
+    for t in range(tree.depth):
+        rows = tree.base_levels[t][idx]
+        p = np.exp(rows - rows.max(axis=1, keepdims=True))
+        p /= p.sum(axis=1, keepdims=True)
+        a = (np.cumsum(p, axis=1) < rng.random(count)[:, None]).sum(axis=1)
+        idx = idx * tree.branching + np.minimum(a, tree.branching - 1)
+    return idx
+
+
+def schulze_winner(util: np.ndarray) -> int:
+    """Schulze winner among k candidates ranked by each voter's utilities (n_voters, k)."""
+
+    k = util.shape[1]
+    d = np.zeros((k, k))
+    for a in range(k):
+        for b in range(k):
+            if a != b:
+                d[a, b] = float((util[:, a] > util[:, b]).sum())
+    p = np.where(d > d.T, d, 0.0)
+    for c in range(k):
+        for a in range(k):
+            for b in range(k):
+                if len({a, b, c}) == 3:
+                    p[a, b] = max(p[a, b], min(p[a, c], p[c, b]))
+    for a in range(k):
+        if all(p[a, b] >= p[b, a] for b in range(k) if b != a):
+            return a
+    return 0
+
+
+def lm_baseline_statements(tree: Tree, ref: dict, instance_id: str) -> dict:
+    """Evaluator-owned single-statement baselines (paper Section 6.3), as lists of statements:
+
+    base_greedy_statement    the base model's greedy decode (its own consensus statement);
+    best_of_n_statement      Best-of-N: N=4 base-model samples, the one with the lowest EPPL;
+    habermas_vote_statement  Habermas-style post-hoc vote: N=4 base-model samples, each participant
+                             ranks them by its own likelihood, Schulze winner (no critique round).
+    Sampled baselines use LM_REPLICATES fixed-seed draws; their metrics are averaged over them.
+    """
+
+    idx = 0
+    for t in range(tree.depth):
+        idx = idx * tree.branching + int(np.argmax(tree.base_levels[t][idx]))
+    rng = np.random.default_rng([LM_BASELINE_SEED, zlib.crc32(instance_id.encode())])
+    samples = sample_statements(tree, rng, LM_REPLICATES * LM_BON_N).reshape(LM_REPLICATES, LM_BON_N)
+    best = samples[np.arange(LM_REPLICATES), np.argmax(ref["ew_leaf"][samples], axis=1)]
+    vote = [int(row[schulze_winner(tree.leaf_logu[:, row])]) for row in samples]
+    return {"base_greedy_statement": [idx], "best_of_n_statement": [int(x) for x in best],
+            "habermas_vote_statement": vote}
+
+
 def aggregate(experiment: str, rows: list[dict]) -> dict:
+    if experiment == LM:
+        return {
+            "log_eppl_regret": float(np.mean([r["log_eppl_regret"] for r in rows])),
+            "egalitarian_perplexity": float(np.mean([r["egalitarian_perplexity"] for r in rows])),
+            "optimal_statement_rate": float(np.mean([r["optimal"] for r in rows])),
+            "base_perplexity": float(np.mean([r["base_perplexity"] for r in rows])),
+        }
     eff = float(np.mean([r["nash_welfare_efficiency"] for r in rows]))
     if experiment == EMPIRICAL:
         alpha_max = float(min(max(r["max_coalition_improvement"] for r in rows), ALPHA_CAP))
@@ -574,7 +718,9 @@ def _valid_prefix(p, branching: int, depth: int) -> bool:
 def serve_instance(session: SolverSession, spec: dict, tree: Tree):
     """Send one instance, answer its queries within budget, return (policy, queries used)."""
 
-    session.send({"type": "instance", **{k: spec[k] for k in HEADER_KEYS}})
+    header = {k: spec[k] for k in HEADER_KEYS}
+    header["output"] = "statement" if spec["experiment"] == LM else "lottery"
+    session.send({"type": "instance", **header})
     budget = int(spec["query_budget"])
     seen: set = set()
     while True:
@@ -596,11 +742,14 @@ def serve_instance(session: SolverSession, spec: dict, tree: Tree):
                                                           f"batch needs {len(new)} more"})
                 continue
             seen |= new
-            session.send({
+            reply = {
                 "type": "logprobs",
                 "logprobs": [tree.prefix_logprobs(k).tolist() for k in keys],
                 "queries_used": len(seen),
-            })
+            }
+            if tree.base_levels is not None:
+                reply["base_logprobs"] = [tree.prefix_base_logprobs(k).tolist() for k in keys]
+            session.send(reply)
         elif kind == "policy":
             session.send({"type": "accepted"})
             return message.get("policy"), len(seen)
@@ -641,14 +790,18 @@ def _solver_name(script: Path, used: set) -> str:
 
 
 def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: Path, workspace: Path,
-                   timeout: float, log_dir: Path) -> dict:
+                   timeout: float, log_dir: Path, experiments=None) -> dict:
     """Instance by instance: build the tree once, score the evaluator baselines, then serve the
     instance to every solver still running (all solvers run side by side, each waiting for its
-    next instance) and score its policy."""
+    next instance) and score its output. ``experiments`` (default: all) restricts a diagnostic
+    run to some experiments; the official scores always use all of them."""
 
     t0 = time.time()
+    if experiments:
+        specs = [s for s in specs if s["experiment"] in experiments]
     by_exp = {exp: [s for s in specs if s["experiment"] == exp] for exp in EXPERIMENTS}
-    coalitions = {n: all_coalitions(n) for n in {int(s["num_agents"]) for s in specs}}
+    active = [exp for exp in EXPERIMENTS if by_exp[exp]]
+    coalitions = {n: all_coalitions(n) for n in {int(s["num_agents"]) for s in specs if s["experiment"] != LM}}
     log_dir.mkdir(parents=True, exist_ok=True)
 
     used_names: set[str] = set(BASELINES)
@@ -666,6 +819,7 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
     raw: dict[str, dict[str, list[dict]]] = {exp: {} for exp in EXPERIMENTS}
     used_queries: dict[str, dict[str, list[int]]] = {name: {exp: [] for exp in EXPERIMENTS} for name in sessions}
     refs: dict[str, dict] = {}
+    lm_worst_rows: list[dict] = []
 
     def fail(name: str, reason: str) -> None:
         failures.setdefault(name, []).append(reason)
@@ -675,17 +829,29 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
 
     for count, spec in enumerate(specs, 1):
         exp = spec["experiment"]
-        tree = Tree(build_levels(spec))
-        ref = refs[spec["instance_id"]] = reference_data(tree)
-        for name, log_u in baseline_utilities(tree).items():
-            raw[exp].setdefault(name, []).append(
-                instance_metrics(exp, tree, ref, log_u, coalitions[tree.num_agents]))
+        tree = Tree.build(build_levels(spec))
+        if exp == LM:
+            ref = refs[spec["instance_id"]] = lm_reference_data(tree)
+            lm_worst_rows.append(lm_worst_row(tree, ref))
+            for name, statements in lm_baseline_statements(tree, ref, spec["instance_id"]).items():
+                raw[exp].setdefault(name, []).append(_mean_rows([lm_statement_row(tree, ref, x) for x in statements]))
+        else:
+            ref = refs[spec["instance_id"]] = reference_data(tree)
+            for name, log_u in baseline_utilities(tree).items():
+                raw[exp].setdefault(name, []).append(
+                    instance_metrics(exp, tree, ref, log_u, coalitions[tree.num_agents]))
         for name in list(alive):
             try:
                 policy, n_queries = serve_instance(sessions[name], spec, tree)
                 ids, probs = execute_policy(policy, tree.branching, tree.depth)
-                log_u = log_expected_utilities(tree.leaf_logu, ids, probs)
-                row = instance_metrics(exp, tree, ref, log_u, coalitions[tree.num_agents])
+                if exp == LM:
+                    if ids.size != 1:
+                        raise SolverFailure(f"{LM} needs a single statement (a deterministic policy); "
+                                            f"the policy reaches {ids.size} statements")
+                    row = {**lm_statement_row(tree, ref, int(ids[0])), "statement": int(ids[0])}
+                else:
+                    log_u = log_expected_utilities(tree.leaf_logu, ids, probs)
+                    row = instance_metrics(exp, tree, ref, log_u, coalitions[tree.num_agents])
                 raw[exp].setdefault(name, []).append(row)
                 used_queries[name][exp].append(n_queries)
                 if exp == EMPIRICAL and row["blocked"] > 0:
@@ -729,7 +895,7 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
         status = "FAILED: " + failures[name][0][:300] if name in failures else "ok"
         print(f"[{split}] solver {name}: {status} (solver time {solver_time[name]:.1f}s)", flush=True)
 
-    method_names = list(BASELINES) + sorted(n for n in set(sessions) | set(failures) if n not in BASELINES)
+    solver_names = sorted(n for n in set(sessions) | set(failures) if n not in BASELINES)
     scores = {"experiments": {}, "_meta": {
         "split": split,
         "solvers_failed": failures,
@@ -737,43 +903,53 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
         "mean_queries_used": queries,
         "evaluation_seconds": None,
     }}
-    for exp in EXPERIMENTS:
+    worst = {exp: dict(WORST[exp]) for exp in (EMPIRICAL, DEEP)}
+    if lm_worst_rows:
+        worst[LM] = aggregate(LM, lm_worst_rows)
+    for exp in active:
         results, measured, per_rho = {}, {}, {}
-        for name in method_names:
+        for name in list(BASELINES_BY_EXPERIMENT[exp]) + solver_names:
             rows = raw[exp].get(name)
             if rows:
                 measured[name] = aggregate(exp, rows)
                 if exp == EMPIRICAL:
                     per_rho[name] = _by_rho(by_exp[exp], rows, "max_coalition_improvement", np.max)
-                else:
+                elif exp == DEEP:
                     per_rho[name] = {
                         key: _by_rho(by_exp[exp], rows, key, np.mean)
                         for key in ("nash_welfare_efficiency", "log10_coalition_improvement", "blocked")
                     }
-            results[name] = dict(WORST[exp]) if (name in failures or not rows) else measured[name]
-        scores["experiments"][exp] = {
-            "results": results,
-            "_details": {
-                "split": split,
-                "num_instances": len(by_exp[exp]),
-                "query_budget": sorted({int(s["query_budget"]) for s in by_exp[exp]}),
-                "rhos": sorted({float(s["rho"]) for s in by_exp[exp]}),
-                "measured_before_failure_masking": measured,
-                "per_rho": per_rho,
-                "per_instance": {
-                    name: [{"instance_id": s["instance_id"], "rho": s["rho"], **row}
-                           for s, row in zip(by_exp[exp], rows)]
-                    for name, rows in raw[exp].items()
-                },
-                "exact_optimum_gap_max": float(max(refs[s["instance_id"]]["nw_gap"] for s in by_exp[exp]))
-                if by_exp[exp] else None,
+            results[name] = dict(worst[exp]) if (name in failures or not rows) else measured[name]
+        details = {
+            "split": split,
+            "num_instances": len(by_exp[exp]),
+            "query_budget": sorted({int(s["query_budget"]) for s in by_exp[exp]}),
+            "measured_before_failure_masking": measured,
+            "per_instance": {
+                name: [{"instance_id": s["instance_id"], **({} if exp == LM else {"rho": s["rho"]}), **row}
+                       for s, row in zip(by_exp[exp], rows)]
+                for name, rows in raw[exp].items()
             },
         }
+        if exp == LM:
+            details.update({
+                "worst_statement_values": worst[LM],
+                "sampled_baselines": {"candidates": LM_BON_N, "replicates": LM_REPLICATES},
+                "best_statement_eppl": [math.exp(-refs[s["instance_id"]]["ew_star"] / int(s["depth"]))
+                                        for s in by_exp[exp]],
+            })
+        else:
+            details.update({
+                "rhos": sorted({float(s["rho"]) for s in by_exp[exp]}),
+                "per_rho": per_rho,
+                "exact_optimum_gap_max": float(max(refs[s["instance_id"]]["nw_gap"] for s in by_exp[exp])),
+            })
+        scores["experiments"][exp] = {"results": results, "_details": details}
     scores["_meta"]["evaluation_seconds"] = round(time.time() - t0, 1)
     scores_path = Path(scores_path)
     scores_path.parent.mkdir(parents=True, exist_ok=True)
     scores_path.write_text(json.dumps(scores, indent=1), encoding="utf-8")
-    summary = {exp: scores["experiments"][exp]["results"] for exp in EXPERIMENTS}
+    summary = {exp: scores["experiments"][exp]["results"] for exp in active}
     print(json.dumps(summary, indent=1))
     if failures:
         print(json.dumps({"failed": {k: v[:1] for k, v in failures.items()}}, indent=1))

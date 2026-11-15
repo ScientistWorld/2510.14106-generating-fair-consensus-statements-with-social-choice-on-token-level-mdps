@@ -1,0 +1,122 @@
+[
+ {"id": "test_lm_000", "issue": "Should the UK introduce a universal basic income?", "opinions": [
+  "Yes. A basic income would end poverty, simplify the benefits system and give people security as automation takes jobs.",
+  "No, paying everyone money regardless of need is a huge waste. It would cost a fortune and require massive tax rises.",
+  "I worry it would make people stop working. There has to be an incentive to contribute to society.",
+  "It's worth testing with proper pilot schemes before deciding. The trials so far have been small and short.",
+  "A basic income would give carers, artists and volunteers recognition for valuable work that currently goes unpaid."]},
+ {"id": "test_lm_001", "issue": "Should nuclear power be expanded to fight climate change?", "opinions": [
+  "Yes, nuclear is low carbon and provides steady power when the wind isn't blowing and the sun isn't shining. We can't hit net zero without it.",
+  "No. Nuclear waste stays dangerous for thousands of years and nobody has a safe place to store it.",
+  "New nuclear plants are far too expensive and take decades to build. That money would cut more emissions if spent on renewables and insulation.",
+  "I support small modular reactors, which could be cheaper and quicker to build, but not more giant plants like Hinkley Point.",
+  "After Fukushima and Chernobyl I simply don't trust it. One accident can make a whole region uninhabitable."]},
+ {"id": "test_lm_002", "issue": "Should junk food advertising be banned?", "opinions": [
+  "Yes, especially adverts aimed at children. Obesity is a crisis and companies spend billions persuading kids to eat sugar.",
+  "No. Adults can make their own choices. The government shouldn't decide what we're allowed to see advertised.",
+  "Advertising is only part of the problem. Healthy food is too expensive, and people need cooking skills and time.",
+  "I'd ban it before the 9pm watershed and online where children are watching, but not completely.",
+  "A ban would hurt broadcasters and sports clubs that depend on the advertising money."]},
+ {"id": "test_lm_003", "issue": "Should the monarchy be abolished?", "opinions": [
+  "Yes. In a democracy no one should be head of state just because of who their parents are. We should elect our head of state.",
+  "No, the monarchy brings stability and continuity, and the King stays above party politics.",
+  "The royal family brings in a lot of tourism and does a huge amount of charity work. It is worth what it costs.",
+  "Keep it but slim it down. Fewer royals on the public payroll and more transparency about their finances.",
+  "It doesn't really matter to me either way. There are far more important problems like the cost of living, so this debate is a distraction."]},
+ {"id": "test_lm_004", "issue": "Should voting be compulsory?", "opinions": [
+  "Yes, as in Australia. Compulsory voting means governments represent everyone, not just the groups who turn out.",
+  "No. Freedom includes the freedom not to vote, and forcing people would just produce random or spoiled ballots.",
+  "I'd only support it if there is a 'none of the above' option on the ballot so people can register a protest.",
+  "The real problem is that people feel politicians don't listen. Fix that and turnout will rise on its own.",
+  "Make voting easier instead, with weekend polling days and online voting, rather than fining people."]},
+ {"id": "test_lm_005", "issue": "Should the state pension age be raised?", "opinions": [
+  "Yes. People live much longer than when pensions were introduced, and the country can't afford to pay pensions for thirty years.",
+  "No, it's unfair on manual workers whose bodies wear out. A builder or cleaner can't keep working until 70.",
+  "Life expectancy varies hugely between rich and poor areas, so a single pension age punishes people in poorer regions.",
+  "It should rise slowly and with plenty of warning so people can plan. Sudden changes have already hurt many women.",
+  "Instead of raising the age, make wealthy pensioners contribute more and stop the triple lock rising so fast."]},
+ {"id": "test_lm_006", "issue": "Should rent controls be introduced in big cities?", "opinions": [
+  "Yes. Rents have gone up far faster than wages and people are being forced out of the cities where they work.",
+  "No, rent controls reduce the supply of rental homes because landlords sell up, and quality falls. It has failed in many cities.",
+  "The only real solution is building far more homes, including council housing. Controls just treat the symptom.",
+  "Limit how much rent can increase each year for existing tenants, which protects people without freezing the market.",
+  "As a small landlord, my costs have risen with mortgage rates. Controls would make renting out my flat unaffordable."]},
+ {"id": "test_lm_007", "issue": "Should mobile phones be banned in schools?", "opinions": [
+  "Yes, phones are a constant distraction in class and are behind a lot of bullying. Schools that ban them have better results.",
+  "No. Parents need to be able to contact their children, especially on the way to and from school.",
+  "Phones should be locked away during lessons but students should learn to use technology responsibly rather than having it banned.",
+  "It should be left to each head teacher to decide, not imposed nationally.",
+  "The bigger problem is social media, not phones. A ban at school won't help if children are online all evening."]},
+ {"id": "test_lm_008", "issue": "Should sugary drinks be taxed more heavily?", "opinions": [
+  "Yes. The sugar tax has already made manufacturers cut sugar, so extending it would help fight obesity and tooth decay.",
+  "No, it's a regressive tax that hits poorer families hardest while rich people barely notice.",
+  "Taxing drinks is fine, but the money must go into school sports and healthy meals, otherwise it's just a cash grab.",
+  "People should be free to choose what they drink. Education works better than punishing people with taxes.",
+  "It would make more sense to tax sugar in all processed food, not just drinks, which are only a small part of the problem."]},
+ {"id": "test_lm_009", "issue": "Should cannabis be legalised?", "opinions": [
+  "Yes. Prohibition has failed. Legalising and regulating it would take money away from criminal gangs and raise tax.",
+  "No, cannabis can cause psychosis, especially strong skunk used by teenagers. Legalising it sends the message it is safe.",
+  "It should be legal for medical use, which helps people with epilepsy and chronic pain, but not for recreation.",
+  "Decriminalise possession so people are not given criminal records, but keep selling it illegal.",
+  "I've seen what drugs did to my family. Making it easier to get will lead to more people using harder drugs."]},
+ {"id": "test_lm_010", "issue": "Should national service be reintroduced for young people?", "opinions": [
+  "Yes. It would teach discipline, bring together young people from different backgrounds, and give them useful skills.",
+  "No. Forcing young people into the military or volunteering is a waste of their time and an infringement of their freedom.",
+  "A voluntary scheme with incentives, like help with university fees, would work better than compulsion.",
+  "If it happens, it must include community and care work, not just the armed forces.",
+  "The cost would be enormous and the money would be better spent on youth services that were cut."]},
+ {"id": "test_lm_011", "issue": "Should private schools lose their tax advantages?", "opinions": [
+  "Yes. Private schools are businesses for the wealthy, not charities, and taxpayers shouldn't subsidise them.",
+  "No. Parents who pay fees also pay taxes for state schools they don't use, saving the state money.",
+  "Taxing them will push some smaller schools to close and send thousands of children into already crowded state schools.",
+  "They should keep the tax relief only if they share facilities and offer many more free places to local children.",
+  "The focus should be on raising standards in state schools so that nobody feels they need to go private."]},
+ {"id": "test_lm_012", "issue": "Should genetically modified crops be allowed?", "opinions": [
+  "Yes, GM crops can resist pests and drought, reduce pesticide use and help feed a growing population.",
+  "No. We don't know the long-term effects on health and the environment, and the risks are irreversible once released.",
+  "My concern is big corporations patenting seeds and making farmers dependent on them.",
+  "Allow them but with strict testing and clear labelling so consumers can choose.",
+  "Gene editing that only speeds up natural breeding is fine, but inserting genes from other species goes too far."]},
+ {"id": "test_lm_013", "issue": "Should there be a cap on immigration?", "opinions": [
+  "Yes. Public services, housing and the NHS can't keep up with the numbers arriving every year.",
+  "No. Immigrants fill vital jobs in care, health and farming. A cap would cause shortages and damage the economy.",
+  "Immigration should be based on skills the country needs, with a points system rather than a fixed number.",
+  "We have a moral duty to take refugees fleeing war and persecution, and they should not count towards any cap.",
+  "The debate is too heated. We need honest figures and a system that is fair and properly enforced."]},
+ {"id": "test_lm_014", "issue": "Should assisted dying be legalised?", "opinions": [
+  "Yes. Terminally ill people who are suffering should have the right to choose a peaceful death.",
+  "No. Vulnerable and elderly people could feel pressure to end their lives so they are not a burden on their families.",
+  "Better palliative care is the answer. If people had good end-of-life care, few would ask to die.",
+  "Allow it only for terminally ill adults with six months to live, with approval from two doctors and a judge.",
+  "As a person of faith, I believe life is sacred and it is not for us to decide when it ends."]},
+ {"id": "test_lm_015", "issue": "Should public transport be free?", "opinions": [
+  "Yes, free buses and trains would get people out of cars, cut pollution and help people on low incomes get to work.",
+  "No. Someone still has to pay, and the money would be better spent on making services more frequent and reliable.",
+  "It should be free for young people, students and the elderly, but everyone else should pay something.",
+  "In rural areas there are hardly any buses at all. Free fares are pointless if there's no service.",
+  "Free transport might lead to overcrowding and antisocial behaviour on services that are already packed."]},
+ {"id": "test_lm_016", "issue": "Should the BBC licence fee be scrapped?", "opinions": [
+  "Yes. It's unfair to force people to pay for the BBC when they watch streaming services instead. It should move to subscriptions.",
+  "No. The licence fee keeps the BBC independent from government and advertisers and pays for quality programmes for everyone.",
+  "Replace it with funding from general taxation, scaled to income, so poorer households pay less.",
+  "I'm fed up with BBC bias and huge salaries for presenters. Why should I pay for that?",
+  "The BBC World Service and local radio are vital public services that commercial broadcasters would never provide."]},
+ {"id": "test_lm_017", "issue": "Should children be allowed to use AI tools for homework?", "opinions": [
+  "Yes. AI is part of the world they're growing up in, and learning to use it well is an essential skill.",
+  "No. If AI writes their essays, children never learn to think, write or solve problems for themselves.",
+  "AI can be a great tutor that explains things step by step, as long as teachers set tasks that can't simply be copied.",
+  "It widens inequality: children with paid AI subscriptions and tech-savvy parents get ahead.",
+  "Schools need clear rules and to teach children about AI making mistakes and inventing facts."]},
+ {"id": "test_lm_018", "issue": "Should the government limit how many flights people can take?", "opinions": [
+  "Yes. Aviation is one of the fastest-growing sources of emissions, and a small number of frequent flyers cause most of them.",
+  "No, that's a huge intrusion into personal freedom. People have the right to travel and see family abroad.",
+  "A frequent flyer levy that increases with each flight would be fairer than a hard limit.",
+  "Invest in high-speed rail and ban short domestic flights where trains are a real alternative.",
+  "Ordinary families taking one holiday a year are not the problem. Target private jets and business travel first."]},
+ {"id": "test_lm_019", "issue": "Should animal testing for medicines be banned?", "opinions": [
+  "Yes. It causes huge suffering and animals are often poor models for humans, so many drugs that pass animal tests still fail.",
+  "No. Animal testing is still necessary to make sure new medicines are safe before they're given to people.",
+  "It should be phased out as alternatives like organ-on-a-chip and computer models improve, with funding to speed them up.",
+  "Testing should be allowed only for serious diseases, never for cosmetics or minor products, and with strict welfare rules.",
+  "As someone with a chronic illness, I depend on medicines that were tested on animals. Banning it would cost human lives."]}
+]

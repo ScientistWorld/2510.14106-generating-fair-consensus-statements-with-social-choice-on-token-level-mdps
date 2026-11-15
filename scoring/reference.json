@@ -2,7 +2,7 @@
   "experiments": {
     "empirical_core_test": {
       "description": "Paper Section 4.2 empirical core test on synthetic token trees (B=3, depth 4, 81 complete statements, six agents, d=8, polarization rho on linspace(0.6, 5.0, 20)); the oracle's query budget (40) covers every prefix. Every coalition's proportional blocking LP is solved over all statements. A stochastic outcome that any coalition can block (max coalition improvement > 1 + 1e-6 on any instance) fails the run.",
-      "weight": 0.4,
+      "weight": 0.2,
       "primary_metric": "max_coalition_improvement",
       "_paper_reported": "Figure 2: the Nash-welfare policy stays at alpha* = 1 for every rho; uniform and utilitarian policies become blockable as rho grows (no numeric table). The paper's setting (six agents, d=8, rho on linspace(0.6, 5, 20), seeds 42-44 in the authors' code) is used unchanged; the held-out slice uses other seeds.",
       "metrics": {
@@ -41,7 +41,7 @@
     },
     "deep_tree_core_test": {
       "description": "Deep prefix-dependent token trees (B=3, depth 12, 531,441 complete statements, six agents, d=8, a fresh token vector at every prefix, rho in {0.4, 0.8, 1.6, 3.2}). Solvers see the agents' policies only through a query oracle with 1,500 prefix queries per instance (0.56% of the 265,720 prefixes), the regime in which the paper resorts to token chunking (Section 4.3, Theorem 2). Outcomes are judged against the full tree: Nash welfare against the exact optimum, and exact proportional blocking by every coalition using any statement.",
-      "weight": 0.6,
+      "weight": 0.4,
       "primary_metric": "nash_welfare_efficiency",
       "_note": "The paper reports no number for this setting (it states only that chunking guarantees the core relative to the chunked statement set, that Nash welfare over it cannot exceed the full optimum, and that no constant-factor guarantee exists). The proposed-method value below (0.7724) is the gym's reference run of the paper's chunked method (Algorithm 1 on the chunked statement set, chunk size 4, greedy block proposals) on the held-out slice, not a paper number.",
       "metrics": {
@@ -78,6 +78,57 @@
           "type": "baseline"
         },
         "random_dictatorship_policy": {
+          "type": "baseline"
+        }
+      }
+    },
+    "lm_consensus_search": {
+      "description": "Paper Section 6.3 single consensus statements, on token trees from a real language model: the base model (Qwen2.5-1.5B-Instruct prompted with the issue and every participant's opinion, paper Figure 6) proposes its 4 most likely tokens at every prefix (B=4), statements are L=8 tokens long (65,536 statements, 21,845 prefixes), and each participant's policy is the same model prompted with that participant's opinion only (Figure 7). Ten public scenarios (the paper's three, Tables 11-13, and seven gym-authored) and twenty held-out gym-authored scenarios with 4-5 participants. A solver sees participants' and the base model's log-probabilities of the candidates only at the prefixes it queries (200 per instance, 0.9% of the prefixes) and returns one statement (a deterministic policy). The reference solver runs the paper's egalitarian-welfare beam search (Algorithm 3, width 4).",
+      "weight": 0.4,
+      "primary_metric": "log_eppl_regret",
+      "_paper_reported": {
+        "source": "Table 10 / Figure 4: egalitarian perplexity (EPPL, lower is better), Llama 3.1 8B Instruct, 3 scenarios x 3 seeds, statements up to 50 tokens with a brush-up step",
+        "beam_search_width4": 2.87,
+        "finite_lookahead_d4_b2": 4.18,
+        "best_of_n_4": 6.35,
+        "prompted_habermas_machine": 9.67,
+        "habermas_machine_statement": 15.69
+      },
+      "_note": "Scaled setting: a 1.5B model instead of Llama 3.1 8B, 8-token statements instead of up to 50 tokens without brush-up, and a 200-query budget. The paper's EPPL values are not on this scale and are kept under _paper_reported; the proposed-method value below is the gym's reference run on the held-out slice (paper's beam search, width 4), not a paper number. The paper's claim is the ordering: beam search (and finite lookahead) below Best-of-N below the Habermas-style vote.",
+      "metrics": {
+        "log_eppl_regret": {
+          "higher_is_better": false,
+          "coefficient": 1.0,
+          "description": "Mean over instances of log EPPL(X) - log EPPL(X*), where EPPL(X) = max_i exp(-(1/L) sum_t log pi_i(a_t | s_{t-1})) and X* is the statement of the full tree with the lowest EPPL (exact, over all 65,536 statements). 0 means the best statement on every instance. A failed run receives the worst statement's value on every instance."
+        },
+        "egalitarian_perplexity": {
+          "higher_is_better": false,
+          "coefficient": 0.5,
+          "description": "Mean over instances of EPPL(X), the paper's egalitarian perplexity of the returned statement (perplexity of the least satisfied participant). A failed run receives the worst statement's EPPL on every instance."
+        },
+        "optimal_statement_rate": {
+          "higher_is_better": true,
+          "coefficient": 0.0,
+          "description": "Diagnostic: fraction of instances on which the returned statement has the lowest EPPL of the tree."
+        },
+        "base_perplexity": {
+          "higher_is_better": false,
+          "coefficient": 0.0,
+          "description": "Diagnostic: mean perplexity of the returned statement under the base (consensus-prompted) model."
+        }
+      },
+      "results": {
+        "nash_welfare_policy": {
+          "type": "proposed",
+          "log_eppl_regret": 0.1
+        },
+        "base_greedy_statement": {
+          "type": "baseline"
+        },
+        "best_of_n_statement": {
+          "type": "baseline"
+        },
+        "habermas_vote_statement": {
           "type": "baseline"
         }
       }

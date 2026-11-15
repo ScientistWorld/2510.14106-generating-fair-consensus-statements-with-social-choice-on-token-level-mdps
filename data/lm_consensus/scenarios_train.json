@@ -1,0 +1,121 @@
+[
+ {
+  "id": "train_lm_000",
+  "source": "paper Table 11 (Habermas Machine dataset, Scenario 1)",
+  "issue": "Are we living in a golden age of democracy?",
+  "opinions": [
+   "No, I think the golden age of democracy is long gone. I think a system where the first past the post wins is not working and we need to move to a model of proportional representation which would give more people the feeling that their voices were being heard. On the subject of voices, I'm strongly of the opinion that we have become a society where the loud voices of minority groups are able to impose their views on the rest of the population which to me is no democracy at all.",
+   "Worldwide democracy is more present than it's ever been in history. So yes, compared to previous ages in history I believe we are. Although that's not to say we can't improve - many countries still don't operate democratically, and in the ones that do, corruption is rife.",
+   "Yes, we are living in a golden age of democracy as democracy is of the people.",
+   "Not at all. The notion of democracy is being used for personal gains of those in government, and the system is manipulated. Around the world there is a considerable amount of oppression and lack of democratic values.",
+   "Compared to some parts of the world such as Russia and China which are actively regressing and reverting back to archaic ways of controlling their people, most Western countries are living through comparatively decent times, although problems still exist."
+  ]
+ },
+ {
+  "id": "train_lm_001",
+  "source": "paper Table 12 (Habermas Machine dataset, Scenario 2)",
+  "issue": "Should the UK's ties to Europe be stronger or weaker?",
+  "opinions": [
+   "When we was in Europe we had good trade with them, The decision to leave was very bad for united kingdom. We need to put the vote again to the British public i am sure this time the decision would be to remain",
+   "The natural evolution of our species has been to grow into ever bigger \"tribes\". Families ruled by their patriarchs became tribes ruled by elders became countries ruled by governments. It made sense that countries would evolve separately since they were geographically separate with no means of communication. Now our world is so connected, it is inevitable that we evolve into ever larger units such as the United States and the European Union. Eventually we will become a multi-planetary species ruled by an Earth government. To sever ties with Europe is a step in the wrong direction.",
+   "Although we did exit EU few years ago, we are geographically and economically in proximity to most EU countries. Several geographic, financial, political and economical parameters are intertwined with our neighbouring countries and, it would be advantageous to be in good relations to fully harness our economic, political, and financial facilities.",
+   "I believe the UK's ties to Europe should be stronger, as it would make trade deals easier to negotiate. This would allow us to benefit from a larger array of goods, which would make our imports cheaper. I also believe that closer ties with Europe in terms of immigration policies should occur as our immigration policy doesn't coincide with other nations around us. I believe a more united Europe would help all countries grow more through the movement of free labour, goods and services and more.",
+   "I think they should be stronger, as all the countries of Europe, except us, are part of the EU, and it makes Britain more isolated. Countries are stronger I believe when they work together with other countries and are open to the influence of other countries. I believe that leaving the EU was a step backwards and done for the wrong reasons. We are not the country we were 100 or even 50 years ago and the world is changing so much that we cannot afford to not be part of Europe."
+  ]
+ },
+ {
+  "id": "train_lm_002",
+  "source": "paper Table 13 (Habermas Machine dataset, Scenario 3)",
+  "issue": "Is it okay to use animals for food?",
+  "opinions": [
+   "Yes, as human beings are natural meat eaters. However, it is morally wrong to keep animals in cruel conditions and use them for food. On the whole, farming is an unethical practise and many farming methods should be banned.",
+   "I think that it is ok to use animals for food because I enjoy eating meat. I don't think it is ok if the animal is endangered and I do think that there should be certain factors in place to ensure that they are well kept.",
+   "In my opinion it is ok to use animals for food. They provide nutrition and vitamins to use and I think it is just the basic food chain. I do understand why people choose to be vegetarian or vegan, but I do not agree with them trying to force their views upon others.",
+   "Humans have used animals for food since we first evolved as a species. Animals provide a great deal of nutrition that the human body needs to be healthy. It is certainly true that we now have more alternative foods available so that it can be possible to live healthily without consuming meat - though this does usually rely on taking nutritional supplements. I think that we should continue to diversify food production to provide people with meat alternatives, but also we should continue to improve the welfare of animals that are eaten for food and try to do this sustainably to minimise the impact this has on the animals wellbeing and on the land / environment too."
+  ]
+ },
+ {
+  "id": "train_lm_003",
+  "source": "gym-authored",
+  "issue": "Should the voting age be lowered to 16?",
+  "opinions": [
+   "Yes. At 16 you can work, pay tax and join the army with permission, so you should have a say in who spends that money. Young people will live longest with the decisions being made today.",
+   "No, I don't think most 16 year olds are mature enough. They are still at school and heavily influenced by their parents and teachers, and many have no interest in politics yet.",
+   "I'm not against it in principle, but it should come with proper political education in schools first. Otherwise we are just handing votes to people who have never been taught how government works.",
+   "Absolutely yes. Climate change, housing and university fees affect young people more than anyone, and older voters keep deciding these things for them.",
+   "Keep it at 18. Adulthood has to start somewhere and 18 is when you get every other full right and responsibility. Changing it looks like politicians trying to win new voters."
+  ]
+ },
+ {
+  "id": "train_lm_004",
+  "source": "gym-authored",
+  "issue": "Should cars be banned from city centres?",
+  "opinions": [
+   "Yes, city centres would be cleaner, quieter and safer without cars. Every city that has pedestrianised its centre has seen more people walking, cycling and spending money in shops.",
+   "A ban would hurt disabled and elderly people who cannot walk long distances or use crowded buses. Any change must guarantee access for them.",
+   "No. Small businesses rely on customers who drive in and on deliveries. Banning cars would push shoppers to out-of-town retail parks and kill the high street.",
+   "I support it only if public transport is improved first. At the moment the buses are unreliable and expensive, so people have no real alternative to driving.",
+   "Partly. Ban private cars at peak times and allow electric vehicles, taxis and deliveries. A total ban is too extreme but we can't carry on with the congestion and pollution."
+  ]
+ },
+ {
+  "id": "train_lm_005",
+  "source": "gym-authored",
+  "issue": "Should university education be free?",
+  "opinions": [
+   "Yes. Education benefits the whole of society, not just the student, and nobody should be put off university because they are afraid of debt.",
+   "No, it isn't fair to make people who never went to university pay through their taxes for others to get degrees that will earn them more money.",
+   "Tuition should be free for subjects the country needs, like nursing, teaching and engineering, but not necessarily for every course.",
+   "I think the bigger problem is living costs. Even with free tuition, poorer students can't afford rent, so grants for living expenses matter more.",
+   "Free university sounds nice but it would mean fewer places and lower quality, as has happened in other countries. The current loan system, where you only repay when you earn enough, is a reasonable compromise."
+  ]
+ },
+ {
+  "id": "train_lm_006",
+  "source": "gym-authored",
+  "issue": "Should the government introduce a four-day working week?",
+  "opinions": [
+   "Yes. Trials have shown people are just as productive in four days, and they are happier and healthier. It would also cut commuting and emissions.",
+   "It wouldn't work for many jobs. Hospitals, care homes, shops and farms need people every day, so it would only benefit office workers.",
+   "It should be up to employers and employees to agree, not forced by the government. Some businesses can do it, others would go bust.",
+   "I'd support it as long as pay stays the same. A four-day week with a 20% pay cut is just a pay cut that many families cannot afford.",
+   "No. We already have low productivity and a shortage of workers. Working less will make the economy weaker and public services even more stretched."
+  ]
+ },
+ {
+  "id": "train_lm_007",
+  "source": "gym-authored",
+  "issue": "Should social media platforms require users to verify their identity?",
+  "opinions": [
+   "Yes, anonymity lets people abuse others with no consequences. If people had to use their real identity, online bullying and trolling would drop a lot.",
+   "No. Anonymity protects whistleblowers, abuse victims and people living under repressive governments. Forcing ID would put them in danger.",
+   "I would be in favour if verification is done privately, so the platform knows who you are but you can still post under a username.",
+   "I don't trust tech companies with my passport or ID details. They already sell our data and have huge data breaches.",
+   "Verification should be required for accounts with large followings or that run adverts, because they have the most influence, but ordinary users should be left alone."
+  ]
+ },
+ {
+  "id": "train_lm_008",
+  "source": "gym-authored",
+  "issue": "Should zoos be abolished?",
+  "opinions": [
+   "Yes. Keeping wild animals in small enclosures for entertainment is cruel, no matter how good the zoo claims to be.",
+   "No. Good zoos run breeding programmes that have saved species from extinction, and they fund conservation in the wild.",
+   "Zoos are important for education. Seeing a real animal inspires children to care about nature in a way a documentary never can.",
+   "Small, poorly run zoos should be closed, but large accredited zoos and sanctuaries that focus on conservation should stay.",
+   "I think we should gradually move away from zoos towards wildlife reserves where animals have space to roam and people visit with minimal disturbance."
+  ]
+ },
+ {
+  "id": "train_lm_009",
+  "source": "gym-authored",
+  "issue": "Should homework be banned in primary schools?",
+  "opinions": [
+   "Yes, young children need time to play, rest and be with their families after a long school day. There is little evidence homework helps at that age.",
+   "No, a little homework, especially reading, builds good habits and lets parents see what their children are learning.",
+   "Homework widens the gap between children whose parents can help them and those whose parents work long hours or don't speak English.",
+   "It should be optional. Families who want extra work can ask for it, but nobody should be punished for not doing it.",
+   "Banning it would leave children unprepared for secondary school where they suddenly get loads of homework. A small amount should continue."
+  ]
+ }
+]
