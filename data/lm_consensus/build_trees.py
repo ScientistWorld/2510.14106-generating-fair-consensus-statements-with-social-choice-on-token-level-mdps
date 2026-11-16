@@ -16,6 +16,10 @@ Figure 6); participant i's policy is the same model prompted with the issue and 
 
 where row k of level t is the prefix whose candidate indices spell k in base B. Files are
 written one scenario at a time and existing files are skipped, so the job can resume.
+
+The model runs with bfloat16 weights and a float32 output layer (log-probabilities are computed
+in float32 from the last hidden state). GPUs may be shared, so the builder waits for enough free
+memory, sizes its batches from the memory actually free, and retries smaller batches on OOM.
 """
 
 from __future__ import annotations
@@ -23,6 +27,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import time
 from pathlib import Path
 
@@ -50,25 +55,41 @@ class TreeBuilder:
 
         self.torch = torch
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        dtype = torch.bfloat16 if self.device == "cuda" else torch.float32
         if self.device == "cuda":
-            # TF32 matmuls: logit errors well below the float16 resolution the trees are stored at.
-            torch.backends.cuda.matmul.allow_tf32 = True
-            torch.backends.cudnn.allow_tf32 = True
+            self._wait_for_memory(6.0e9)
         self.tok = AutoTokenizer.from_pretrained(str(model_path))
         self.model = AutoModelForCausalLM.from_pretrained(
-            str(model_path), torch_dtype=torch.float32, attn_implementation="sdpa").to(self.device).eval()
+            str(model_path), torch_dtype=dtype, attn_implementation="sdpa").to(self.device).eval()
+        self.head = self.model.get_output_embeddings().weight.detach().float()  # float32 output layer
         cfg = self.model.config
-        self.vocab = int(self.model.get_output_embeddings().weight.shape[0])
+        self.vocab = int(self.head.shape[0])
         head_dim = cfg.hidden_size // cfg.num_attention_heads
-        self.kv_bytes_per_token = cfg.num_hidden_layers * 2 * cfg.num_key_value_heads * head_dim * 4
-        if self.device == "cuda":
-            total = torch.cuda.get_device_properties(0).total_memory
-            self.cache_budget = max(1.0e9, 0.25 * total)
-        else:
-            self.cache_budget = 2.0e9
+        elt = 2 if dtype == torch.bfloat16 else 4
+        # expanded prompt cache + per-layer repeated keys/values (GQA), per sequence and token
+        self.bytes_per_token = (cfg.num_hidden_layers * 2 * cfg.num_key_value_heads * head_dim * elt
+                                + 2 * cfg.num_attention_heads * head_dim * elt * 2)
+        self.bytes_per_row = 4 * self.vocab * 4  # float32 logits, log-softmax and masked copies
+        self.chunk_cap = 1024
         self.banned = self._banned_mask()
-        print(f"[build] device={self.device} vocab={self.vocab} banned={int(self.banned.sum())} "
-              f"kv_bytes/token={self.kv_bytes_per_token}", flush=True)
+        print(f"[build] device={self.device} dtype={dtype} vocab={self.vocab} banned={int(self.banned.sum())} "
+              f"free={self._free() / 1e9:.1f}GB", flush=True)
+
+    def _free(self) -> float:
+        if self.device != "cuda":
+            return 4.0e9
+        free, _ = self.torch.cuda.mem_get_info()
+        return float(free)
+
+    def _wait_for_memory(self, need: float, max_wait: float = 3600.0) -> None:
+        start = time.time()
+        while self._free() < need and time.time() - start < max_wait:
+            print(f"[build] waiting for GPU memory: {self._free() / 1e9:.2f}GB free, need {need / 1e9:.1f}GB",
+                  flush=True)
+            time.sleep(60)
+
+    def _logprobs_from_hidden(self, h):
+        return self.torch.log_softmax(h.float() @ self.head.T, dim=-1)
 
     def _banned_mask(self):
         torch = self.torch
@@ -91,35 +112,58 @@ class TreeBuilder:
     def _prompt_state(self, ids: list[int]):
         torch = self.torch
         with torch.no_grad():
-            out = self.model(input_ids=torch.tensor([ids], device=self.device), use_cache=True)
-        logits = out.logits[0, -1].float()
-        return torch.log_softmax(logits, dim=-1)[None, :], _legacy(out.past_key_values), len(ids)
+            out = self.model.model(input_ids=torch.tensor([ids], device=self.device), use_cache=True)
+            root = self._logprobs_from_hidden(out.last_hidden_state[:, -1])
+        return root, _legacy(out.past_key_values), len(ids)
+
+    def _forward_chunk(self, legacy, batch):
+        torch = self.torch
+        from transformers import DynamicCache
+
+        c = batch.shape[0]
+        cache = DynamicCache()
+        for layer, (k, v) in enumerate(legacy):
+            cache.update(k.expand(c, -1, -1, -1).contiguous(), v.expand(c, -1, -1, -1).contiguous(), layer)
+        with torch.no_grad():
+            out = self.model.model(input_ids=batch, past_key_values=cache, use_cache=True)
+            lp = self._logprobs_from_hidden(out.last_hidden_state[:, -1])
+        del cache, out
+        return lp
 
     def _level_logprobs(self, state, prefixes, reduce):
         """Apply ``reduce(row_slice, logprobs)`` to the full-vocabulary next-token log-probabilities
         at every prefix (rows of ``prefixes``, all of the same length >= 1), chunk by chunk."""
 
         torch = self.torch
-        from transformers import DynamicCache
-
         root_lp, legacy, plen = state
         if prefixes.shape[1] == 0:
             reduce(slice(0, 1), root_lp)
             return
         rows = prefixes.shape[0]
-        chunk = int(max(8, min(1024, self.cache_budget // (self.kv_bytes_per_token * (plen + prefixes.shape[1])))))
-        for start in range(0, rows, chunk):
+        per_seq = self.bytes_per_token * (plen + prefixes.shape[1]) + self.bytes_per_row
+        start, failures = 0, 0
+        while start < rows:
+            chunk = int(max(1, min(self.chunk_cap, 0.6 * self._free() // per_seq)))
             stop = min(rows, start + chunk)
-            batch = prefixes[start:stop]
-            c = batch.shape[0]
-            cache = DynamicCache()
-            for layer, (k, v) in enumerate(legacy):
-                cache.update(k.expand(c, -1, -1, -1).contiguous(), v.expand(c, -1, -1, -1).contiguous(), layer)
-            with torch.no_grad():
-                out = self.model.model(input_ids=batch, past_key_values=cache, use_cache=True)
-                logits = self.model.lm_head(out.last_hidden_state[:, -1]).float()
-            reduce(slice(start, stop), torch.log_softmax(logits, dim=-1))
-            del cache, out, logits
+            try:
+                lp = self._forward_chunk(legacy, prefixes[start:stop])
+                reduce(slice(start, stop), lp)  # idempotent: a retried slice is simply rewritten
+                del lp
+            except (torch.OutOfMemoryError, RuntimeError) as exc:
+                if "out of memory" not in str(exc).lower():
+                    raise
+                lp = None
+                torch.cuda.empty_cache()
+                failures += 1
+                self.chunk_cap = max(1, chunk // 2)
+                if chunk == 1:
+                    print(f"[build] OOM at batch 1 ({self._free() / 1e9:.2f}GB free); waiting", flush=True)
+                    time.sleep(30)
+                if failures > 200:
+                    raise
+                continue
+            self.chunk_cap = min(1024, self.chunk_cap + max(1, self.chunk_cap // 8))
+            start = stop
 
     def build(self, issue: str, opinions: list[str]) -> dict:
         torch = self.torch
@@ -214,7 +258,8 @@ def main() -> None:
         t0 = time.time()
         arrays = builder.build(sc["issue"], sc["opinions"])
         meta = {"id": sc["id"], "model": MODEL_NAME, "branching": BRANCHING, "depth": DEPTH,
-                "num_agents": len(sc["opinions"]), "dtype": "float16"}
+                "num_agents": len(sc["opinions"]), "stored_dtype": "float16",
+                "compute": "bfloat16 weights, float32 output layer" if builder.device == "cuda" else "float32"}
         tmp = out_dir / f".{sc['id']}.tmp.npz"
         np.savez_compressed(tmp, meta=np.array(json.dumps(meta)), **arrays)
         tmp.rename(path)

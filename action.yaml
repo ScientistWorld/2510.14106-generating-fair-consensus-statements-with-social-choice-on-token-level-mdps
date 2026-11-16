@@ -5,4 +5,4 @@ action: submit
 gpus: 1
 test: false
 milestone: core_claim_plus
-notes: "Build the language-model token trees for the new lm_consensus_search experiment (Qwen2.5-1.5B-Instruct, B=4, L=8; 10 train + 20 held-out scenarios) on the GPU, then the full hardening audit: LM self-tests, LM search calibration by budget, reference-only train/test scores, every variant and shortcut through the no-argument hidden test, mutation probe, summary, validate."
+notes: "Retry: build the LM token trees for lm_consensus_search (Qwen2.5-1.5B-Instruct, bf16 weights + fp32 head, memory-adaptive batches for a shared GPU; 10 train + 20 held-out scenarios), then the full hardening audit (LM self-tests, calibration by budget, reference-only scores, all variants and shortcuts through the hidden test, mutation probe, summary, validate)."

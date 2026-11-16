@@ -4,6 +4,7 @@
 # (hardening/run_job.sh: self-tests, calibration, reference-only scores, every variant and
 # shortcut through the hidden test, mutation probe, summary, validation).
 set -u
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd /home/user
 mkdir -p hardening/results hardening/logs
 LOG=hardening/results/build_steps.log
@@ -24,6 +25,13 @@ python -m data.lm_consensus.build_trees --scenarios eval/test/lm_scenarios.json 
     --out eval/test/lm_trees > hardening/logs/build_test.log 2>&1; echo "rc=$?" | tee -a $LOG
 cp hardening/logs/build_*.log hardening/results/ 2>/dev/null
 du -sh data/lm_consensus/trees eval/test/lm_trees | tee -a $LOG
+n_train=$(ls data/lm_consensus/trees/train_lm_*.npz 2>/dev/null | wc -l)
+n_test=$(ls eval/test/lm_trees/test_lm_*.npz 2>/dev/null | wc -l)
+echo "trees: train $n_train/10, test $n_test/20" | tee -a $LOG
+if [ "$n_train" -ne 10 ] || [ "$n_test" -ne 20 ]; then
+    echo "tree building incomplete; skipping the audit" | tee -a $LOG
+    exit 4
+fi
 step "audit"
 bash hardening/run_job.sh
 step "done"
