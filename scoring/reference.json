@@ -83,7 +83,7 @@
       }
     },
     "lm_consensus_search": {
-      "description": "Paper Section 6.3 single consensus statements, on token trees from a real language model: the base model (Qwen2.5-1.5B-Instruct prompted with the issue and every participant's opinion, paper Figure 6) proposes its 4 most likely tokens at every prefix (B=4), statements are L=8 tokens long (65,536 statements, 21,845 prefixes), and each participant's policy is the same model prompted with that participant's opinion only (Figure 7). Ten public scenarios (the paper's three, Tables 11-13, and seven gym-authored) and twenty held-out gym-authored scenarios with 4-5 participants. A solver sees participants' and the base model's log-probabilities of the candidates only at the prefixes it queries (200 per instance, 0.9% of the prefixes) and returns one statement (a deterministic policy). The reference solver runs the paper's egalitarian-welfare beam search (Algorithm 3, width 4).",
+      "description": "Paper Section 6.3 single consensus statements, on token trees from a real language model: the base model (Qwen2.5-1.5B-Instruct prompted with the issue and every participant's opinion, paper Figure 6) proposes its 2 most likely tokens at every prefix (B=2, the paper's branching factor for finite lookahead), statements are L=16 tokens long (65,536 statements, 65,535 prefixes), and each participant's policy is the same model prompted with that participant's opinion only (Figure 7). Ten public scenarios (the paper's three, Tables 11-13, and seven gym-authored) and twenty held-out gym-authored scenarios with 4-5 participants. A solver sees participants' and the base model's log-probabilities of the candidates only at the prefixes it queries (300 per instance, 0.46% of the prefixes) and returns one statement (a deterministic policy). The reference solver runs the paper's egalitarian-welfare beam search (Algorithm 3, width 4).",
       "weight": 0.4,
       "primary_metric": "log_eppl_regret",
       "_paper_reported": {
@@ -94,7 +94,7 @@
         "prompted_habermas_machine": 9.67,
         "habermas_machine_statement": 15.69
       },
-      "_note": "Scaled setting: a 1.5B model instead of Llama 3.1 8B, 8-token statements instead of up to 50 tokens without brush-up, and a 200-query budget. The paper's EPPL values are not on this scale and are kept under _paper_reported; the proposed-method value below is the gym's reference run on the held-out slice (paper's beam search, width 4), not a paper number. The paper's claim is the ordering: beam search (and finite lookahead) below Best-of-N below the Habermas-style vote.",
+      "_note": "Scaled setting: a 1.5B model instead of Llama 3.1 8B, 16-token statements instead of up to 50 tokens without brush-up, and a 300-query budget. The paper's EPPL values are not on this scale and are kept under _paper_reported; the proposed-method value below is the gym's reference run on the held-out slice (paper's beam search, width 4), not a paper number. The paper's claim is the ordering: beam search (and finite lookahead) below Best-of-N below the Habermas-style vote.",
       "metrics": {
         "log_eppl_regret": {
           "higher_is_better": false,

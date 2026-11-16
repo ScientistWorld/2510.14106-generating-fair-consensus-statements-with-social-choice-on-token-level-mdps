@@ -7,8 +7,9 @@ perplexity EPPL(X) = max_i exp(-U_i^log(X) / L).
 
 * ``beam_search``: paper Algorithm 3. Keep the ``width`` best partial statements; expand every
   beam by all B candidate tokens, score each candidate by min_i U_i^log, keep the top ``width``;
-  return the best statement of the final beam. The paper's main experiment uses width 4 and the
-  authors' code expands each beam with ``width`` distinct tokens, here the B=4 candidates.
+  return the best statement of the final beam. The paper's main experiment uses width 4 (the
+  authors' code expands each beam with up to ``width`` sampled tokens; here each beam is expanded
+  by the tree's B candidates).
 * ``finite_lookahead``: paper Algorithm 2 (depth d=4, branching 2 in the paper). At every step,
   enumerate the paths of length min(d, remaining) below the current state through each node's
   ``branching`` most likely tokens under the base model, score each path P by

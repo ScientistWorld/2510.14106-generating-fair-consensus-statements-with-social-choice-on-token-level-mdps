@@ -5,4 +5,4 @@ action: submit
 gpus: 1
 test: false
 milestone: core_claim_plus
-notes: "Retry: build the LM token trees for lm_consensus_search (Qwen2.5-1.5B-Instruct, bf16 weights + fp32 head, memory-adaptive batches for a shared GPU; 10 train + 20 held-out scenarios), then the full hardening audit (LM self-tests, calibration by budget, reference-only scores, all variants and shortcuts through the hidden test, mutation probe, summary, validate)."
+notes: "Rebuild the LM token trees deeper (B=2, L=16: 65,536 statements; the B=4/L=8 pilot let a width-16 beam and best-first search reach the exact optimum) with ancestor-cached batched passes verified against direct passes; then LM self-tests, search calibration by budget, and an LM-only evaluator smoke run with the audit variants."

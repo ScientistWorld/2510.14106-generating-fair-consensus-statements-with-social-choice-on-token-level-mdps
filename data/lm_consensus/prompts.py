@@ -9,8 +9,8 @@ model's chat template.
 
 from __future__ import annotations
 
-BRANCHING = 4  # candidate tokens per prefix: the base policy's 4 most likely tokens
-DEPTH = 8  # statement length in tokens
+BRANCHING = 2  # candidate tokens per prefix: the base policy's 2 most likely tokens
+DEPTH = 16  # statement length in tokens
 MODEL_NAME = "Qwen/Qwen2.5-1.5B-Instruct"
 
 REFERENCE_SYSTEM = (

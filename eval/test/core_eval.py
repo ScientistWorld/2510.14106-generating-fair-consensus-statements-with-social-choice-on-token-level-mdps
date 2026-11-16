@@ -16,11 +16,12 @@ deep_tree_core_test   B=3, L=12 trees (531,441 complete statements) with prefix-
                       policies; a solver may query 1,500 of the 265,720 prefixes. Nash welfare is
                       compared with the exact optimum over the full tree, and blocking is
                       computed exactly for every coalition over every statement.
-lm_consensus_search   Paper Section 6.3: B=4, L=8 trees from a real language model (the base
-                      model's four most likely tokens at every prefix; participants' policies are
-                      the model prompted with each opinion). The solver returns ONE statement (a
-                      deterministic policy); its egalitarian perplexity is compared with the best
-                      statement of the full tree (65,536 statements, computed exactly).
+lm_consensus_search   Paper Section 6.3: B=2, L=16 trees from a real language model (the base
+                      model's two most likely tokens at every prefix; participants' policies are
+                      the model prompted with each opinion); a solver may query 300 of the 65,535
+                      prefixes. The solver returns ONE statement (a deterministic policy); its
+                      egalitarian perplexity is compared with the best statement of the full tree
+                      (65,536 statements, computed exactly).
 
 A run that crashes, exceeds the time limit, breaks the protocol, omits an instance, returns an
 invalid policy (or, on lm_consensus_search, more than one statement), or fails the core
@@ -906,6 +907,10 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
     worst = {exp: dict(WORST[exp]) for exp in (EMPIRICAL, DEEP)}
     if lm_worst_rows:
         worst[LM] = aggregate(LM, lm_worst_rows)
+    # Per-instance rows of the held-out slice would reveal each hidden instance's optimum (from a
+    # method's value and its gap to the optimum); they go to the (git-ignored) log directory only.
+    withhold = split == "test"
+    per_instance_all = {}
     for exp in active:
         results, measured, per_rho = {}, {}, {}
         for name in list(BASELINES_BY_EXPERIMENT[exp]) + solver_names:
@@ -920,24 +925,26 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
                         for key in ("nash_welfare_efficiency", "log10_coalition_improvement", "blocked")
                     }
             results[name] = dict(worst[exp]) if (name in failures or not rows) else measured[name]
+        per_instance_all[exp] = {
+            name: [{"instance_id": s["instance_id"], **({} if exp == LM else {"rho": s["rho"]}), **row}
+                   for s, row in zip(by_exp[exp], rows)]
+            for name, rows in raw[exp].items()
+        }
         details = {
             "split": split,
             "num_instances": len(by_exp[exp]),
             "query_budget": sorted({int(s["query_budget"]) for s in by_exp[exp]}),
             "measured_before_failure_masking": measured,
-            "per_instance": {
-                name: [{"instance_id": s["instance_id"], **({} if exp == LM else {"rho": s["rho"]}), **row}
-                       for s, row in zip(by_exp[exp], rows)]
-                for name, rows in raw[exp].items()
-            },
+            "per_instance": "withheld on the held-out slice" if withhold else per_instance_all[exp],
         }
         if exp == LM:
             details.update({
                 "worst_statement_values": worst[LM],
                 "sampled_baselines": {"candidates": LM_BON_N, "replicates": LM_REPLICATES},
-                "best_statement_eppl": [math.exp(-refs[s["instance_id"]]["ew_star"] / int(s["depth"]))
-                                        for s in by_exp[exp]],
             })
+            if not withhold:
+                details["best_statement_eppl"] = [math.exp(-refs[s["instance_id"]]["ew_star"] / int(s["depth"]))
+                                                  for s in by_exp[exp]]
         else:
             details.update({
                 "rhos": sorted({float(s["rho"]) for s in by_exp[exp]}),
@@ -946,6 +953,8 @@ def run_evaluation(specs: list[dict], build_levels, *, split: str, scores_path: 
             })
         scores["experiments"][exp] = {"results": results, "_details": details}
     scores["_meta"]["evaluation_seconds"] = round(time.time() - t0, 1)
+    if withhold:
+        (log_dir / f"per_instance_{split}.json").write_text(json.dumps(per_instance_all), encoding="utf-8")
     scores_path = Path(scores_path)
     scores_path.parent.mkdir(parents=True, exist_ok=True)
     scores_path.write_text(json.dumps(scores, indent=1), encoding="utf-8")

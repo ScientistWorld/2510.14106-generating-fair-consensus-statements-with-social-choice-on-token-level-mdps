@@ -26,7 +26,7 @@ LM = "lm_consensus_search"
 _HERE = Path(__file__).resolve().parent
 _LM_SCENARIOS = _HERE / "lm_scenarios.json"
 _LM_TREES = _HERE / "lm_trees"
-LM_SETTINGS = {"branching": 4, "depth": 8, "query_budget": 200}
+LM_SETTINGS = {"branching": 2, "depth": 16, "query_budget": 300}
 
 SETTINGS = {
     EMPIRICAL: {

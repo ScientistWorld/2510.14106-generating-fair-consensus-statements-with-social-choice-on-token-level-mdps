@@ -61,7 +61,7 @@ def solve_statement(inst, args):
         tokens = finite_lookahead(inst, depth=args.lookahead_depth, branching=args.lookahead_branching)
     else:
         tokens = beam_search(inst, width=args.beam_width)
-    return path_policy(tokens, inst.branching), {"mode": args.lm_search, "statement": list(tokens)}
+    return path_policy(tokens, inst.branching), {"mode": args.lm_search}
 
 
 def solve_instance(inst, args):

@@ -1,8 +1,8 @@
 """Public training instances of the language-model consensus-search experiment (method-agnostic).
 
 Each instance is a token tree built by ``build_trees.py`` from one scenario in
-``scenarios_train.json``: branching B=4 (the base model's four most likely next tokens at every
-prefix), depth L=8, and n participants whose next-token log-probabilities come from the same
+``scenarios_train.json``: branching B=2 (the base model's two most likely next tokens at every
+prefix), depth L=16, and n participants whose next-token log-probabilities come from the same
 language model prompted with each participant's opinion. Solvers never see the text; they see
 the participants' (and the base model's) log-probabilities of the B candidates at the prefixes
 they query, within the instance's query budget.
@@ -23,7 +23,7 @@ LM = "lm_consensus_search"
 HERE = Path(__file__).resolve().parent
 SCENARIOS = HERE / "scenarios_train.json"
 TREE_DIR = HERE / "trees"
-SETTINGS = {"branching": 4, "depth": 8, "query_budget": 200}
+SETTINGS = {"branching": 2, "depth": 16, "query_budget": 300}
 
 
 def lm_train_specs() -> list[dict]:
