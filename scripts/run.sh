@@ -1,10 +1,10 @@
 #!/bin/bash
 # Job script (runs inside the compute container, workspace at /home/user, no internet).
-# This job: the full hardening audit (hardening/run_job.sh): exactness and language-model
-# self-tests, the language-model search calibration, the reference alone on train and test (the
-# official scores), every audit variant and shortcut through the no-argument hidden test and the
-# train evaluation, the workspace-mutation probe, summary, validation.
-set -u
+# Reproduces the reference end to end: the paper's methods and the evaluator baselines on the
+# public training slice and the held-out test slice (all three experiments), then validation.
+# The language-model token trees are committed; rebuilding them needs a GPU and the model weights
+# (scripts/download.sh, then python -m data.lm_consensus.build_trees ...). The hardening audit
+# that checked variants and shortcuts is hardening/run_job.sh.
+set -e
 cd /home/user
-trap 'python -m hardening.install_solvers uninstall >/dev/null 2>&1' EXIT
-bash hardening/run_job.sh
+bash scripts/reproduce.sh

@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: core_claim_plus**
+**Current: secondary_claims**
 
 ## Progress Log
 
@@ -39,5 +39,10 @@
 - The paper's Section 4.2 core test (B=3, L=4, six agents, rho on linspace(0.6, 5, 20)) is served through the same oracle and is a hard gate; the reference stays at alpha* = 1 on all 100 held-out instances while uniform (9.90), utilitarian (2.75e5) and random dictatorship (1.21) are blockable.
 - Reference (Algorithm 1 + Section 4.3 chunking) on held-out deep trees: efficiency 0.772, mean log10 alpha* 0.300; better variants +0.22 (40/40 paired wins), coarser chunking -0.058 (39/40 losses), seed spread ~1e-12; every shortcut fails or ties. Details in HARDENING.md.
 
+### [2026-11-17 06:00] - secondary_claims
+- Final hardening: added `lm_consensus_search`, the paper's Section 6.3 single-statement experiment on token trees from a real small language model (Qwen2.5-1.5B-Instruct prompted per opinion, B=2, 16-token statements; the paper's three scenarios plus seven authored in train, twenty held-out authored scenarios in test; 150 queries per instance), scored against the exact best statement of each tree.
+- The reference runs the paper's beam search (Algorithm 3, width 4): held-out EPPL 5.73 vs finite lookahead 7.73, Best-of-4 13.37, Habermas-style vote 14.07, base-model statement 24.25, the paper's ordering (Table 10). Better searches within the budget gain 0.082 log-EPPL regret (95% CI [0.036, 0.137], 9-10 wins, 0 losses); brute force and Best-of-many stay below the reference.
+- Held-out per-instance values are no longer committed (they revealed hidden optima). Weights 0.2 / 0.4 / 0.4. Details in HARDENING.md.
+
 ## Stop Justification
-- Completed at milestone `core_claim_plus`.
+- Completed at milestone `secondary_claims`: the core claim (Nash-welfare lottery in the ex-ante core, with the deep-tree tractability study) and the secondary empirical claim (egalitarian-welfare search beats sampling and Habermas-style baselines on worst-case alignment) are reproduced; the opinion-length scaling and credit-assignment studies (Sections 6.1-6.2) are not.

@@ -21,3 +21,17 @@ outcome judged against the entire tree: how much Nash welfare it delivers relati
 lottery over all statements, and how far any coalition of participants could still improve on it
 using statements anywhere in the tree. Seeing more of the tree is not possible; spending the
 queries well is the problem.
+
+## lm_consensus_search
+
+Real consensus scenarios (an issue and four or five written opinions, including the three
+published in the paper) turned into statement trees by a small instruction-tuned language
+model: at every prefix the model, prompted with all opinions, proposes its two most likely next
+tokens, and each participant's preferences are the same model's probabilities when prompted with
+that participant's opinion alone. Statements are 16 tokens long (65,536 per scenario), only 150
+prefixes per scenario can be queried, and no text is ever shown. The experiment asks how close a
+single returned statement comes to the one its least satisfied participant likes best (lowest
+egalitarian perplexity among all statements of the tree), and whether it beats statements
+obtained by sampling from the consensus-prompted model and choosing among the samples, by a
+post-hoc vote among sampled candidates, or by the model's own most likely statement. Held-out
+scenarios are distinct issues written in the same style as the public ones.

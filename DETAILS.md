@@ -13,7 +13,7 @@ The paper represents each participant's opinion as a next-token policy and uses 
 
 - In the synthetic core test, the Nash-welfare policy remains unblocked with maximum coalition improvement equal to 1, while uniform and utilitarian policies become blockable as polarization grows.
 - Enumerating every complete statement becomes infeasible for long statements; the paper restricts attention to chunked statement sets, for which the core guarantee holds only relative to the restricted set and no constant-factor Nash-welfare guarantee exists (Theorem 2). This gym measures that gap on deep prefix-dependent trees seen through a query budget.
-- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead (not part of this gym's executable benchmark).
+- On three Habermas Machine scenarios, beam search reports the best overall EPPL in the main experiment, followed by finite lookahead. Since the final hardening iteration the gym reproduces this comparison on token trees from a real small language model (`lm_consensus_search`; see HARDENING.md).
 
 ---
 

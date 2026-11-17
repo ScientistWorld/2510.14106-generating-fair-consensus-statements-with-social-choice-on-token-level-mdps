@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
-milestone: core_claim_plus
-notes: "Full hardening audit with the final LM setting (B=2, L=16 trees, 150 queries per instance): self-tests, calibration, reference-only train/test scores (official), all honest variants and shortcuts through the no-argument hidden test and train, mutation probe, summary, validate."
+action: done
+milestone: secondary_claims
+notes: "Added lm_consensus_search (paper Sec. 6.3 on real Qwen2.5-1.5B token trees, B=2, L=16, 150 queries): reference beam search EPPL 5.73 < lookahead 7.73 < Best-of-4 13.37 < Habermas vote 14.07; better searches +0.082 regret [0.036, 0.137], 9-10/0 wins; shortcuts below reference; held-out per-instance optima no longer committed; weights 0.2/0.4/0.4; details in HARDENING.md."

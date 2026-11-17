@@ -25,6 +25,24 @@ the full tree.
 - **Reference:** the paper's chunked method reaches 0.772 efficiency, mean log10 alpha* 0.300 and
   violation rate 0.95 on the held-out slice (no paper number exists for this setting).
 
+## Primary: lm_consensus_search
+
+A single consensus statement on language-model statement trees (paper Section 6.3), judged
+against the best statement of the full tree.
+
+- **Primary metric:** `log_eppl_regret` (lower is better; 0 = the statement with the lowest
+  egalitarian perplexity on every instance)
+- **Secondary metric:** `egalitarian_perplexity` (lower is better; the paper's EPPL)
+- **Diagnostics:** `optimal_statement_rate`, `base_perplexity` (not ranked)
+- **Constraints (enforced, not scored):** one statement per instance (a deterministic policy);
+  at most 150 prefix queries per instance.
+- **Paper result (Table 10, Llama 3.1 8B, up to 50 tokens):** EPPL beam search 2.87 < finite
+  lookahead 4.18 < Best-of-N 6.35 < prompted Habermas Machine 9.67 < Habermas Machine 15.69.
+- **Reference (held-out slice, this gym's scale):** the paper's beam search (width 4) reaches
+  regret 0.104 / EPPL 5.73; the paper's finite lookahead 0.341 / 7.73; Best-of-4 0.811 / 13.37;
+  Habermas-style vote 0.848 / 14.07; the consensus-prompted model's own statement 1.383 / 24.25.
+  The best statement of each tree has mean EPPL 5.13.
+
 ## How to run
 
 - `bash scripts/evaluate_train.sh` scores every solver in `scripts/solvers/` on the public
