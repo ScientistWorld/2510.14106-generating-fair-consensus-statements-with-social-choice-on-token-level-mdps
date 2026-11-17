@@ -2,7 +2,7 @@
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
 action: submit
-gpus: 1
+gpus: 0
 test: false
 milestone: core_claim_plus
-notes: "Rebuild the LM token trees deeper (B=2, L=16: 65,536 statements; the B=4/L=8 pilot let a width-16 beam and best-first search reach the exact optimum) with ancestor-cached batched passes verified against direct passes; then LM self-tests, search calibration by budget, and an LM-only evaluator smoke run with the audit variants."
+notes: "Full hardening audit with the final LM setting (B=2, L=16 trees, 150 queries per instance): self-tests, calibration, reference-only train/test scores (official), all honest variants and shortcuts through the no-argument hidden test and train, mutation probe, summary, validate."

@@ -23,7 +23,7 @@ LM = "lm_consensus_search"
 HERE = Path(__file__).resolve().parent
 SCENARIOS = HERE / "scenarios_train.json"
 TREE_DIR = HERE / "trees"
-SETTINGS = {"branching": 2, "depth": 16, "query_budget": 300}
+SETTINGS = {"branching": 2, "depth": 16, "query_budget": 150}
 
 
 def lm_train_specs() -> list[dict]:

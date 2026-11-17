@@ -18,7 +18,7 @@ deep_tree_core_test   B=3, L=12 trees (531,441 complete statements) with prefix-
                       computed exactly for every coalition over every statement.
 lm_consensus_search   Paper Section 6.3: B=2, L=16 trees from a real language model (the base
                       model's two most likely tokens at every prefix; participants' policies are
-                      the model prompted with each opinion); a solver may query 300 of the 65,535
+                      the model prompted with each opinion); a solver may query 150 of the 65,535
                       prefixes. The solver returns ONE statement (a deterministic policy); its
                       egalitarian perplexity is compared with the best statement of the full tree
                       (65,536 statements, computed exactly).
