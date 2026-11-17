@@ -45,4 +45,4 @@
 - Held-out per-instance values are no longer committed (they revealed hidden optima). Weights 0.2 / 0.4 / 0.4. Details in HARDENING.md.
 
 ## Stop Justification
-- Completed at milestone `secondary_claims`: the core claim (Nash-welfare lottery in the ex-ante core, with the deep-tree tractability study) and the secondary empirical claim (egalitarian-welfare search beats sampling and Habermas-style baselines on worst-case alignment) are reproduced; the opinion-length scaling and credit-assignment studies (Sections 6.1-6.2) are not.
+- Completed at milestone `core_claim_plus`.
