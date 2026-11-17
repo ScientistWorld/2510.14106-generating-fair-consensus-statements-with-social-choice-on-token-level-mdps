@@ -1,0 +1,222 @@
+[
+ {
+  "base_greedy": "A basic income could provide security and recognition for valuable work, but it should be",
+  "base_greedy_eppl": 22.679634243811744,
+  "egalitarian_optimum": "Implementing a universal basic income could reduce poverty and provide financial security, but it",
+  "optimum_eppl": 5.928355879646385,
+  "worst_eppl": 914.3718297879218,
+  "id": "test_lm_000",
+  "seconds": 130.9,
+  "bytes": 1513591,
+  "verify_max_abs_diff": 0.1276
+ },
+ {
+  "base_greedy": "Yes, but with careful regulation and investment in renewable energy to complement it. Small",
+  "base_greedy_eppl": 15.939187637818868,
+  "egalitarian_optimum": "Yes, nuclear power should be expanded, but only if it's done safely and",
+  "optimum_eppl": 3.443828331050949,
+  "worst_eppl": 404.34088655486227,
+  "id": "test_lm_001",
+  "seconds": 148.4,
+  "bytes": 1531252,
+  "verify_max_abs_diff": 0.2192
+ },
+ {
+  "base_greedy": "Advertising should be regulated to protect children and promote healthier choices, but not completely ban",
+  "base_greedy_eppl": 12.590898896495311,
+  "egalitarian_optimum": "Yes, junk food advertising should be heavily regulated or banned, especially for children,",
+  "optimum_eppl": 5.970046921779804,
+  "worst_eppl": 1101.2192772695328,
+  "id": "test_lm_002",
+  "seconds": 126.9,
+  "bytes": 1510657,
+  "verify_max_abs_diff": 0.1085
+ },
+ {
+  "base_greedy": "We should consider the benefits and drawbacks of monarchy, electing a head of state",
+  "base_greedy_eppl": 23.764746300629394,
+  "egalitarian_optimum": "The monarchy's role should be redefined in a way that balances tradition with modern",
+  "optimum_eppl": 5.94252599408309,
+  "worst_eppl": 866.9789075831555,
+  "id": "test_lm_003",
+  "seconds": 150.0,
+  "bytes": 1546837,
+  "verify_max_abs_diff": 0.0914
+ },
+ {
+  "base_greedy": "Compulsory voting can lead to random or spoiled ballots, infringing on individual",
+  "base_greedy_eppl": 34.47592189548416,
+  "egalitarian_optimum": "Voting is a fundamental right, but it's important to ensure it's accessible",
+  "optimum_eppl": 4.591280469787663,
+  "worst_eppl": 535.9436403588182,
+  "id": "test_lm_004",
+  "seconds": 122.1,
+  "bytes": 1552486,
+  "verify_max_abs_diff": 0.1053
+ },
+ {
+  "base_greedy": "Yes, the state pension age should be raised gradually with more warning, but contributions",
+  "base_greedy_eppl": 48.88174754225222,
+  "egalitarian_optimum": "Yes, the state pension age should be raised, but it should be done gradually",
+  "optimum_eppl": 3.95864485620495,
+  "worst_eppl": 1346.5785751097499,
+  "id": "test_lm_005",
+  "seconds": 144.3,
+  "bytes": 1509556,
+  "verify_max_abs_diff": 0.1064
+ },
+ {
+  "base_greedy": "Rent controls should be limited to protect existing tenants while encouraging more housing supply. Quality",
+  "base_greedy_eppl": 23.229470283304547,
+  "egalitarian_optimum": "Rent controls should be introduced with strict limits to prevent price gouging and ensure affordability",
+  "optimum_eppl": 5.354494614062621,
+  "worst_eppl": 516.0405268138626,
+  "id": "test_lm_006",
+  "seconds": 136.4,
+  "bytes": 1523965,
+  "verify_max_abs_diff": 0.0877
+ },
+ {
+  "base_greedy": "Phones should be used responsibly and with parental consent, with lessons being tech-free periods",
+  "base_greedy_eppl": 38.14998133794862,
+  "egalitarian_optimum": "Phones should not be banned in schools, but their use should be monitored and controlled",
+  "optimum_eppl": 4.818449460121708,
+  "worst_eppl": 480.6358252490405,
+  "id": "test_lm_007",
+  "seconds": 129.9,
+  "bytes": 1531738,
+  "verify_max_abs_diff": 0.0868
+ },
+ {
+  "base_greedy": "Yes, taxing sugary drinks more heavily can help reduce obesity and tooth decay,",
+  "base_greedy_eppl": 15.152003788137566,
+  "egalitarian_optimum": "Yes, sugary drinks should be taxed, but only if the revenue is used",
+  "optimum_eppl": 3.5495666811997517,
+  "worst_eppl": 543.7318442805685,
+  "id": "test_lm_008",
+  "seconds": 144.6,
+  "bytes": 1493585,
+  "verify_max_abs_diff": 0.1773
+ },
+ {
+  "base_greedy": "Legalising cannabis for medical purposes and decriminalising possession can reduce criminal activity and",
+  "base_greedy_eppl": 10.578186345594467,
+  "egalitarian_optimum": "Cannabis should be decriminalised and legalized for medicinal purposes, but not",
+  "optimum_eppl": 5.456260822389271,
+  "worst_eppl": 586.4549870632978,
+  "id": "test_lm_009",
+  "seconds": 126.1,
+  "bytes": 1507820,
+  "verify_max_abs_diff": 0.0772
+ },
+ {
+  "base_greedy": "Yes, but with a voluntary, incentive-based scheme that includes community and care work",
+  "base_greedy_eppl": 59.378578632155865,
+  "egalitarian_optimum": "Yes, but only if it's a voluntary program with clear benefits and incentives.",
+  "optimum_eppl": 6.043049148525068,
+  "worst_eppl": 874.8459831108383,
+  "id": "test_lm_010",
+  "seconds": 142.3,
+  "bytes": 1524280,
+  "verify_max_abs_diff": 0.2451
+ },
+ {
+  "base_greedy": "Private schools should not lose their tax advantages, but they should share facilities and offer",
+  "base_greedy_eppl": 26.68106117715301,
+  "egalitarian_optimum": "Private schools' tax benefits should be re-evaluated to ensure they contribute to",
+  "optimum_eppl": 4.603434379815455,
+  "worst_eppl": 363.92849188084404,
+  "id": "test_lm_011",
+  "seconds": 137.6,
+  "bytes": 1531344,
+  "verify_max_abs_diff": 0.1334
+ },
+ {
+  "base_greedy": "Allow GM crops with strict testing and clear labelling, but only if they enhance",
+  "base_greedy_eppl": 45.120629917006504,
+  "egalitarian_optimum": "Genetically modified crops should be regulated and tested for long-term effects on the environment",
+  "optimum_eppl": 4.680815233909198,
+  "worst_eppl": 1065.3918515153944,
+  "id": "test_lm_012",
+  "seconds": 132.0,
+  "bytes": 1525738,
+  "verify_max_abs_diff": 0.0807
+ },
+ {
+  "base_greedy": "We should consider a points-based system for immigration, with a focus on skills and",
+  "base_greedy_eppl": 19.339918124613202,
+  "egalitarian_optimum": "We should aim for a balanced immigration system that respects both the rights of immigrants and",
+  "optimum_eppl": 5.612185972120741,
+  "worst_eppl": 1832.7077640001419,
+  "id": "test_lm_013",
+  "seconds": 141.0,
+  "bytes": 1524479,
+  "verify_max_abs_diff": 0.2329
+ },
+ {
+  "base_greedy": "Assisted dying should be legalised only for terminally ill adults with six months",
+  "base_greedy_eppl": 14.650368304418647,
+  "egalitarian_optimum": "Assisted dying should only be legalised under strict medical and ethical guidelines to ensure",
+  "optimum_eppl": 4.898688430866151,
+  "worst_eppl": 1642.026655500412,
+  "id": "test_lm_014",
+  "seconds": 126.8,
+  "bytes": 1525688,
+  "verify_max_abs_diff": 0.0865
+ },
+ {
+  "base_greedy": "Public transport should be free for low-income groups and students, but not for everyone",
+  "base_greedy_eppl": 12.262794763070548,
+  "egalitarian_optimum": "Public transport should be free to encourage more people to use it, especially in areas",
+  "optimum_eppl": 4.056578327672803,
+  "worst_eppl": 309.8297488071429,
+  "id": "test_lm_015",
+  "seconds": 143.6,
+  "bytes": 1522044,
+  "verify_max_abs_diff": 0.1751
+ },
+ {
+  "base_greedy": "The BBC should be funded through general taxation, with a progressive rate based on income",
+  "base_greedy_eppl": 9.28883763249576,
+  "egalitarian_optimum": "Yes, the licence fee should be scrapped and replaced with a more equitable funding model",
+  "optimum_eppl": 4.098831855941894,
+  "worst_eppl": 1088.2979249801379,
+  "id": "test_lm_016",
+  "seconds": 136.4,
+  "bytes": 1520246,
+  "verify_max_abs_diff": 0.1042
+ },
+ {
+  "base_greedy": "Children should be allowed to use AI tools for homework, but with clear guidelines and",
+  "base_greedy_eppl": 3.814392288674419,
+  "egalitarian_optimum": "Children should be allowed to use AI tools for homework, but with clear guidelines and",
+  "optimum_eppl": 3.814392288674419,
+  "worst_eppl": 381.3559592969142,
+  "id": "test_lm_017",
+  "seconds": 131.6,
+  "bytes": 1538363,
+  "verify_max_abs_diff": 0.1488
+ },
+ {
+  "base_greedy": "A balanced approach should consider both environmental impact and personal freedom, with options like a",
+  "base_greedy_eppl": 39.14800011618817,
+  "egalitarian_optimum": "A balanced approach is needed, considering the impact of frequent flying on the environment and",
+  "optimum_eppl": 9.788096752450803,
+  "worst_eppl": 590.5069736543147,
+  "id": "test_lm_018",
+  "seconds": 138.1,
+  "bytes": 1517719,
+  "verify_max_abs_diff": 0.1314
+ },
+ {
+  "base_greedy": "Animal testing for medicines should be phased out gradually, with alternatives improving, while ensuring",
+  "base_greedy_eppl": 9.848844380972736,
+  "egalitarian_optimum": "Banning animal testing for medicines would cause unnecessary harm to animals and could lead to",
+  "optimum_eppl": 5.8872702994915675,
+  "worst_eppl": 429.4460770310335,
+  "id": "test_lm_019",
+  "seconds": 132.8,
+  "bytes": 1519001,
+  "verify_max_abs_diff": 0.0931
+ }
+]

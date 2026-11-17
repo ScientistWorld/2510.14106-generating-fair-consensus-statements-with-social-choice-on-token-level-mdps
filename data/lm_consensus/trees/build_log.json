@@ -1,0 +1,112 @@
+[
+ {
+  "base_greedy": "We are living in a golden age of democracy, but it is not without challenges",
+  "base_greedy_eppl": 5.366915702818175,
+  "egalitarian_optimum": "Yes, we are living in a golden age of democracy, as evidenced by the",
+  "optimum_eppl": 2.6816617680221,
+  "worst_eppl": 370.0037658626919,
+  "id": "train_lm_000",
+  "seconds": 161.0,
+  "bytes": 1520333,
+  "verify_max_abs_diff": 0.0738
+ },
+ {
+  "base_greedy": "The UK's ties to Europe should be stronger to benefit from trade, economic integration",
+  "base_greedy_eppl": 7.196372518273253,
+  "egalitarian_optimum": "The UK should strengthen its ties with Europe to benefit from economic and political cooperation.",
+  "optimum_eppl": 3.536285461692415,
+  "worst_eppl": 411.097061385192,
+  "id": "train_lm_001",
+  "seconds": 146.2,
+  "bytes": 1517471,
+  "verify_max_abs_diff": 0.0719
+ },
+ {
+  "base_greedy": "It is acceptable to use animals for food, but it is crucial to ensure their",
+  "base_greedy_eppl": 3.7398625212563292,
+  "egalitarian_optimum": "It's acceptable to use animals for food as long as they're treated humanely",
+  "optimum_eppl": 2.3306314623293516,
+  "worst_eppl": 193.23083259507578,
+  "id": "train_lm_002",
+  "seconds": 79.4,
+  "bytes": 1292283,
+  "verify_max_abs_diff": 0.0829
+ },
+ {
+  "base_greedy": "Yes, lowering the voting age to 16 can be beneficial, but it",
+  "base_greedy_eppl": 6.317722582614104,
+  "egalitarian_optimum": "Lowering the voting age to 16 can be beneficial for young people,",
+  "optimum_eppl": 4.168450877573341,
+  "worst_eppl": 541.1087691782891,
+  "id": "train_lm_003",
+  "seconds": 84.0,
+  "bytes": 1521919,
+  "verify_max_abs_diff": 0.1053
+ },
+ {
+  "base_greedy": "Yes, a gradual transition to electric vehicles and improved public transport is needed before banning",
+  "base_greedy_eppl": 24.111690823964132,
+  "egalitarian_optimum": "Bans on cars in city centres should be accompanied by improvements in public transportation and",
+  "optimum_eppl": 5.721646341024721,
+  "worst_eppl": 392.5230316420695,
+  "id": "train_lm_004",
+  "seconds": 123.1,
+  "bytes": 1505914,
+  "verify_max_abs_diff": 0.1275
+ },
+ {
+  "base_greedy": "Free university education should be considered, but with conditions to ensure it benefits society and",
+  "base_greedy_eppl": 15.338313249672751,
+  "egalitarian_optimum": "Yes, university education should be free, especially for those who can't afford it",
+  "optimum_eppl": 3.552580382254955,
+  "worst_eppl": 833.2058760236864,
+  "id": "train_lm_005",
+  "seconds": 157.8,
+  "bytes": 1530885,
+  "verify_max_abs_diff": 0.0955
+ },
+ {
+  "base_greedy": "Implementing a four-day working week should be voluntary, with pay adjustments to ensure",
+  "base_greedy_eppl": 13.597600412158537,
+  "egalitarian_optimum": "Yes, a four-day working week could be beneficial, but it needs to be",
+  "optimum_eppl": 4.725760188760411,
+  "worst_eppl": 883.3537458242025,
+  "id": "train_lm_006",
+  "seconds": 144.6,
+  "bytes": 1506537,
+  "verify_max_abs_diff": 0.0659
+ },
+ {
+  "base_greedy": "Social media platforms should require users to verify their identity, but with privacy protections and",
+  "base_greedy_eppl": 7.612140345557593,
+  "egalitarian_optimum": "Yes, social media platforms should require users to verify their identity, but only if",
+  "optimum_eppl": 3.715919151392273,
+  "worst_eppl": 1752.8159392551165,
+  "id": "train_lm_007",
+  "seconds": 140.3,
+  "bytes": 1513001,
+  "verify_max_abs_diff": 0.0907
+ },
+ {
+  "base_greedy": "Zoos should be phased out, with large, well-regarded sanctu",
+  "base_greedy_eppl": 14.372155590869708,
+  "egalitarian_optimum": "Yes, zoos should be phased out in favor of wildlife sanctuaries that",
+  "optimum_eppl": 3.8759399997509036,
+  "worst_eppl": 970.09657644124,
+  "id": "train_lm_008",
+  "seconds": 151.5,
+  "bytes": 1535672,
+  "verify_max_abs_diff": 0.0745
+ },
+ {
+  "base_greedy": "Homework should be optional, with a small amount for those who need it,",
+  "base_greedy_eppl": 8.247743638721243,
+  "egalitarian_optimum": "Homework should not be banned, but it should be optional and tailored to individual",
+  "optimum_eppl": 4.269645517093301,
+  "worst_eppl": 433.1528630902628,
+  "id": "train_lm_009",
+  "seconds": 135.7,
+  "bytes": 1528912,
+  "verify_max_abs_diff": 0.085
+ }
+]
